@@ -1,0 +1,17 @@
+#video-placeholder {
+	height: 400px;
+	width: 600px;
+	background: #000;
+	color: #FFF;
+	text-align: center;
+	float: left;
+	margin-right: 60px;
+}
+
+#app-about {
+	margin-top: 22px;
+	font-size: 18px;
+	font-weight: 700;
+	padding-left: 60px;
+	line-height: 30px;
+}
