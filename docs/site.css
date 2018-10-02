@@ -1,0 +1,18 @@
+body {
+	background: #F4F4F4;
+}
+
+headerbar {
+	height: 70px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	background: #FFF;
+}
+
+.title-text {
+	font: bold;
+	font-size: 30px;
+	text-align: center;
+}
