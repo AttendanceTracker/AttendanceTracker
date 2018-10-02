@@ -11,8 +11,31 @@ headerbar {
 	background: #FFF;
 }
 
+.title-holder {
+	width: 250px;
+	margin-top: 20px;
+	margin-left: 8px;
+	float: left;
+}
+
 .title-text {
-	font: bold;
+	font-weight: 700;
 	font-size: 30px;
-	text-align: center;
+}
+
+.menu-list {
+	margin-top: 22px;
+	margin-right: 8px;
+	float: right;
+}
+
+.menu-list li {
+	float: left;
+	list-style: none;
+	padding: 5px;
+}
+
+.menu-list li a, .menu-list li a:visited, .menu-list li a:hover, .menu-list li a:active {
+    text-decoration: none;
+    color: #000;
 }
