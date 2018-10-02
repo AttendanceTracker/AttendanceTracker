@@ -70,3 +70,11 @@ headerbar {
 .page-menu-item:hover {
 	color: #000;
 }
+
+maincontent {
+	top: 70px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	position: fixed;
+}
