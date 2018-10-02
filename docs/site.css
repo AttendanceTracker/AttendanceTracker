@@ -1,3 +1,7 @@
+html * {
+	font-family: sans-serif;
+}
+
 body {
 	background: #F4F4F4;
 }
@@ -13,29 +17,57 @@ headerbar {
 
 .title-holder {
 	width: 250px;
-	margin-top: 20px;
+	margin-top: 24px;
 	margin-left: 8px;
 	float: left;
 }
 
 .title-text {
 	font-weight: 700;
-	font-size: 30px;
+	font-size: 22px;
+	color: #4f4f4f;
+}
+
+.menu-list, .menu-list > li, .menu-list li > a {
+	height: 70px;
 }
 
 .menu-list {
-	margin-top: 22px;
+	padding: 0px;
+	margin-top: 0px;
 	margin-right: 8px;
 	float: right;
 }
 
-.menu-list li {
+.menu-list > li {
+	margin-bottom: 0px;
 	float: left;
 	list-style: none;
-	padding: 5px;
+	background: #FFF;
 }
 
-.menu-list li a, .menu-list li a:visited, .menu-list li a:hover, .menu-list li a:active {
-    text-decoration: none;
-    color: #000;
+.menu-list > li:hover {
+	background: #FFF;
+	color: #4f4f4f;
+}
+
+.page-menu-item {
+	font-size: 18px;
+	font-weight: 700;
+	text-decoration: none;
+	color: #4f4f4f;
+	display: block;
+	padding-top: 22px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 100%;
+	text-align: center;
+}
+
+.page-menu-item:visited, .page-menu-item:active {
+	color: #4f4f4f;
+}
+
+.page-menu-item:hover {
+	color: #000;
 }
