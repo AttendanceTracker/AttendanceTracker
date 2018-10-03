@@ -99,4 +99,14 @@ maincontent {
 	left: 10%;
 	right: 10%;
 	position: absolute;
+	box-shadow: 0 2px 4px rgba(0,0,0,.5);
+}
+
+.fancy-ul {
+	border-left-style: solid;
+	border-color: #bbdefb;
+	border-width: 10px;
+	margin-left: 10px;
+	padding-left: 10px;
+	list-style: none;
 }
