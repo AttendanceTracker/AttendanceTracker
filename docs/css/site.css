@@ -12,9 +12,11 @@ headerbar {
 	top: 0px;
 	left: 0px;
 	right: 0px;
-	padding-left: 60px;
-	padding-right: 60px;
+	padding-left: 10%;
+	padding-right: 10%;
 	background: #FFF;
+	box-shadow: 0 2px 4px rgba(0,0,0,.5);
+	z-index: 1;
 }
 
 .title-holder {
@@ -92,10 +94,9 @@ maincontent {
 .content-body {
 	padding: 60px;
 	background: #FFF;
-	left: 0px;
-	right: 0px;
-	/*top: 70px;
+	top: 0px;
 	bottom: 0px;
-	left: 0px;
-	right: 0px;*/
+	left: 10%;
+	right: 10%;
+	position: absolute;
 }
