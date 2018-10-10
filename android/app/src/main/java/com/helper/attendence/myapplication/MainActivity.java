@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         //Should show 4 boxes to enter the fname, lname, username, and CWID
         if (!newDeviceFlag) {
             setContentView(R.layout.info_logging);
-
             Button clickButton = (Button) findViewById(R.id.button2);
             clickButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
             }
             TextView text = (TextView) findViewById(R.id.txtCount);
             text.setText("All good. Your info is stored :)\n");
-    }
+        }
+        mainMenu();
+
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
     public void displayInfo() {
         SharedPreferences app_preferences1 =
@@ -82,6 +85,31 @@ public class MainActivity extends AppCompatActivity {
         TextView text = (TextView) findViewById(R.id.txtCount);
         text.setText("This app has been started " + counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
     }
+
+    public void mainMenu() {
+        FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
+        qrBtn.setOnClickListener(new View.OnClickListener() {
+            //Open qr loibrary and go from there
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Scan a QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                TextView text = (TextView) findViewById(R.id.txtCount);
+                text.setText("Qr code has been picked boi!");
+            }
+        });
+
+        FloatingActionButton settingsBtn = (FloatingActionButton) findViewById(R.id.settings_menu_button);
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            //Open qr loibrary and go from there
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Scan a QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                TextView text = (TextView) findViewById(R.id.txtCount);
+                text.setText("Settings button pushed!");
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
