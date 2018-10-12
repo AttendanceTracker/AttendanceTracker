@@ -1,6 +1,7 @@
 package com.helper.attendence.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -58,18 +59,6 @@ public class MainActivity extends AppCompatActivity {
             text.setText("All good. Your info is stored :)\n");
         }
         mainMenu();
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
@@ -100,12 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton settingsBtn = (FloatingActionButton) findViewById(R.id.settings_menu_button);
         settingsBtn.setOnClickListener(new View.OnClickListener() {
-            //Open qr loibrary and go from there
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Scan a QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                TextView text = (TextView) findViewById(R.id.txtCount);
-                text.setText("Settings button pushed!");
+                Intent i = new Intent(MainActivity.this, Settings.class);
+                startActivity(i);
             }
         });
     }
@@ -134,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static String getUniqueIMEIId(Context context) {
-
         return "not_found";
     }
 
