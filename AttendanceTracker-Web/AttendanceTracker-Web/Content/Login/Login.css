@@ -1,0 +1,19 @@
+﻿.mdl-grid {
+    display: grid;
+}
+
+.mdl-cell {
+    margin: auto !important;
+}
+
+.mdl-layout__content {
+    position: absolute !important;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+}
+
+.main-container-spacing {
+    margin: 10px auto;
+}

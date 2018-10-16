@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Login\Login.css" />
     <Content Include="Content\Material\font-family.css" />
     <Content Include="Content\Material\icon-family.css" />
     <Content Include="Content\Material\material.cyan-light_blue.css" />
@@ -231,14 +232,11 @@
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Home\" />
-    <Folder Include="Content\Login\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

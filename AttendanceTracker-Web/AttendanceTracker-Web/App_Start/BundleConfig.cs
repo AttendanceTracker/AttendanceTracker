@@ -24,7 +24,9 @@ namespace AttendanceTracker_Web
 
             bundles.Add(new StyleBundle("~/Content/css").IncludeDirectory(
                       "~/Content/Material", "*.css", true).Include(
-                      "~/Content/site.css"));
+                      "~/Content/site.css").IncludeDirectory(
+                      "~/Content/Login", "*.css", true).IncludeDirectory(
+                      "~/Content/Home", "*.css", true));
         }
     }
 }
