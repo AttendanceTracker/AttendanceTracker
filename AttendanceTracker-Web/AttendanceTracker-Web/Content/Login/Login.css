@@ -1,9 +1,14 @@
 ﻿.mdl-grid {
     display: grid;
+    padding: unset;
+    width: 400px;
+    margin-top: 40px;
+    border-radius: 3px;
 }
 
 .mdl-cell {
-    margin: auto !important;
+    margin: auto;
+    overflow: hidden;
 }
 
 .mdl-layout__content {
@@ -16,4 +21,18 @@
 
 .main-container-spacing {
     margin: 10px auto;
+}
+
+#header {
+    height: 100px;
+    width: 100%;
+}
+
+.field-container {
+    display: grid;
+    padding: 10px;
+}
+
+.login-field {
+    margin: auto;
 }
