@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace AttendanceTracker_Web.Controllers
+namespace AttendanceTracker_Web.Controllers.MVC
 {
     public class HomeController : Controller
     {
