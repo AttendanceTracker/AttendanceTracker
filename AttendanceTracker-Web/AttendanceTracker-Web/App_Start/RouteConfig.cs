@@ -17,7 +17,6 @@ namespace AttendanceTracker_Web
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
-                //defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

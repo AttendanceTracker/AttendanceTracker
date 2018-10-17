@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Home\Home.css" />
     <Content Include="Content\Login\Login.css" />
     <Content Include="Content\Material\font-family.css" />
     <Content Include="Content\Material\icon-family.css" />
@@ -236,7 +237,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Home\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
