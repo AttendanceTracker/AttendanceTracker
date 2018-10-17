@@ -182,8 +182,8 @@
     <Content Include="Content\Login\Login.css" />
     <Content Include="Content\Material\font-family.css" />
     <Content Include="Content\Material\icon-family.css" />
-    <Content Include="Content\Material\material.cyan-light_blue.css" />
-    <Content Include="Content\Material\material.cyan-light_blue.min.css" />
+    <Content Include="Content\Material\material.css" />
+    <Content Include="Content\Material\material.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
