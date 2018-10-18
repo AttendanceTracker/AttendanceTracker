@@ -35,7 +35,9 @@
     -ms-flex-pack: end;
     justify-content: flex-end;
     padding: 16px;
-    height: 151px;
+    height: 100px;
+    font-size: 25px;
+    text-align: center;
 }
 
 .main-navigation {
@@ -59,8 +61,7 @@
 }
 
 .home-layout .main-navigation .mdl-navigation__link:hover {
-    background-color: #00BCD4;
-    color: #37474F;
+    background-color: #00605a;
 }
 
 .main-navigation .mdl-navigation__link .material-icons {
@@ -70,7 +71,7 @@
 }
 
 .custom-icon {
-    fill: #78909c;
+    fill: #FFFFFF;
 }
 
 .main-content {
