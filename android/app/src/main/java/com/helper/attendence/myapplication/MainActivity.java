@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     mEdit = (EditText) findViewById(R.id.CWID);
                     editor.putString("CWID", mEdit.getText().toString());
                     editor.putBoolean("deviceFlag", true); //set's boolean to True bc user has been seen before
-                    editor.commit(); // Very important
+                    editor.apply(); // Very important
                     displayInfo(); //displays this info on activity_main
                 }
             });
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             if(DEBUG) {
                 SharedPreferences.Editor editor = app_preferences.edit();
                 editor.putBoolean("deviceFlag", false);
-                editor.commit(); // Very important
+                editor.apply(); // Very important
             }
             TextView text = (TextView) findViewById(R.id.txtCount);
             text.setText("All good. Your info is stored :)\n");
@@ -71,19 +71,19 @@ public class MainActivity extends AppCompatActivity {
         String lName= app_preferences1.getString("lName", "null");
         String userName = app_preferences1.getString("userName", "null");
         String CWID = app_preferences1.getString("CWID", "null");
-        TextView text = (TextView) findViewById(R.id.txtCount);
-        text.setText("This app has been started " + counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
+//        TextView text = (TextView) findViewById(R.id.txtCount);
+//        text.setText("This app has been started " + counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
     }
 
     public void mainMenu() {
         FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
         qrBtn.setOnClickListener(new View.OnClickListener() {
-            //Open qr loibrary and go from there
+            //Open qr library and go from there
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Scan a QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//              Snackbar.make(view, "Scan a QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 TextView text = (TextView) findViewById(R.id.txtCount);
-                text.setText("Qr code has been picked boi!");
+                text.setText("This is the QR Code Section of the App.\n");
             }
         });
 
