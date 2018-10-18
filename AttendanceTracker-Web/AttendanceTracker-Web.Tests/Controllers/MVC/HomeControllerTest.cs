@@ -24,5 +24,31 @@ namespace AttendanceTracker_Web.Tests.Controllers.MVC
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void Classes()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.Classes() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Class()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.Class() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
     }
 }

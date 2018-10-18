@@ -178,7 +178,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Home\Class.css" />
+    <Content Include="Content\Home\Classes.css" />
     <Content Include="Content\Home\Home.css" />
+    <Content Include="Content\Home\Index.css" />
     <Content Include="Content\Login\Login.css" />
     <Content Include="Content\Material\font-family.css" />
     <Content Include="Content\Material\icon-family.css" />
@@ -192,6 +195,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Resources\qrcode.svg" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -217,6 +221,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Views\Home\Classes.cshtml" />
+    <Content Include="Views\Home\Class.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
