@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("CWID", mEdit.getText().toString());
                     editor.putBoolean("deviceFlag", true); //set's boolean to True bc user has been seen before
                     editor.apply(); // Very important
-                    displayInfo(); //displays this info on activity_main
+                    displayInfo(app_preferences); //displays this info on activity_main
                 }
             });
         } else {
@@ -55,24 +55,23 @@ public class MainActivity extends AppCompatActivity {
                 editor.putBoolean("deviceFlag", false);
                 editor.apply(); // Very important
             }
-            TextView text = (TextView) findViewById(R.id.txtCount);
-            text.setText("All good. Your info is stored :)\n");
+            displayInfo(app_preferences);
+//            TextView text = (TextView) findViewById(R.id.txtCount);
+//            text.setText("All good. Your info is stored :)\n");
         }
         mainMenu();
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
-    public void displayInfo() {
-        SharedPreferences app_preferences1 =
-                PreferenceManager.getDefaultSharedPreferences(this);
+    public void displayInfo(SharedPreferences app_preferences) {
         setContentView(R.layout.activity_main);
-        int counter = app_preferences1.getInt("counter", 0);
-        String fName = app_preferences1.getString("fName", "null");
-        String lName= app_preferences1.getString("lName", "null");
-        String userName = app_preferences1.getString("userName", "null");
-        String CWID = app_preferences1.getString("CWID", "null");
-//        TextView text = (TextView) findViewById(R.id.txtCount);
-//        text.setText("This app has been started " + counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
+        int counter = app_preferences.getInt("counter", 0);
+        String fName = app_preferences.getString("fName", "null");
+        String lName= app_preferences.getString("lName", "null");
+        String userName = app_preferences.getString("userName", "null");
+        String CWID = app_preferences.getString("CWID", "null");
+        TextView text = (TextView) findViewById(R.id.txtCount);
+        text.setText("This app has been started " + counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
     }
 
     public void mainMenu() {

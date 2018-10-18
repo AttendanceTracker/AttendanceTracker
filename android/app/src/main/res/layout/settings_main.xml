@@ -22,21 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="272dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.593"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/qrScanner-button"
         android:layout_width="wrap_content"
@@ -61,5 +46,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <Button
+        android:id="@+id/privacy_policy_button"
+        android:layout_width="385dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Privacy Policy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/licenses_button"
+        android:layout_width="385dp"
+        android:layout_height="wrap_content"
+        android:text="Licenses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacy_policy_button" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="385dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Edit Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
