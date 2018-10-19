@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.helper.attendence.myapplication">
     <application
         android:allowBackup="true"
@@ -7,7 +8,8 @@
         android:label="AttendanceTracker"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:label="AttendanceTracker"
@@ -18,9 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Settings"
             android:label="AttendanceTracker">
         </activity>
+
+        <activity
+            android:name=".PrivacyPolicy"
+            android:label="AttendanceTracker">
+        </activity>
+
     </application>
 </manifest>

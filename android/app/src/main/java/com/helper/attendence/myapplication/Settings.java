@@ -7,7 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class Settings extends Activity {
 
@@ -25,6 +28,7 @@ public class Settings extends Activity {
             }
         });
 
+/*
         FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
         qrBtn.setOnClickListener(new View.OnClickListener() {
             //Open qr loibrary and go from there
@@ -35,6 +39,17 @@ public class Settings extends Activity {
                 text.setText("Qr code has been picked boi!");
             }
         });
+*/
+
+        Button policyButton = (Button) findViewById(R.id.privacy_policy_button);
+        policyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Settings.this, PrivacyPolicy.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
