@@ -31,5 +31,15 @@
             android:label="AttendanceTracker">
         </activity>
 
+        <activity
+            android:name=".EditUserInformation"
+            android:label="AttendanceTracker">
+        </activity>
+
+        <activity
+            android:name=".License"
+            android:label="AttendanceTracker">
+        </activity>
+
     </application>
 </manifest>

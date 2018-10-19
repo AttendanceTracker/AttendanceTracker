@@ -19,8 +19,8 @@ public class Settings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_main);
 
-        FloatingActionButton settingsBtn = (FloatingActionButton) findViewById(R.id.backBtn);
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Settings.this, MainActivity.class);
@@ -28,6 +28,7 @@ public class Settings extends Activity {
             }
         });
 
+        //QR Button Commented out, unless we actually want it clickable from the settings menu.
 /*
         FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
         qrBtn.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +47,24 @@ public class Settings extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Settings.this, PrivacyPolicy.class);
+                startActivity(i);
+            }
+        });
+
+        Button editInformationButton = (Button) findViewById(R.id.edit_information_button);
+        editInformationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Settings.this, EditUserInformation.class);
+                startActivity(i);
+            }
+        });
+
+        Button licenseButton = (Button) findViewById(R.id.licenses_button);
+        licenseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Settings.this, License.class);
                 startActivity(i);
             }
         });
