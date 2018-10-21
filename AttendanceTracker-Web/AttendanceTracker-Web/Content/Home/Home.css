@@ -40,6 +40,10 @@
     text-align: center;
 }
 
+.mdl-layout__drawer-button {
+    color: #009688 !important;
+}
+
 .main-navigation {
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
