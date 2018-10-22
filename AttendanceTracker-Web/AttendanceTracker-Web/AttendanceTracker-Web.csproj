@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Home\Attendance.css" />
     <Content Include="Content\Home\Class.css" />
     <Content Include="Content\Home\Classes.css" />
     <Content Include="Content\Home\Home.css" />
@@ -208,6 +209,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\material.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Content\Home\QRCodes.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -224,6 +226,8 @@
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\Classes.cshtml" />
     <Content Include="Views\Home\Class.cshtml" />
+    <Content Include="Views\Home\Attendance.cshtml" />
+    <Content Include="Views\Home\QRCodes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

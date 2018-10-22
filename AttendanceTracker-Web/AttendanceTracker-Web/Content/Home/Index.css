@@ -15,3 +15,7 @@
 .graph-container {
     display: inline-block;
 }
+
+.chart-container {
+    padding: 20px;
+}

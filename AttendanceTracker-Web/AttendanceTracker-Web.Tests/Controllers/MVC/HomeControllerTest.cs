@@ -50,5 +50,31 @@ namespace AttendanceTracker_Web.Tests.Controllers.MVC
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void Attendance()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.Attendance() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void QRCodes()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.QRCodes() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
     }
 }

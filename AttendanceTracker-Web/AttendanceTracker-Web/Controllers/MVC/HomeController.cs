@@ -22,5 +22,15 @@ namespace AttendanceTracker_Web.Controllers.MVC
         {
             return View();
         }
+
+        public ActionResult Attendance()
+        {
+            return View();
+        }
+
+        public ActionResult QRCodes()
+        {
+            return View();
+        }
     }
 }
