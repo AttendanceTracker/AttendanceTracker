@@ -1,5 +1,28 @@
 ﻿@{
     ViewBag.PageName = "QR Codes";
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    string[] classes = { "Class 100 - 003", "Class 300 - 001", "Class 400 - 001" };
     <link href="~/Content/Home/QRCodes.css" rel="stylesheet" />
+}
+
+@foreach (var c in classes)
+{
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop">
+        <div class="mdl-card__title mdl-card--expand mdl-color--primary">
+            <h2 class="mdl-card__title-text mdl-color-text--white">@c</h2>
+        </div>
+        <div class="mdl-card__subtitle-text mdl-cell mdl-cell--12-col">
+            Starts Today, 12:00 PM
+        </div>
+        <div class="mdl-card__subtitle-text mdl-cell mdl-cell--12-col">
+            Expires Today, 1:50 PM
+        </div>
+        <div class="QR-container mdl-card__actions mdl-card--border">
+            <img class="mdl-color-text--accent mdl-cell mdl-cell--12-col" src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fsome%20guid&chs=180x180&choe=UTF-8&chld=L|2' alt=''>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a href="#" class="mdl-color-text--accent mdl-button mdl-js-button mdl-js-ripple-effect">Download</a>
+            <a href="#" class="mdl-color-text--accent mdl-button mdl-js-button mdl-js-ripple-effect">Edit</a>
+        </div>
+    </div>
 }
