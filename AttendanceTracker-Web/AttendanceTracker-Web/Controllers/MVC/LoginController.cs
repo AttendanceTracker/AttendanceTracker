@@ -13,5 +13,10 @@ namespace AttendanceTracker_Web.Controllers.MVC
         {
             return View();
         }
+
+        public ActionResult SignUp()
+        {
+            return View();
+        }
     }
 }

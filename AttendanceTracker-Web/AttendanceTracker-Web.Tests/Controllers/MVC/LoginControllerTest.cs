@@ -24,5 +24,18 @@ namespace AttendanceTracker_Web.Tests.Controllers.MVC
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void SignUp()
+        {
+            // Arrange
+            LoginController controller = new LoginController();
+
+            // Act
+            ViewResult result = controller.SignUp() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
     }
 }

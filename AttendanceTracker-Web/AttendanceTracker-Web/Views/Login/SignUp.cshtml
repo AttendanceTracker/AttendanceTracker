@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    <link href="~/Content/Login/SignUp.css" rel="stylesheet" />
+}
+
+    <div class="field-container">
+        <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="cwid-input" />
+            <label class="mdl-textfield__label" for="cwid-input">CWID</label>
+        </div>
+        <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="username-input" />
+            <label class="mdl-textfield__label" for="username-input">Email</label>
+        </div>
+        <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="password" id="password-input" />
+            <label class="mdl-textfield__label" for="password-input">Password</label>
+        </div>
+        <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="password" id="confirm-password-input" />
+            <label class="mdl-textfield__label" for="confirm-password-input">Confirm Password</label>
+        </div>
+    </div>
+<a href="/Home/Index" id="login-button" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Sign Up</a>
+<a href="/Login/Login" class="main-container-spacing mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Login</a>

@@ -184,6 +184,8 @@
     <Content Include="Content\Home\Home.css" />
     <Content Include="Content\Home\Index.css" />
     <Content Include="Content\Login\Login.css" />
+    <Content Include="Content\Login\SignUp.css" />
+    <Content Include="Content\Login\_LoginLayout.css" />
     <Content Include="Content\Material\font-family.css" />
     <Content Include="Content\Material\icon-family.css" />
     <Content Include="Content\Material\material.css" />
@@ -228,6 +230,8 @@
     <Content Include="Views\Home\Class.cshtml" />
     <Content Include="Views\Home\Attendance.cshtml" />
     <Content Include="Views\Home\QRCodes.cshtml" />
+    <Content Include="Views\Login\SignUp.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

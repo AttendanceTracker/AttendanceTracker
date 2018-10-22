@@ -1,25 +1,18 @@
 ﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
     <link href="~/Content/Login/Login.css" rel="stylesheet" />
 }
 
-<main class="mdl-layout__content mdl-color--grey-100">
-    <div class="mdl-grid">
-        <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-grid">
-            <div class="mdl-color--teal mdl-color-text--white" id="header">
-            AttendanceTracker
-            </div>
-            <div class="field-container">
-                <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="username-input" />
-                    <label class="mdl-textfield__label" for="username-input">Username</label>
-                </div>
-                <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="password" id="password-input" />
-                    <label class="mdl-textfield__label" for="password-input">Password</label>
-                </div>
-            </div>
-            <a href="/Home/Index" id="login-button" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Login</a>
-            <a href="#" class="main-container-spacing mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</a>
-        </div>
+
+<div class="field-container">
+    <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="username-input" />
+        <label class="mdl-textfield__label" for="username-input">Username</label>
     </div>
-</main>
+    <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" id="password-input" />
+        <label class="mdl-textfield__label" for="password-input">Password</label>
+    </div>
+</div>
+<a href="/Home/Index" id="login-button" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Login</a>
+<a href="/Login/SignUp" class="main-container-spacing mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</a>

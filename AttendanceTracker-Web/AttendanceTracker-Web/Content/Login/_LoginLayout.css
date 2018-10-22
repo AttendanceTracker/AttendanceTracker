@@ -1,0 +1,42 @@
+﻿.mdl-grid {
+    display: grid;
+    padding: unset;
+    width: 400px;
+    margin-top: 40px;
+    border-radius: 3px;
+}
+
+.mdl-cell {
+    margin: auto;
+    overflow: hidden;
+}
+
+.mdl-layout__content {
+    position: absolute !important;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+}
+
+.main-container-spacing {
+    margin: 10px auto;
+}
+
+#header {
+    height: 100px;
+    width: 100%;
+    line-height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+.field-container {
+    display: grid;
+    padding: 10px;
+}
+
+.login-field {
+    margin: auto;
+}
