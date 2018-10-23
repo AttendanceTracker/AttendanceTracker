@@ -41,5 +41,9 @@
             android:label="AttendanceTracker">
         </activity>
 
+        <activity
+            android:name=".info_logging"
+            android:label="AttendanceTracker">
+        </activity>
     </application>
 </manifest>

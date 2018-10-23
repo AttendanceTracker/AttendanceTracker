@@ -30,49 +30,30 @@ public class MainActivity extends AppCompatActivity {
 
         //Should show 4 boxes to enter the fname, lname, username, and CWID
         if (!newDeviceFlag) {
-            setContentView(R.layout.info_logging);
-            Button clickButton = (Button) findViewById(R.id.button2);
-            clickButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EditText mEdit = (EditText) findViewById(R.id.firstName);
-                    SharedPreferences.Editor editor = app_preferences.edit();
-                    editor.putString("fName", mEdit.getText().toString());
-                    mEdit = (EditText) findViewById(R.id.lastName);
-                    editor.putString("lName", mEdit.getText().toString());
-                    mEdit = (EditText) findViewById(R.id.username);
-                    editor.putString("userName", mEdit.getText().toString());
-                    mEdit = (EditText) findViewById(R.id.CWID);
-                    editor.putString("CWID", mEdit.getText().toString());
-                    editor.putBoolean("deviceFlag", true); //set's boolean to True bc user has been seen before
-                    editor.apply(); // Very important
-                    displayInfo(); //displays this info on activity_main
-                }
-            });
+            Intent i = new Intent(MainActivity.this, info_logging.class);
+            startActivity(i);
         } else {
-            if(DEBUG) {
-                SharedPreferences.Editor editor = app_preferences.edit();
-                editor.putBoolean("deviceFlag", false);
-                editor.apply(); // Very important
-            }
+//            if(DEBUG) {
+//                SharedPreferences.Editor editor = app_preferences.edit();
+//                editor.putBoolean("deviceFlag", false);
+//                editor.apply(); // Very important
+//            }
             TextView text = (TextView) findViewById(R.id.txtCount);
             text.setText("Welcome. Your info is stored.\n");
-            displayInfo();
+            displayInfo(app_preferences);
         }
-        displayInfo();
+        displayInfo(app_preferences);
         mainMenu();
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
-    public void displayInfo() {
-        SharedPreferences app_preferences1 =
-                PreferenceManager.getDefaultSharedPreferences(this);
+    public void displayInfo(SharedPreferences app_preferences) {
         setContentView(R.layout.activity_main);
-        int counter = app_preferences1.getInt("counter", 0);
-        String fName = app_preferences1.getString("fName", "null");
-        String lName= app_preferences1.getString("lName", "null");
-        String userName = app_preferences1.getString("userName", "null");
-        String CWID = app_preferences1.getString("CWID", "null");
+        int counter = app_preferences.getInt("counter", 0);
+        String fName = app_preferences.getString("fName", "null");
+        String lName= app_preferences.getString("lName", "null");
+        String userName = app_preferences.getString("userName", "null");
+        String CWID = app_preferences.getString("CWID", "null");
         TextView text = (TextView) findViewById(R.id.txtCount);
         text.setText("This app has been started " + ++counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
     }
@@ -121,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
     public static String getUniqueIMEIId(Context context) {
         return "not_found";

@@ -29,7 +29,7 @@ public class PrivacyPolicy extends Activity {
 
         TextView policy = (TextView) findViewById(R.id.txtPrivacy);
         policy.setMovementMethod(new ScrollingMovementMethod());
-        policy.setText("Privacy Policy\n" +
+        policy.setText("\n\n\nPrivacy Policy\n" +
                 "AttendanceTracker Group built the AttendanceTracker app as a Free app. This SERVICE is provided by AttendanceTracker Group at no cost and is intended for use as is.\n" +
                 "\n" +
                 "This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.\n" +
