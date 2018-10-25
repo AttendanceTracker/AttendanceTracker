@@ -47,24 +47,24 @@ public class MainActivity extends AppCompatActivity {
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
     public void displayInfo(SharedPreferences app_preferences) {
         setContentView(R.layout.activity_main);
-        int counter = app_preferences.getInt("counter", 0);
+
         String fName = app_preferences.getString("fName", "null");
         String lName= app_preferences.getString("lName", "null");
         String userName = app_preferences.getString("userName", "null");
         String CWID = app_preferences.getString("CWID", "null");
         TextView text = (TextView) findViewById(R.id.txtCount);
-        text.setText("This app has been started " + ++counter + " times." + "\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
+        text.setText("\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
     }
 
     public void mainMenu() {
+
          FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
        qrBtn.setOnClickListener(new View.OnClickListener() {
             //Open qr library and go from there
             @Override
             public void onClick(View view) {
-//              Snackbar.make(view, "Scan a QR code", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                TextView text = (TextView) findViewById(R.id.txtCount);
-                text.setText("This is the QR Code Section of the app.\n");
+              Intent i = new Intent(MainActivity.this, QRScanner.class);
+              startActivity(i);
             }
         });
 

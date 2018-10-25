@@ -45,5 +45,11 @@
             android:name=".InfoLogging"
             android:label="AttendanceTracker">
         </activity>
+
+        <activity
+            android:name=".QRScanner"
+            android:label="AttendanceTracker">
+        </activity>
+
     </application>
 </manifest>
