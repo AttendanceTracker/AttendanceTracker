@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".info_logging"
+            android:name=".InfoLogging"
             android:label="AttendanceTracker">
         </activity>
     </application>

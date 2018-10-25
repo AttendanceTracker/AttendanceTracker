@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Should show 4 boxes to enter the fname, lname, username, and CWID
         if (!newDeviceFlag) {
-            Intent i = new Intent(MainActivity.this, info_logging.class);
+            Intent i = new Intent(MainActivity.this, InfoLogging.class);
             startActivity(i);
         } else {
 //            if(DEBUG) {
