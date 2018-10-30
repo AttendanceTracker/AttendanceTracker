@@ -1,12 +1,18 @@
 package com.helper.attendence.myapplication;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,16 +20,36 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
+    private TelephonyManager mTelephonyManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Boolean DEBUG = false;  //Debug for toggling seen before or new user
+        //Retreiving device IMEI to make sure it's not a new device
+        String IMEINumber = "-1";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            } else {
+                IMEINumber = getDeviceImei();
+                Log.d("msg", "Final IMEI = " + IMEINumber);
+            }
+        }
+        else {
+            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
+        }
+        //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
+
         // Get the app's shared preferences
         final SharedPreferences app_preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
 
-        // Get the too see if logged in before
+        // See if device has been seen before based off of shared Pref. Can prob take this out
+        // after IMEI checks are finalized.
         Boolean newDeviceFlag = app_preferences.getBoolean("deviceFlag", false);
 
         //Should show 4 boxes to enter the fname, lname, username, and CWID
@@ -31,11 +57,6 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, InfoLogging.class);
             startActivity(i);
         } else {
-//            if(DEBUG) {
-//                SharedPreferences.Editor editor = app_preferences.edit();
-//                editor.putBoolean("deviceFlag", false);
-//                editor.apply(); // Very important
-//            }
             TextView text = (TextView) findViewById(R.id.txtCount);
             text.setText("Welcome. Your info is stored.\n");
             displayInfo(app_preferences);
@@ -80,6 +101,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_PHONE_STATE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getDeviceImei();
+        }
+    }
+
+        @SuppressLint("MissingPermission")
+    private String getDeviceImei() {
+        Log.d("msg", "MSG: About to find the telephony stoof");
+        mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceid = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            deviceid = mTelephonyManager.getImei();
+        }
+        Log.d("msg", "DeviceImei " + deviceid);
+        return deviceid;
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -99,10 +142,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public static String getUniqueIMEIId(Context context) {
-        return "not_found";
     }
 
 }
