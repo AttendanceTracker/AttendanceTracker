@@ -170,12 +170,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
+    <Compile Include="Controllers\API\BaseAPIController.cs" />
     <Compile Include="Controllers\API\DeviceController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAL\DataAccessLayer.cs" />
+    <Compile Include="Models\DAL\DataBaseHelper.cs" />
+    <Compile Include="Models\DAL\DataSource.cs" />
+    <Compile Include="Models\DAL\TestDataHelper.cs" />
+    <Compile Include="Models\DTOs\Web\RegisterDeviceRequest.cs" />
+    <Compile Include="Models\DTOs\Web\RegisterDeviceResponse.cs" />
+    <Compile Include="Models\Factories\WebDTOFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -236,7 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\DTOs\DB\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
