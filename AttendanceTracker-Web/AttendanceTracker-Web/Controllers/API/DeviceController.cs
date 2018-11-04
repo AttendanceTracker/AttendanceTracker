@@ -4,12 +4,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AttendanceTracker_Web.Models.DAL;
 using AttendanceTracker_Web.Models.DTOs.Web;
 
 namespace AttendanceTracker_Web.Controllers.API
 {
     public class DeviceController : BaseAPIController
     {
+        public DeviceController(): base()
+        {
+        }
+
+        public DeviceController(DALDataSource dataSource) : base(dataSource)
+        {
+        }
+
         [HttpGet]
         public IHttpActionResult Verify(string imei)
         {
@@ -17,7 +26,7 @@ namespace AttendanceTracker_Web.Controllers.API
             {
                 return Ok(imei);
             }
-            return Ok(0);
+            return Ok("0");
         }
 
         [HttpPost]

@@ -10,7 +10,7 @@ namespace AttendanceTracker_Web.Models.DAL
     {
         public override bool DoesDeviceExist(string imei)
         {
-            return false;
+            return true;
         }
 
         public override void AddDevice(string imei, long studentID)
