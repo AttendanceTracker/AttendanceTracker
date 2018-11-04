@@ -178,8 +178,10 @@
     <Compile Include="Models\DAL\DataBaseHelper.cs" />
     <Compile Include="Models\DAL\DataSource.cs" />
     <Compile Include="Models\DAL\TestDataHelper.cs" />
+    <Compile Include="Models\DTOs\DB\Device.cs" />
     <Compile Include="Models\DTOs\Web\RegisterDeviceRequest.cs" />
     <Compile Include="Models\DTOs\Web\RegisterDeviceResponse.cs" />
+    <Compile Include="Models\Factories\DataBaseDTOFactory.cs" />
     <Compile Include="Models\Factories\WebDTOFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -244,7 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DTOs\DB\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -7,7 +7,7 @@ namespace AttendanceTracker_Web.Models.DTOs.Web
 {
     public class RegisterDeviceResponse
     {
-        public string imei { get; set; }
-        public long studentID { get; set; }
+        public long IMEI { get; set; }
+        public long StudentID { get; set; }
     }
 }

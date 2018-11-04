@@ -90,8 +90,9 @@
   <ItemGroup>
     <Compile Include="Controllers\API\AccountControllerTest.cs" />
     <Compile Include="Controllers\API\DeviceControllerTest.cs" />
-    <Compile Include="Controllers\Models\DataBaseHelperTest.cs" />
-    <Compile Include="Controllers\Models\WebDTOFactoryTest.cs" />
+    <Compile Include="Controllers\Models\Factories\DataBaseDTOFactoryTest.cs" />
+    <Compile Include="Controllers\Models\DAL\DataBaseHelperTest.cs" />
+    <Compile Include="Controllers\Models\Factories\WebDTOFactoryTest.cs" />
     <Compile Include="Controllers\MVC\LoginControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\MVC\HomeControllerTest.cs" />

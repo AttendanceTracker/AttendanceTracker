@@ -23,8 +23,8 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
         [TestMethod]
         public void Verify()
         {
-            var imei = "1";
-            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<string>; ;
+            long imei = 1;
+            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<long>; ;
             
             Assert.AreEqual(response.Content, imei);
         }
@@ -32,14 +32,14 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
         [TestMethod]
         public void Register()
         {
-            var imei = "1";
+            long imei = 1;
             long studentID = 1;
 
             var requestDTO = webDTOFactory.RegisterDeviceRequest(imei, studentID);
             var response = deviceController.Register(requestDTO) as OkNegotiatedContentResult<RegisterDeviceResponse>;
 
-            Assert.AreEqual(response.Content.imei, imei);
-            Assert.AreEqual(response.Content.studentID, studentID);
+            Assert.AreEqual(response.Content.IMEI, imei);
+            Assert.AreEqual(response.Content.StudentID, studentID);
         }
     }
 }

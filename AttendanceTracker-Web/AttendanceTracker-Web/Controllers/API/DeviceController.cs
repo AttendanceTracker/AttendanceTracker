@@ -20,13 +20,13 @@ namespace AttendanceTracker_Web.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult Verify(string imei)
+        public IHttpActionResult Verify(long imei)
         {
             if (dal.DoesDeviceExist(imei))
             {
                 return Ok(imei);
             }
-            return Ok("0");
+            return Ok(0);
         }
 
         [HttpPost]
@@ -34,8 +34,8 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                dal.AddDevice(request.imei, request.studentID);
-                var response = factory.RegisterDeviceResponse(request.imei, request.studentID);
+                dal.AddDevice(request.IMEI, request.StudentID);
+                var response = factory.RegisterDeviceResponse(request.IMEI, request.StudentID);
                 return Ok(response);
             }
             catch (Exception)

@@ -28,12 +28,12 @@ namespace AttendanceTracker_Web.Models.DAL
             return null;
         }
 
-        public bool DoesDeviceExist(string imei)
+        public bool DoesDeviceExist(long imei)
         {
             return Source.DoesDeviceExist(imei);
         }
 
-        public void AddDevice(string imei, long studentID)
+        public void AddDevice(long imei, long studentID)
         {
             Source.AddDevice(imei, studentID);
         }

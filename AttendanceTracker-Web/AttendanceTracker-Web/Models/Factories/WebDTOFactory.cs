@@ -8,19 +8,19 @@ namespace AttendanceTracker_Web.Models.Factories
 {
     public class WebDTOFactory
     {
-        public RegisterDeviceRequest RegisterDeviceRequest(string imei, long studentID)
+        public RegisterDeviceRequest RegisterDeviceRequest(long imei, long studentID)
         {
             var dto = new RegisterDeviceRequest();
-            dto.imei = imei;
-            dto.studentID = studentID;
+            dto.IMEI = imei;
+            dto.StudentID = studentID;
             return dto;
         }
 
-        public RegisterDeviceResponse RegisterDeviceResponse(string imei, long studentID)
+        public RegisterDeviceResponse RegisterDeviceResponse(long imei, long studentID)
         {
             var dto = new RegisterDeviceResponse();
-            dto.imei = imei;
-            dto.studentID = studentID;
+            dto.IMEI = imei;
+            dto.StudentID = studentID;
             return dto;
         }
     }
