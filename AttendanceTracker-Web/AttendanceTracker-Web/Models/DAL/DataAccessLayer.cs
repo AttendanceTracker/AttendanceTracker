@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AttendanceTracker_Web.Models.DTOs.DB;
 
 namespace AttendanceTracker_Web.Models.DAL
 {
@@ -33,9 +34,9 @@ namespace AttendanceTracker_Web.Models.DAL
             return Source.DoesDeviceExist(imei);
         }
 
-        public void AddDevice(long imei, long studentID)
+        public Device AddDevice(long imei, long studentID)
         {
-            Source.AddDevice(imei, studentID);
+            return Source.AddDevice(imei, studentID);
         }
     }
 }

@@ -34,8 +34,8 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                dal.AddDevice(request.IMEI, request.StudentID);
-                var response = factory.RegisterDeviceResponse(request.IMEI, request.StudentID);
+                var device = dal.AddDevice(request.IMEI, request.StudentID);
+                var response = factory.RegisterDeviceResponse(device.DeviceID, device.StudentID);
                 return Ok(response);
             }
             catch (Exception)
