@@ -27,7 +27,8 @@ namespace AttendanceTracker_Web.Controllers.API
             {
                 return Ok(imei);
             }
-            return Ok(0);
+            long response = 0;
+            return Ok(response);
         }
 
         [HttpPost]

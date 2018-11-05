@@ -24,9 +24,19 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
         public void Verify()
         {
             long imei = 1;
-            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<long>; ;
+            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<long>;
             
             Assert.AreEqual(response.Content, imei);
+        }
+
+        [TestMethod]
+        public void VerifyNoDevice()
+        {
+            long imei = 2;
+            long expected = 0;
+            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<long>;
+
+            Assert.AreEqual(expected, response.Content);
         }
 
         [TestMethod]
