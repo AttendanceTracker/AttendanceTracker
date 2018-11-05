@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Controllers\API\AccountControllerTest.cs" />
     <Compile Include="Controllers\API\DeviceControllerTest.cs" />
+    <Compile Include="Controllers\API\StudentControllerTest.cs" />
     <Compile Include="Controllers\Models\DAL\DataAccessLayerTest.cs" />
     <Compile Include="Controllers\Models\Factories\DataBaseDTOFactoryTest.cs" />
     <Compile Include="Controllers\Models\DAL\DataBaseHelperTest.cs" />
