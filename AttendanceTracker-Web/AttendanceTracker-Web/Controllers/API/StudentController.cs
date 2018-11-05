@@ -21,7 +21,7 @@ namespace AttendanceTracker_Web.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult Register(RegisterStudentRequest request)
+        public IHttpActionResult Register([FromBody] RegisterStudentRequest request)
         {
             try
             {
