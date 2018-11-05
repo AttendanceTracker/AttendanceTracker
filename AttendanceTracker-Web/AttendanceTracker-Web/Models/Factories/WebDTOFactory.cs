@@ -23,5 +23,25 @@ namespace AttendanceTracker_Web.Models.Factories
             dto.StudentID = studentID;
             return dto;
         }
+
+        public RegisterStudentRequest RegisterStudentRequest(long cwid, string firstName, string lastName, string email)
+        {
+            var dto = new RegisterStudentRequest();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Email = email;
+            return dto;
+        }
+
+        public RegisterStudentResponse RegisterStudentResponse(long cwid, string firstName, string lastName, string email)
+        {
+            var dto = new RegisterDeviceResponse();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Email = email;
+            return dto;
+        }
     }
 }

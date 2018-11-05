@@ -169,6 +169,7 @@
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\BaseAPIController.cs" />
     <Compile Include="Controllers\API\DeviceController.cs" />
+    <Compile Include="Controllers\API\StudentController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,8 +180,11 @@
     <Compile Include="Models\DAL\DataSource.cs" />
     <Compile Include="Models\DAL\TestDataHelper.cs" />
     <Compile Include="Models\DTOs\DB\Device.cs" />
+    <Compile Include="Models\DTOs\DB\Student.cs" />
     <Compile Include="Models\DTOs\Web\RegisterDeviceRequest.cs" />
     <Compile Include="Models\DTOs\Web\RegisterDeviceResponse.cs" />
+    <Compile Include="Models\DTOs\Web\RegisterStudentRequest.cs" />
+    <Compile Include="Models\DTOs\Web\RegisterStudentResponse.cs" />
     <Compile Include="Models\Factories\DataBaseDTOFactory.cs" />
     <Compile Include="Models\Factories\WebDTOFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
