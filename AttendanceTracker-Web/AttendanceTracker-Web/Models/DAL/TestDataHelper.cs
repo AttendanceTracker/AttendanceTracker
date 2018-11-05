@@ -21,12 +21,16 @@ namespace AttendanceTracker_Web.Models.DAL
             return true;
         }
 
-        public override Device AddDevice(long imei, long studentID)
+        public override Device AddDevice(Device device)
         {
-            var deviceID = imei;
-            var CWID = studentID;
-            var device = dbDTOFactory.Device(imei, studentID);
-            return device;
+            var resultDevice = device;
+            return resultDevice;
+        }
+
+        public override Student AddStudent(Student student)
+        {
+            var resultStudent = student;
+            return resultStudent;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AttendanceTracker_Web.Models.DAL;
 using AttendanceTracker_Web.Models.DTOs.DB;
+using AttendanceTracker_Web.Models.Factories;
 
 namespace AttendanceTracker_Web.Tests.Controllers.Models.DAL
 {
@@ -9,11 +10,13 @@ namespace AttendanceTracker_Web.Tests.Controllers.Models.DAL
     public class DataAccessLayerTest
     {
         DataAccessLayer dal;
+        DataBaseDTOFactory dbDTOFactory;
 
         [TestInitialize]
         public void Setup()
         {
             dal = new DataAccessLayer(DALDataSource.Test);
+            dbDTOFactory = new DataBaseDTOFactory();
         }
 
         [TestMethod]
@@ -29,9 +32,27 @@ namespace AttendanceTracker_Web.Tests.Controllers.Models.DAL
         {
             long imei = 1;
             long studentID = 1;
-            var dto = dal.AddDevice(imei, studentID);
+            var device = dbDTOFactory.Device(imei, studentID);
+            var dto = dal.AddDevice(device);
             Assert.AreEqual(imei, dto.DeviceID);
             Assert.AreEqual(studentID, dto.StudentID);
+        }
+
+        [TestMethod]
+        public void AddStudent()
+        {
+            long cwid = 1;
+            string firstName = "Jane";
+            string lastName = "Doe";
+            string email = "jdoe@a.com";
+            var student = dbDTOFactory.Student(cwid, firstName, lastName, email);
+
+            var dto = dal.AddStudent(student);
+
+            Assert.AreEqual(cwid, dto.CWID);
+            Assert.AreEqual(firstName, dto.FirstName);
+            Assert.AreEqual(lastName, dto.LastName);
+            Assert.AreEqual(email, dto.Email);
         }
     }
 }

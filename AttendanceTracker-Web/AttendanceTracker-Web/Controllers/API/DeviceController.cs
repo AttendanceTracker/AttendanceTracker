@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using AttendanceTracker_Web.Models.DAL;
 using AttendanceTracker_Web.Models.DTOs.Web;
+using AttendanceTracker_Web.Models.Factories;
 
 namespace AttendanceTracker_Web.Controllers.API
 {
@@ -34,8 +35,9 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var device = dal.AddDevice(request.IMEI, request.StudentID);
-                var response = factory.RegisterDeviceResponse(device.DeviceID, device.StudentID);
+                var device = dbDTOFactory.Device(request.IMEI, request.StudentID);
+                var resultDevice = dal.AddDevice(device);
+                var response = webDTOFactory.RegisterDeviceResponse(resultDevice.DeviceID, resultDevice.StudentID);
                 return Ok(response);
             }
             catch (Exception)

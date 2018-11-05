@@ -34,9 +34,14 @@ namespace AttendanceTracker_Web.Models.DAL
             return Source.DoesDeviceExist(imei);
         }
 
-        public Device AddDevice(long imei, long studentID)
+        public Device AddDevice(Device device)
         {
-            return Source.AddDevice(imei, studentID);
+            return Source.AddDevice(device);
+        }
+
+        public Student AddStudent(Student student)
+        {
+            return Source.AddStudent(student);
         }
     }
 }

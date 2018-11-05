@@ -36,22 +36,43 @@ namespace AttendanceTracker_Web.Models.DAL
             return results.Rows.Count > 0;
         }
 
-        public override Device AddDevice(long imei, long studentID)
+        public override Device AddDevice(Device device)
         {
-            var query = string.Format("exec [attenda1_db].[Devices_AddDevice] {0}, {1};", imei, studentID);
+            var query = string.Format("exec [attenda1_db].[Devices_AddDevice] {0}, {1};", device.DeviceID, device.StudentID);
             ExecuteQuery(query);
 
-            var results = GetDevice(imei);
+            var results = GetDevice(device.DeviceID);
             var deviceData = results.Rows[0];
             var resultIMEI = (long)deviceData[0];
             var resultStudentID = (long)deviceData[1];
-            var device = dbDTOFactory.Device(resultIMEI, resultStudentID);
-            return device;
+            var resultDevice = dbDTOFactory.Device(resultIMEI, resultStudentID);
+            return resultDevice;
         }
 
         private DataTable GetDevice(long imei)
         {
             var query = string.Format("exec [attenda1_db].[Devices_GetDevice] {0};", imei);
+            var results = ExecuteQuery(query);
+            return results;
+        }
+
+        public override Student AddStudent(Student student)
+        {
+            var query = string.Format("exec [attenda1_dbdev].[Students_AddStudent] {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
+            ExecuteQuery(query);
+
+            var results = GetStudent(student.CWID);
+            var studentData = results.Rows[0];
+            var cwid = (long)studentData[0];
+            var firstName = (string)studentData[1];
+            var lastName = (string)studentData[2];
+            var email = (string)studentData[3];
+            var resultStudent = dbDTOFactory.Student(cwid, firstName, lastName, email);
+            return resultStudent;
+        }
+        private DataTable GetStudent(long cwid)
+        {
+            var query = string.Format("exec [attenda1_dbdev].[Students_GetStudent] {0};", cwid);
             var results = ExecuteQuery(query);
             return results;
         }
@@ -68,7 +89,7 @@ namespace AttendanceTracker_Web.Models.DAL
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand(query, connection))
             {
-                foreach(var param in parameters)
+                foreach (var param in parameters)
                 {
                     command.Parameters.AddWithValue(param.Key, param.Value);
                 }

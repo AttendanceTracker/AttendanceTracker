@@ -28,5 +28,21 @@ namespace AttendanceTracker_Web.Tests.Controllers.Models.Factories
             Assert.AreEqual(expectedDTO.DeviceID, dto.DeviceID);
             Assert.AreEqual(expectedDTO.StudentID, dto.StudentID);
         }
+
+        [TestMethod]
+        public void Student()
+        {
+            long cwid = 1;
+            string firstName = "Jane";
+            string lastName = "Doe";
+            string email = "jdoe@a.com";
+
+            var dto = dbDTOFactory.Student(cwid, firstName, lastName, email);
+
+            Assert.AreEqual(cwid, dto.CWID);
+            Assert.AreEqual(firstName, dto.FirstName);
+            Assert.AreEqual(lastName, dto.LastName);
+            Assert.AreEqual(email, dto.Email);
+        }
     }
 }

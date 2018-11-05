@@ -21,9 +21,19 @@ namespace AttendanceTracker_Web.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult Register()
+        public IHttpActionResult Register(RegisterStudentRequest request)
         {
-            return Ok();
+            try
+            {
+                var student = dbDTOFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
+                var resultStudent = dal.AddStudent(student);
+                var response = webDTOFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
+                return Ok(response);
+            }
+            catch(Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

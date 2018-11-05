@@ -36,7 +36,7 @@ namespace AttendanceTracker_Web.Models.Factories
 
         public RegisterStudentResponse RegisterStudentResponse(long cwid, string firstName, string lastName, string email)
         {
-            var dto = new RegisterDeviceResponse();
+            var dto = new RegisterStudentResponse();
             dto.CWID = cwid;
             dto.FirstName = firstName;
             dto.LastName = lastName;

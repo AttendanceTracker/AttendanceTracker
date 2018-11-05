@@ -12,18 +12,24 @@ namespace AttendanceTracker_Web.Controllers.API
     public class BaseAPIController : ApiController
     {
         public DataAccessLayer dal;
-        public WebDTOFactory factory;
+        public WebDTOFactory webDTOFactory;
+        public DataBaseDTOFactory dbDTOFactory;
 
         public BaseAPIController()
         {
-            dal = new DataAccessLayer(DALDataSource.DB);
-            factory = new WebDTOFactory();
+            init(DALDataSource.DB);
         }
 
         public BaseAPIController(DALDataSource dataSource)
         {
+            init(dataSource);
+        }
+
+        private void init(DALDataSource dataSource)
+        {
             dal = new DataAccessLayer(dataSource);
-            factory = new WebDTOFactory();
+            webDTOFactory = new WebDTOFactory();
+            dbDTOFactory = new DataBaseDTOFactory();
         }
     }
 }

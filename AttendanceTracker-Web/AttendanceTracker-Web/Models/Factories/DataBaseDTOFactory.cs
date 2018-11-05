@@ -15,5 +15,15 @@ namespace AttendanceTracker_Web.Models.Factories
             dto.StudentID = studentID;
             return dto;
         }
+
+        public Student Student(long cwid, string firstName, string lastName, string email)
+        {
+            var dto = new Student();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Email = email;
+            return dto;
+        }
     }
 }

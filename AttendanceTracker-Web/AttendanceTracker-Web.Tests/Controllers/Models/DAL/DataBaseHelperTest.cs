@@ -32,12 +32,29 @@ namespace AttendanceTracker_Web.Tests.Controllers.Models.DAL
         {
             long deviceID = 5;
             long studentID = 5;
-            var expectedDTO = dbDTOFactory.Device(deviceID, studentID);
+            var device = dbDTOFactory.Device(deviceID, studentID);
 
-            var dto = dbHelper.AddDevice(deviceID, studentID);
+            var dto = dbHelper.AddDevice(device);
 
-            Assert.AreEqual(expectedDTO.DeviceID, dto.DeviceID);
-            Assert.AreEqual(expectedDTO.StudentID, dto.StudentID);
+            Assert.AreEqual(device.DeviceID, dto.DeviceID);
+            Assert.AreEqual(device.StudentID, dto.StudentID);
+        }
+
+        [TestMethod]
+        public void AddStudent()
+        {
+            long cwid = 8;
+            string firstName = "Grace";
+            string lastName = "Hopper";
+            string email = "ghoper@asdf.com";
+            var student = dbDTOFactory.Student(cwid, firstName, lastName, email);
+
+            var dto = dbHelper.AddStudent(student);
+
+            Assert.AreEqual(cwid, dto.CWID);
+            Assert.AreEqual(firstName, dto.FirstName);
+            Assert.AreEqual(lastName, dto.LastName);
+            Assert.AreEqual(email, dto.Email);
         }
     }
 }
