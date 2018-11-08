@@ -36,8 +36,9 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override Device AddDevice(Device device)
         {
-            var query = string.Format("exec Devices_AddDevice {0}, {1};", device.DeviceID, device.StudentID);
-            ExecuteQuery(query);
+            var queryString = string.Format("exec Devices_AddDevice {0}, {1};", device.DeviceID, device.StudentID);
+            var query = new Query(queryString, connectionString);
+            query.ExecuteQuery();
 
             var results = GetDevice(device.DeviceID);
             var deviceData = results.Rows[0];
@@ -49,15 +50,17 @@ namespace AttendanceTracker_Web.Models.DB
 
         private DataTable GetDevice(long imei)
         {
-            var query = string.Format("exec Devices_GetDevice {0};", imei);
-            var results = ExecuteQuery(query);
+            var queryString = string.Format("exec Devices_GetDevice {0};", imei);
+            var query = new Query(queryString, connectionString);
+            var results = query.ExecuteQuery();
             return results;
         }
 
         public override Student AddStudent(Student student)
         {
-            var query = string.Format("exec Students_AddStudent {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
-            ExecuteQuery(query);
+            var queryString = string.Format("exec Students_AddStudent {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
+            var query = new Query(queryString, connectionString);
+            query.ExecuteQuery();
 
             var results = GetStudent(student.CWID);
             var studentData = results.Rows[0];
@@ -68,36 +71,13 @@ namespace AttendanceTracker_Web.Models.DB
             var resultStudent = dbDTOFactory.Student(cwid, firstName, lastName, email);
             return resultStudent;
         }
+
         private DataTable GetStudent(long cwid)
         {
-            var query = string.Format("exec Students_GetStudent {0};", cwid);
-            var results = ExecuteQuery(query);
+            var queryString = string.Format("exec Students_GetStudent {0};", cwid);
+            var query = new Query(queryString, connectionString);
+            var results = query.ExecuteQuery();
             return results;
-        }
-
-        private DataTable ExecuteQuery(string query)
-        {
-            var emptyDictionary = new Dictionary<string, object>();
-            return ExecuteQuery(query, emptyDictionary);
-        }
-
-        private DataTable ExecuteQuery(string query, Dictionary<string, object> parameters)
-        {
-            var resultTable = new DataTable();
-            using (var connection = new SqlConnection(connectionString))
-            using (var command = new SqlCommand(query, connection))
-            {
-                foreach (var param in parameters)
-                {
-                    command.Parameters.AddWithValue(param.Key, param.Value);
-                }
-
-                connection.Open();
-                var reader = command.ExecuteReader();
-                resultTable.Load(reader);
-                reader.Close();
-            }
-            return resultTable;
         }
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
     <Compile Include="Models\DB\DAL\DataBaseHelper.cs" />
     <Compile Include="Models\DB\DAL\DataSource.cs" />
+    <Compile Include="Models\DB\DAL\Query.cs" />
     <Compile Include="Models\DB\DAL\TestDataHelper.cs" />
     <Compile Include="Models\DB\DTOs\Device.cs" />
     <Compile Include="Models\DB\DTOs\Student.cs" />
