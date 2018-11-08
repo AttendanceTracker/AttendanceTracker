@@ -8,13 +8,13 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
     public class DataBaseHelperTest
     {
         DataBaseHelper dbHelper;
-        DataBaseDTOFactory dbDTOFactory;
+        DataBaseFactory dbDTOFactory;
 
         [TestInitialize]
         public void Setup()
         {
             dbHelper = new DataBaseHelper();
-            dbDTOFactory = new DataBaseDTOFactory();
+            dbDTOFactory = new DataBaseFactory();
         }
 
         [TestMethod]

@@ -12,12 +12,12 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
     public class DeviceControllerTest
     {
         DeviceController deviceController;
-        WebDTOFactory webDTOFactory;
+        WebFactory webFactory;
 
         [TestInitialize]
         public void Setup() {
             deviceController = new DeviceController(DALDataSource.Test);
-            webDTOFactory = new WebDTOFactory();
+            webFactory = new WebFactory();
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
             long imei = 1;
             long studentID = 1;
 
-            var requestDTO = webDTOFactory.RegisterDeviceRequest(imei, studentID);
+            var requestDTO = webFactory.RegisterDeviceRequest(imei, studentID);
             var response = deviceController.Register(requestDTO) as OkNegotiatedContentResult<RegisterDeviceResponse>;
 
             Assert.AreEqual(response.Content.IMEI, imei);

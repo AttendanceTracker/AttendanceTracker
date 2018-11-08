@@ -7,12 +7,12 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
     [TestClass]
     public class DataBaseDTOFactoryTest
     {
-        DataBaseDTOFactory dbDTOFactory;
+        DataBaseFactory dbDTOFactory;
 
         [TestInitialize]
         public void Setup()
         {
-            dbDTOFactory = new DataBaseDTOFactory();
+            dbDTOFactory = new DataBaseFactory();
         }
 
         [TestMethod]

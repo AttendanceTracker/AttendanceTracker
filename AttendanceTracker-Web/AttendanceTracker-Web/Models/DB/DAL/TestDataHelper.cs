@@ -7,11 +7,11 @@ namespace AttendanceTracker_Web.Models.DB
 {
     public class TestDataHelper : DataSource
     {
-        DataBaseDTOFactory dbDTOFactory;
+        DataBaseFactory dbDTOFactory;
 
         public TestDataHelper()
         {
-            dbDTOFactory = new DataBaseDTOFactory();
+            dbDTOFactory = new DataBaseFactory();
         }
 
         public override bool DoesDeviceExist(long imei)

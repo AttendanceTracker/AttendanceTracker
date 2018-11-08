@@ -26,7 +26,7 @@ namespace AttendanceTracker_Web.Controllers.API
             {
                 var student = dbDTOFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
                 var resultStudent = dal.AddStudent(student);
-                var response = webDTOFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
+                var response = webFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
             }
             catch(Exception)

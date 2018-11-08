@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AttendanceTracker_Web.Models.Web
 {
-    public class WebDTOFactory
+    public class WebFactory
     {
         public RegisterDeviceRequest RegisterDeviceRequest(long imei, long studentID)
         {

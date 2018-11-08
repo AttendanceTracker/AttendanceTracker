@@ -185,8 +185,12 @@
     <Compile Include="Models\Web\DTOs\RegisterDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentRequest.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentResponse.cs" />
-    <Compile Include="Models\DB\DataBaseDTOFactory.cs" />
-    <Compile Include="Models\Web\WebDTOFactory.cs" />
+    <Compile Include="Models\DB\Factories\DataBaseFactory.cs" />
+    <Compile Include="Models\Web\DTOs\WebDevice.cs" />
+    <Compile Include="Models\Web\DTOs\WebStudent.cs" />
+    <Compile Include="Models\Web\Factories\WebDeviceFactory.cs" />
+    <Compile Include="Models\Web\Factories\WebFactory.cs" />
+    <Compile Include="Models\Web\Factories\WebStudentFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

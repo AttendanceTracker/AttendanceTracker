@@ -8,13 +8,13 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
     public class DataAccessLayerTest
     {
         DataAccessLayer dal;
-        DataBaseDTOFactory dbDTOFactory;
+        DataBaseFactory dbDTOFactory;
 
         [TestInitialize]
         public void Setup()
         {
             dal = new DataAccessLayer(DALDataSource.Test);
-            dbDTOFactory = new DataBaseDTOFactory();
+            dbDTOFactory = new DataBaseFactory();
         }
 
         [TestMethod]

@@ -10,7 +10,7 @@ namespace AttendanceTracker_Web.Models.DB
     public class DataBaseHelper : DataSource
     {
         string connectionString;
-        DataBaseDTOFactory dbDTOFactory;
+        DataBaseFactory dbDTOFactory;
 
         public DataBaseHelper()
         {
@@ -25,7 +25,7 @@ namespace AttendanceTracker_Web.Models.DB
         private void Init(string connectionSource)
         {
             connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[connectionSource].ConnectionString;
-            dbDTOFactory = new DataBaseDTOFactory();
+            dbDTOFactory = new DataBaseFactory();
         }
 
         public override bool DoesDeviceExist(long imei)

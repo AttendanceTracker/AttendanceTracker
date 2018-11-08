@@ -7,12 +7,12 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
     [TestClass]
     public class WebDTOFactoryTest
     {
-        WebDTOFactory factory;
+        WebFactory webFactory;
 
         [TestInitialize]
         public void Setup()
         {
-            factory = new WebDTOFactory();
+            webFactory = new WebFactory();
         }
 
         [TestMethod]
@@ -20,14 +20,11 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
         {
             long imei = 1;
             long studentID = 1;
-            var expectedDTO = new RegisterDeviceRequest();
-            expectedDTO.IMEI = imei;
-            expectedDTO.StudentID = 1;
 
-            var actualDTO = factory.RegisterDeviceRequest(imei, studentID);
+            var actualDTO = webFactory.RegisterDeviceRequest(imei, studentID);
 
-            Assert.AreEqual(expectedDTO.IMEI, actualDTO.IMEI);
-            Assert.AreEqual(expectedDTO.StudentID, actualDTO.StudentID);
+            Assert.AreEqual(imei, actualDTO.IMEI);
+            Assert.AreEqual(studentID, actualDTO.StudentID);
         }
 
         [TestMethod]
@@ -35,14 +32,11 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
         {
             long imei = 1;
             long studentID = 1;
-            var expectedDTO = new RegisterDeviceResponse();
-            expectedDTO.IMEI = imei;
-            expectedDTO.StudentID = 1;
 
-            var actualDTO = factory.RegisterDeviceResponse(imei, studentID);
+            var actualDTO = webFactory.RegisterDeviceResponse(imei, studentID);
 
-            Assert.AreEqual(expectedDTO.IMEI, actualDTO.IMEI);
-            Assert.AreEqual(expectedDTO.StudentID, actualDTO.StudentID);
+            Assert.AreEqual(imei, actualDTO.IMEI);
+            Assert.AreEqual(studentID, actualDTO.StudentID);
         }
 
         [TestMethod]
@@ -53,7 +47,7 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var lastName = "Doe";
             var email = "jdoe@a.com";
 
-            var dto = factory.RegisterStudentRequest(cwid, firstName, lastName, email);
+            var dto = webFactory.RegisterStudentRequest(cwid, firstName, lastName, email);
 
             Assert.AreEqual(cwid, dto.CWID);
             Assert.AreEqual(firstName, dto.FirstName);
@@ -69,7 +63,7 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var lastName = "Doe";
             var email = "jdoe@a.com";
 
-            var dto = factory.RegisterStudentResponse(cwid, firstName, lastName, email);
+            var dto = webFactory.RegisterStudentResponse(cwid, firstName, lastName, email);
 
             Assert.AreEqual(cwid, dto.CWID);
             Assert.AreEqual(firstName, dto.FirstName);

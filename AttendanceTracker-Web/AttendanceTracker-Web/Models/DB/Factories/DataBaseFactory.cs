@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AttendanceTracker_Web.Models.DB
 {
-    public class DataBaseDTOFactory
+    public class DataBaseFactory
     {
         public Device Device(long deviceID, long studentID)
         {

@@ -11,13 +11,13 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
     public class StudentControllerTest
     {
         StudentController studentController;
-        WebDTOFactory webDTOFactory;
+        WebFactory webFactory;
 
         [TestInitialize]
         public void Setup()
         {
             studentController = new StudentController(DALDataSource.Test);
-            webDTOFactory = new WebDTOFactory();
+            webFactory = new WebFactory();
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
             string firstName = "Jane";
             string lastName = "Doe";
             string email = "jdoe@a.com";
-            var student = webDTOFactory.RegisterStudentRequest(cwid, firstName, lastName, email);
+            var student = webFactory.RegisterStudentRequest(cwid, firstName, lastName, email);
 
             var response = studentController.Register(student) as OkNegotiatedContentResult<RegisterStudentResponse>;
 
