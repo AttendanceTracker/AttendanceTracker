@@ -16,7 +16,8 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
 
         [TestInitialize]
         public void Setup() {
-            deviceController = new DeviceController(DALDataSource.Test);
+            DataAccessLayer dal = new DataAccessLayer(DALDataSource.Test);
+            deviceController = new DeviceController(dal);
             webFactory = new WebFactory();
         }
 

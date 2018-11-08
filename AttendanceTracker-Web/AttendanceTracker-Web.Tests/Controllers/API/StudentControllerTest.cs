@@ -16,7 +16,8 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
         [TestInitialize]
         public void Setup()
         {
-            studentController = new StudentController(DALDataSource.Test);
+            DataAccessLayer dal = new DataAccessLayer(DALDataSource.Test);
+            studentController = new StudentController(dal);
             webFactory = new WebFactory();
         }
 

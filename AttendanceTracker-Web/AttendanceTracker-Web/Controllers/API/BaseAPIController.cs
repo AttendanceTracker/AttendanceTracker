@@ -17,17 +17,18 @@ namespace AttendanceTracker_Web.Controllers.API
 
         public BaseAPIController()
         {
-            init(DALDataSource.DB);
+            dal = new DataAccessLayer(DALDataSource.DB);
+            SetupFactories();
         }
 
-        public BaseAPIController(DALDataSource dataSource)
+        public BaseAPIController(DataAccessLayer dal)
         {
-            init(dataSource);
+            this.dal = dal;
+            SetupFactories();
         }
 
-        private void init(DALDataSource dataSource)
+        private void SetupFactories()
         {
-            dal = new DataAccessLayer(dataSource);
             webFactory = new WebFactory();
             dbFactory = new DataBaseFactory();
         }

@@ -15,7 +15,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
         }
 
-        public DeviceController(DALDataSource dataSource) : base(dataSource)
+        public DeviceController(DataAccessLayer dal) : base(dal)
         {
         }
 
