@@ -20,14 +20,18 @@ namespace AttendanceTracker_Web.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult Verify(long imei)
+        public IHttpActionResult Get(long imei)
         {
-            if (dal.DoesDeviceExist(imei))
+            try
             {
-                return Ok(imei);
+                var device = dal.GetDevice(imei);
+                var responseDevice = webFactory.GetDeviceResponse(device.DeviceID, device.StudentID);
+                return Ok(responseDevice);
             }
-            long response = 0;
-            return Ok(response);
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -35,9 +39,25 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var device = dbDTOFactory.Device(request.IMEI, request.StudentID);
+                var device = dbFactory.Device(request.IMEI, request.StudentID);
                 var resultDevice = dal.AddDevice(device);
                 var response = webFactory.RegisterDeviceResponse(resultDevice.DeviceID, resultDevice.StudentID);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Update([FromBody] UpdateDeviceRequest request)
+        {
+            try
+            {
+                var device = dbFactory.Device(request.IMEI, request.StudentID);
+                var resultDevice = dal.UpdateDevice(device);
+                var response = webFactory.UpdateDeviceResponse(resultDevice.DeviceID, resultDevice.StudentID);
                 return Ok(response);
             }
             catch (Exception)

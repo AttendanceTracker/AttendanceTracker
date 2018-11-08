@@ -182,16 +182,20 @@
     <Compile Include="Models\DB\DAL\TestDataHelper.cs" />
     <Compile Include="Models\DB\DTOs\Device.cs" />
     <Compile Include="Models\DB\DTOs\Student.cs" />
+    <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
+    <Compile Include="Models\Web\DTOs\GetStudentResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentRequest.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentResponse.cs" />
     <Compile Include="Models\DB\Factories\DataBaseFactory.cs" />
+    <Compile Include="Models\Web\DTOs\UpdateDeviceRequest.cs" />
+    <Compile Include="Models\Web\DTOs\UpdateDeviceResponse.cs" />
+    <Compile Include="Models\Web\DTOs\UpdateStudentRequest.cs" />
+    <Compile Include="Models\Web\DTOs\UpdateStudentResponse.cs" />
     <Compile Include="Models\Web\DTOs\WebDevice.cs" />
     <Compile Include="Models\Web\DTOs\WebStudent.cs" />
-    <Compile Include="Models\Web\Factories\WebDeviceFactory.cs" />
     <Compile Include="Models\Web\Factories\WebFactory.cs" />
-    <Compile Include="Models\Web\Factories\WebStudentFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

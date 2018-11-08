@@ -13,7 +13,7 @@ namespace AttendanceTracker_Web.Controllers.API
     {
         public DataAccessLayer dal;
         public WebFactory webFactory;
-        public DataBaseFactory dbDTOFactory;
+        public DataBaseFactory dbFactory;
 
         public BaseAPIController()
         {
@@ -29,7 +29,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             dal = new DataAccessLayer(dataSource);
             webFactory = new WebFactory();
-            dbDTOFactory = new DataBaseFactory();
+            dbFactory = new DataBaseFactory();
         }
     }
 }

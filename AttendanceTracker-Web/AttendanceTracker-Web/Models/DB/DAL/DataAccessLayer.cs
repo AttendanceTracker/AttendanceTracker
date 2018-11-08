@@ -28,19 +28,44 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
-        public bool DoesDeviceExist(long imei)
-        {
-            return Source.DoesDeviceExist(imei);
-        }
-
         public Device AddDevice(Device device)
         {
             return Source.AddDevice(device);
         }
 
+        public Device UpdateDevice(Device device)
+        {
+            return Source.UpdateDevice(device);
+        }
+
+        public Device GetDevice(long imei)
+        {
+            return Source.GetDevice(imei);
+        }
+
+        public void RemoveDevice(long imei)
+        {
+            Source.RemoveDevice(imei);
+        }
+
         public Student AddStudent(Student student)
         {
             return Source.AddStudent(student);
+        }
+
+        public Student UpdateStudent(Student student)
+        {
+            return Source.UpdateStudent(student);
+        }
+
+        public Student GetStudent(long cwid)
+        {
+            return Source.GetStudent(cwid);
+        }
+
+        public void RemoveStudent(long cwid)
+        {
+            Source.RemoveDevice(cwid);
         }
     }
 }

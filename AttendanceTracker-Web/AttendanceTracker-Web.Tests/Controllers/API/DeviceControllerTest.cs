@@ -21,22 +21,15 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
         }
 
         [TestMethod]
-        public void Verify()
+        public void Get()
         {
             long imei = 1;
-            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<long>;
-            
-            Assert.AreEqual(response.Content, imei);
-        }
+            long studentID = 1;
 
-        [TestMethod]
-        public void VerifyNoDevice()
-        {
-            long imei = 2;
-            long expected = 0;
-            var response = deviceController.Verify(imei) as OkNegotiatedContentResult<long>;
+            var response = deviceController.Get(imei) as OkNegotiatedContentResult<GetDeviceResponse>;
 
-            Assert.AreEqual(expected, response.Content);
+            Assert.AreEqual(imei, response.Content.IMEI);
+            Assert.AreEqual(studentID, response.Content.StudentID);
         }
 
         [TestMethod]
@@ -48,8 +41,21 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
             var requestDTO = webFactory.RegisterDeviceRequest(imei, studentID);
             var response = deviceController.Register(requestDTO) as OkNegotiatedContentResult<RegisterDeviceResponse>;
 
-            Assert.AreEqual(response.Content.IMEI, imei);
-            Assert.AreEqual(response.Content.StudentID, studentID);
+            Assert.AreEqual(imei, response.Content.IMEI);
+            Assert.AreEqual(studentID, response.Content.StudentID);
+        }
+
+        [TestMethod]
+        public void Update()
+        {
+            long imei = 1;
+            long studentID = 1;
+
+            var requestDTO = webFactory.UpdateDeviceRequest(imei, studentID);
+            var response = deviceController.Update(requestDTO) as OkNegotiatedContentResult<UpdateDeviceResponse>;
+
+            Assert.AreEqual(imei, response.Content.IMEI);
+            Assert.AreEqual(studentID, response.Content.StudentID);
         }
     }
 }

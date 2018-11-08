@@ -92,9 +92,9 @@
     <Compile Include="Controllers\API\DeviceControllerTest.cs" />
     <Compile Include="Controllers\API\StudentControllerTest.cs" />
     <Compile Include="Models\DAL\DataAccessLayerTest.cs" />
-    <Compile Include="Models\Factories\DataBaseDTOFactoryTest.cs" />
+    <Compile Include="Models\Factories\DataBaseFactoryTest.cs" />
     <Compile Include="Models\DAL\DataBaseHelperTest.cs" />
-    <Compile Include="Models\Factories\WebDTOFactoryTest.cs" />
+    <Compile Include="Models\Factories\WebFactoryTest.cs" />
     <Compile Include="Controllers\MVC\LoginControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\MVC\HomeControllerTest.cs" />

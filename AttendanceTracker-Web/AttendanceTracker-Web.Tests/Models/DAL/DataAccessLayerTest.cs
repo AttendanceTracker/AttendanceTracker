@@ -17,13 +17,13 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             dbDTOFactory = new DataBaseFactory();
         }
 
-        [TestMethod]
-        public void DoesDeviceExist()
-        {
-            long imei = 1;
-            var doesExist = dal.DoesDeviceExist(imei);
-            Assert.IsTrue(doesExist);
-        }
+        //[TestMethod]
+        //public void DoesDeviceExist()
+        //{
+        //    long imei = 1;
+        //    var doesExist = dal.DoesDeviceExist(imei);
+        //    Assert.IsTrue(doesExist);
+        //}
 
         [TestMethod]
         public void AddDevice()

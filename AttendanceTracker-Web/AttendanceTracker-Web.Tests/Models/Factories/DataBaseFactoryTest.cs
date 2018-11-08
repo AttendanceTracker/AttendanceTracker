@@ -5,7 +5,7 @@ using AttendanceTracker_Web.Models.DB;
 namespace AttendanceTracker_Web.Tests.Models.Factories
 {
     [TestClass]
-    public class DataBaseDTOFactoryTest
+    public class DataBaseFactoryTest
     {
         DataBaseFactory dbDTOFactory;
 

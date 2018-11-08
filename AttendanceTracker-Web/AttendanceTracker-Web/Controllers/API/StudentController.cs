@@ -19,17 +19,48 @@ namespace AttendanceTracker_Web.Controllers.API
         {
         }
 
+        [HttpGet]
+        public IHttpActionResult Get(long cwid)
+        {
+            try
+            {
+                var resultStudent = dal.GetStudent(cwid);
+                var response = webFactory.GetStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public IHttpActionResult Register([FromBody] RegisterStudentRequest request)
         {
             try
             {
-                var student = dbDTOFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
+                var student = dbFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
                 var resultStudent = dal.AddStudent(student);
                 var response = webFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
             }
             catch(Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Update([FromBody] UpdateStudentRequest request)
+        {
+            try
+            {
+                var student = dbFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
+                var resultStudent = dal.UpdateStudent(student);
+                var response = webFactory.UpdateStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
+                return Ok(response);
+            }
+            catch (Exception)
             {
                 return BadRequest();
             }
