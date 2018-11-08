@@ -38,7 +38,7 @@ namespace AttendanceTracker_Web.Models.DAL
 
         public override Device AddDevice(Device device)
         {
-            var query = string.Format("exec [attenda1_db].[Devices_AddDevice] {0}, {1};", device.DeviceID, device.StudentID);
+            var query = string.Format("exec Devices_AddDevice {0}, {1};", device.DeviceID, device.StudentID);
             ExecuteQuery(query);
 
             var results = GetDevice(device.DeviceID);
@@ -51,14 +51,14 @@ namespace AttendanceTracker_Web.Models.DAL
 
         private DataTable GetDevice(long imei)
         {
-            var query = string.Format("exec [attenda1_db].[Devices_GetDevice] {0};", imei);
+            var query = string.Format("exec Devices_GetDevice {0};", imei);
             var results = ExecuteQuery(query);
             return results;
         }
 
         public override Student AddStudent(Student student)
         {
-            var query = string.Format("exec [attenda1_dbdev].[Students_AddStudent] {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
+            var query = string.Format("exec Students_AddStudent {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
             ExecuteQuery(query);
 
             var results = GetStudent(student.CWID);
@@ -72,7 +72,7 @@ namespace AttendanceTracker_Web.Models.DAL
         }
         private DataTable GetStudent(long cwid)
         {
-            var query = string.Format("exec [attenda1_dbdev].[Students_GetStudent] {0};", cwid);
+            var query = string.Format("exec Students_GetStudent {0};", cwid);
             var results = ExecuteQuery(query);
             return results;
         }

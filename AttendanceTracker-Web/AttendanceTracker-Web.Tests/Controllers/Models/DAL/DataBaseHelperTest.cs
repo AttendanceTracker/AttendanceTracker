@@ -46,7 +46,7 @@ namespace AttendanceTracker_Web.Tests.Controllers.Models.DAL
             long cwid = 8;
             string firstName = "Grace";
             string lastName = "Hopper";
-            string email = "ghoper@asdf.com";
+            string email = "ghopper@asdf.com";
             var student = dbDTOFactory.Student(cwid, firstName, lastName, email);
 
             var dto = dbHelper.AddStudent(student);
