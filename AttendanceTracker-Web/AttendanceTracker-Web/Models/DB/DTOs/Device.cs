@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AttendanceTracker_Web.Models.DTOs.Web
+namespace AttendanceTracker_Web.Models.DB
 {
-    public class RegisterDeviceRequest
+    public class Device
     {
-        public long IMEI { get; set; }
+        public long DeviceID { get; set; }
         public long StudentID { get; set; }
     }
 }

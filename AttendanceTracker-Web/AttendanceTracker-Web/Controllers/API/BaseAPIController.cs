@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AttendanceTracker_Web.Models.Factories;
-using AttendanceTracker_Web.Models.DAL;
+using AttendanceTracker_Web.Models.DB;
+using AttendanceTracker_Web.Models.Web;
 
 namespace AttendanceTracker_Web.Controllers.API
 {

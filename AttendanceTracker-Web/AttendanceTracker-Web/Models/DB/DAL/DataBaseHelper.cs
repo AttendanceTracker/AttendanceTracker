@@ -4,10 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-using AttendanceTracker_Web.Models.DTOs.DB;
-using AttendanceTracker_Web.Models.Factories;
 
-namespace AttendanceTracker_Web.Models.DAL
+namespace AttendanceTracker_Web.Models.DB
 {
     public class DataBaseHelper : DataSource
     {

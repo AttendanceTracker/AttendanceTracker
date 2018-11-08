@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AttendanceTracker_Web.Models.DTOs.DB;
 
-namespace AttendanceTracker_Web.Models.DAL
+namespace AttendanceTracker_Web.Models.DB
 {
     public abstract class DataSource
     {

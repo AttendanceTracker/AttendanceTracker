@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AttendanceTracker_Web.Controllers.API;
-using AttendanceTracker_Web.Models.DTOs.Web;
-using AttendanceTracker_Web.Models.Factories;
-using AttendanceTracker_Web.Models.DAL;
+using AttendanceTracker_Web.Models.DB;
+using AttendanceTracker_Web.Models.Web;
+
 using System.Web.Http.Results;
 
 namespace AttendanceTracker_Web.Tests.Controllers.API

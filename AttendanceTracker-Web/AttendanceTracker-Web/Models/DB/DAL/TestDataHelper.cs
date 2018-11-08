@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AttendanceTracker_Web.Models.DTOs.DB;
-using AttendanceTracker_Web.Models.Factories;
 
-namespace AttendanceTracker_Web.Models.DAL
+namespace AttendanceTracker_Web.Models.DB
 {
     public class TestDataHelper : DataSource
     {
@@ -18,7 +16,7 @@ namespace AttendanceTracker_Web.Models.DAL
 
         public override bool DoesDeviceExist(long imei)
         {
-            if(imei < 2)
+            if (imei < 2)
             {
                 return true;
             }

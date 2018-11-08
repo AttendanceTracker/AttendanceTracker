@@ -157,6 +157,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -172,18 +175,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DAL\DataAccessLayer.cs" />
-    <Compile Include="Models\DAL\DataBaseHelper.cs" />
-    <Compile Include="Models\DAL\DataSource.cs" />
-    <Compile Include="Models\DAL\TestDataHelper.cs" />
-    <Compile Include="Models\DTOs\DB\Device.cs" />
-    <Compile Include="Models\DTOs\DB\Student.cs" />
-    <Compile Include="Models\DTOs\Web\RegisterDeviceRequest.cs" />
-    <Compile Include="Models\DTOs\Web\RegisterDeviceResponse.cs" />
-    <Compile Include="Models\DTOs\Web\RegisterStudentRequest.cs" />
-    <Compile Include="Models\DTOs\Web\RegisterStudentResponse.cs" />
-    <Compile Include="Models\Factories\DataBaseDTOFactory.cs" />
-    <Compile Include="Models\Factories\WebDTOFactory.cs" />
+    <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
+    <Compile Include="Models\DB\DAL\DataBaseHelper.cs" />
+    <Compile Include="Models\DB\DAL\DataSource.cs" />
+    <Compile Include="Models\DB\DAL\TestDataHelper.cs" />
+    <Compile Include="Models\DB\DTOs\Device.cs" />
+    <Compile Include="Models\DB\DTOs\Student.cs" />
+    <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />
+    <Compile Include="Models\Web\DTOs\RegisterDeviceResponse.cs" />
+    <Compile Include="Models\Web\DTOs\RegisterStudentRequest.cs" />
+    <Compile Include="Models\Web\DTOs\RegisterStudentResponse.cs" />
+    <Compile Include="Models\DB\DataBaseDTOFactory.cs" />
+    <Compile Include="Models\Web\WebDTOFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

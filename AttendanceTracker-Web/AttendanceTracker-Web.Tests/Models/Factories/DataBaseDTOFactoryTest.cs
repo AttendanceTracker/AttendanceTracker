@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AttendanceTracker_Web.Models.Factories;
-using AttendanceTracker_Web.Models.DTOs.DB;
+using AttendanceTracker_Web.Models.DB;
 
-namespace AttendanceTracker_Web.Tests.Controllers.Models.Factories
+namespace AttendanceTracker_Web.Tests.Models.Factories
 {
     [TestClass]
     public class DataBaseDTOFactoryTest

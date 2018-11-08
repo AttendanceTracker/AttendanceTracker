@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AttendanceTracker_Web.Models.DTOs.Web;
 
-namespace AttendanceTracker_Web.Models.Factories
+namespace AttendanceTracker_Web.Models.Web
 {
     public class WebDTOFactory
     {

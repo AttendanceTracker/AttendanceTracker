@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AttendanceTracker_Web.Models.DTOs.Web
+namespace AttendanceTracker_Web.Models.DB
 {
-    public class RegisterStudentRequest
+    public class Student
     {
         public long CWID { get; set; }
         public string FirstName { get; set; }
