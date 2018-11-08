@@ -24,8 +24,8 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var resultStudent = dal.GetStudent(cwid);
-                var response = webFactory.GetStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
+                var student = dal.GetStudent(cwid);
+                var response = webFactory.GetStudentResponse(student.CWID, student.FirstName, student.LastName, student.Email);
                 return Ok(response);
             }
             catch (Exception)
@@ -39,7 +39,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var student = dbFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
+                var student = WebStudentToDBStudent(request);
                 var resultStudent = dal.AddStudent(student);
                 var response = webFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
@@ -55,7 +55,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var student = dbFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
+                var student = WebStudentToDBStudent(request);
                 var resultStudent = dal.UpdateStudent(student);
                 var response = webFactory.UpdateStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
@@ -64,6 +64,12 @@ namespace AttendanceTracker_Web.Controllers.API
             {
                 return BadRequest();
             }
+        }
+
+        private Student WebStudentToDBStudent(WebStudent webStudent)
+        {
+            var dbStudent = dbFactory.Student(webStudent.CWID, webStudent.FirstName, webStudent.LastName, webStudent.Email);
+            return dbStudent;
         }
     }
 }
