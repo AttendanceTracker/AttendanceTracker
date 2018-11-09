@@ -31,10 +31,9 @@ namespace AttendanceTracker_Web.Models.Web
             return dto;
         }
 
-        public UpdateDeviceRequest UpdateDeviceRequest(long imei, long studentID)
+        public UpdateDeviceRequest UpdateDeviceRequest(long studentID)
         {
             var dto = new UpdateDeviceRequest();
-            dto.IMEI = imei;
             dto.StudentID = studentID;
             return dto;
         }
@@ -77,10 +76,9 @@ namespace AttendanceTracker_Web.Models.Web
             return dto;
         }
 
-        public UpdateStudentRequest UpdateStudentRequest(long cwid, string firstName, string lastName, string email)
+        public UpdateStudentRequest UpdateStudentRequest(string firstName, string lastName, string email)
         {
             var dto = new UpdateStudentRequest();
-            dto.CWID = cwid;
             dto.FirstName = firstName;
             dto.LastName = lastName;
             dto.Email = email;

@@ -52,8 +52,8 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
             long imei = 1;
             long studentID = 1;
 
-            var requestDTO = webFactory.UpdateDeviceRequest(imei, studentID);
-            var response = deviceController.Update(requestDTO) as OkNegotiatedContentResult<UpdateDeviceResponse>;
+            var requestDTO = webFactory.UpdateDeviceRequest(studentID);
+            var response = deviceController.Update(imei, requestDTO) as OkNegotiatedContentResult<UpdateDeviceResponse>;
 
             Assert.AreEqual(imei, response.Content.IMEI);
             Assert.AreEqual(studentID, response.Content.StudentID);

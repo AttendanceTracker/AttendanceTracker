@@ -21,8 +21,9 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var expected = new GetDeviceResponse();
             expected.IMEI = 1;
             expected.StudentID = 1;
-            var actualDTO = webFactory.GetDeviceResponse(expected.IMEI, expected.StudentID);
-            AssertDevicesAreEqual(expected, actualDTO);
+            var actual = webFactory.GetDeviceResponse(expected.IMEI, expected.StudentID);
+            Assert.AreEqual(expected.IMEI, actual.IMEI);
+            Assert.AreEqual(expected.StudentID, actual.StudentID);
         }
 
         [TestMethod]
@@ -31,8 +32,9 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var expected = new RegisterDeviceRequest();
             expected.IMEI = 1;
             expected.StudentID = 1;
-            var actualDTO = webFactory.RegisterDeviceRequest(expected.IMEI, expected.StudentID);
-            AssertDevicesAreEqual(expected, actualDTO);
+            var actual = webFactory.RegisterDeviceRequest(expected.IMEI, expected.StudentID);
+            Assert.AreEqual(expected.IMEI, actual.IMEI);
+            Assert.AreEqual(expected.StudentID, actual.StudentID);
         }
 
         [TestMethod]
@@ -41,18 +43,18 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var expected = new RegisterDeviceResponse();
             expected.IMEI = 1;
             expected.StudentID = 1;
-            var actualDTO = webFactory.RegisterDeviceResponse(expected.IMEI, expected.StudentID);
-            AssertDevicesAreEqual(expected, actualDTO);
+            var actual = webFactory.RegisterDeviceResponse(expected.IMEI, expected.StudentID);
+            Assert.AreEqual(expected.IMEI, actual.IMEI);
+            Assert.AreEqual(expected.StudentID, actual.StudentID);
         }
 
         [TestMethod]
         public void UpdateDeviceRequest()
         {
             var expected = new UpdateDeviceRequest();
-            expected.IMEI = 1;
             expected.StudentID = 1;
-            var actualDTO = webFactory.UpdateDeviceRequest(expected.IMEI, expected.StudentID);
-            AssertDevicesAreEqual(expected, actualDTO);
+            var actual = webFactory.UpdateDeviceRequest(expected.StudentID);
+            Assert.AreEqual(expected.StudentID, actual.StudentID);
         }
 
         [TestMethod]
@@ -61,15 +63,25 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var expected = new UpdateDeviceResponse();
             expected.IMEI = 1;
             expected.StudentID = 1;
-            var actualDTO = webFactory.UpdateDeviceResponse(expected.IMEI, expected.StudentID);
-            AssertDevicesAreEqual(expected, actualDTO);
-        }
-
-        void AssertDevicesAreEqual(WebDevice expected, WebDevice actual)
-        {
-
+            var actual = webFactory.UpdateDeviceResponse(expected.IMEI, expected.StudentID);
             Assert.AreEqual(expected.IMEI, actual.IMEI);
             Assert.AreEqual(expected.StudentID, actual.StudentID);
+        }
+
+        [TestMethod]
+        public void GetStudentResponse()
+        {
+            var cwid = 1;
+            var firstName = "John";
+            var lastName = "Doe";
+            var email = "jdoe@a.com";
+
+            var dto = webFactory.GetStudentResponse(cwid, firstName, lastName, email);
+
+            Assert.AreEqual(cwid, dto.CWID);
+            Assert.AreEqual(firstName, dto.FirstName);
+            Assert.AreEqual(lastName, dto.LastName);
+            Assert.AreEqual(email, dto.Email);
         }
 
         [TestMethod]
@@ -97,6 +109,36 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             var email = "jdoe@a.com";
 
             var dto = webFactory.RegisterStudentResponse(cwid, firstName, lastName, email);
+
+            Assert.AreEqual(cwid, dto.CWID);
+            Assert.AreEqual(firstName, dto.FirstName);
+            Assert.AreEqual(lastName, dto.LastName);
+            Assert.AreEqual(email, dto.Email);
+        }
+
+        [TestMethod]
+        public void UpdateStudentRequest()
+        {
+            var firstName = "John";
+            var lastName = "Doe";
+            var email = "jdoe@a.com";
+
+            var dto = webFactory.UpdateStudentRequest(firstName, lastName, email);
+
+            Assert.AreEqual(firstName, dto.FirstName);
+            Assert.AreEqual(lastName, dto.LastName);
+            Assert.AreEqual(email, dto.Email);
+        }
+
+        [TestMethod]
+        public void UpdateStudentResponse()
+        {
+            var cwid = 1;
+            var firstName = "John";
+            var lastName = "Doe";
+            var email = "jdoe@a.com";
+
+            var dto = webFactory.UpdateStudentResponse(cwid, firstName, lastName, email);
 
             Assert.AreEqual(cwid, dto.CWID);
             Assert.AreEqual(firstName, dto.FirstName);

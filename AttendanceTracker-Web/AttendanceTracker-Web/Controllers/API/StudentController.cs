@@ -43,7 +43,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var student = WebStudentToDBStudent(request);
+                var student = dbFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
                 var resultStudent = dal.AddStudent(student);
                 var response = webFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
@@ -54,12 +54,12 @@ namespace AttendanceTracker_Web.Controllers.API
             }
         }
 
-        [HttpPost]
-        public IHttpActionResult Update([FromBody] UpdateStudentRequest request)
+        [HttpPut]
+        public IHttpActionResult Update(long cwid, [FromBody] UpdateStudentRequest request)
         {
             try
             {
-                var student = WebStudentToDBStudent(request);
+                var student = dbFactory.Student(cwid, request.FirstName, request.LastName, request.Email);
                 var resultStudent = dal.UpdateStudent(student);
                 var response = webFactory.UpdateStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
@@ -68,12 +68,6 @@ namespace AttendanceTracker_Web.Controllers.API
             {
                 return BadRequest();
             }
-        }
-
-        private Student WebStudentToDBStudent(WebStudent webStudent)
-        {
-            var dbStudent = dbFactory.Student(webStudent.CWID, webStudent.FirstName, webStudent.LastName, webStudent.Email);
-            return dbStudent;
         }
     }
 }

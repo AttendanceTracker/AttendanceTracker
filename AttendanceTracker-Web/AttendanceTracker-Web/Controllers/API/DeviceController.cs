@@ -43,7 +43,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var device = WebDeviceToDBDevice(request);
+                var device = dbFactory.Device(request.IMEI, request.StudentID);
                 var resultDevice = dal.AddDevice(device);
                 var response = webFactory.RegisterDeviceResponse(resultDevice.DeviceID, resultDevice.StudentID);
                 return Ok(response);
@@ -54,12 +54,12 @@ namespace AttendanceTracker_Web.Controllers.API
             }
         }
 
-        [HttpPost]
-        public IHttpActionResult Update([FromBody] UpdateDeviceRequest request)
+        [HttpPut]
+        public IHttpActionResult Update(long imei, [FromBody] UpdateDeviceRequest request)
         {
             try
             {
-                var device = WebDeviceToDBDevice(request);
+                var device = dbFactory.Device(imei, request.StudentID);
                 var resultDevice = dal.UpdateDevice(device);
                 var response = webFactory.UpdateDeviceResponse(resultDevice.DeviceID, resultDevice.StudentID);
                 return Ok(response);
@@ -68,12 +68,6 @@ namespace AttendanceTracker_Web.Controllers.API
             {
                 return BadRequest();
             }
-        }
-    
-        private Device WebDeviceToDBDevice(WebDevice webDevice)
-        {
-            var dbDevice = dbFactory.Device(webDevice.IMEI, webDevice.StudentID);
-            return dbDevice;
         }
     }
 }

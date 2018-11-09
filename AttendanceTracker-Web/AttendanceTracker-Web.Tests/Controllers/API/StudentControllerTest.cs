@@ -61,9 +61,9 @@ namespace AttendanceTracker_Web.Tests.Controllers.API
             string firstName = "Jane";
             string lastName = "Doe";
             string email = "jdoe@a.com";
-            var student = webFactory.UpdateStudentRequest(cwid, firstName, lastName, email);
+            var student = webFactory.UpdateStudentRequest(firstName, lastName, email);
 
-            var response = studentController.Update(student) as OkNegotiatedContentResult<UpdateStudentResponse>;
+            var response = studentController.Update(cwid, student) as OkNegotiatedContentResult<UpdateStudentResponse>;
 
             Assert.AreEqual(cwid, response.Content.CWID);
             Assert.AreEqual(firstName, response.Content.FirstName);

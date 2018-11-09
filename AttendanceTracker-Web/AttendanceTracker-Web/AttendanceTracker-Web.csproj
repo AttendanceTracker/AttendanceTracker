@@ -193,8 +193,6 @@
     <Compile Include="Models\Web\DTOs\UpdateDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\UpdateStudentRequest.cs" />
     <Compile Include="Models\Web\DTOs\UpdateStudentResponse.cs" />
-    <Compile Include="Models\Web\DTOs\WebDevice.cs" />
-    <Compile Include="Models\Web\DTOs\WebStudent.cs" />
     <Compile Include="Models\Web\Factories\WebFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,7 +5,8 @@ using System.Web;
 
 namespace AttendanceTracker_Web.Models.Web
 {
-    public class UpdateDeviceRequest: WebDevice
+    public class UpdateDeviceRequest
     {
+        public long StudentID { get; set; }
     }
 }

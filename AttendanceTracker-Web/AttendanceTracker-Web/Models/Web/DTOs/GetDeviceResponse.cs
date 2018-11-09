@@ -5,7 +5,9 @@ using System.Web;
 
 namespace AttendanceTracker_Web.Models.Web
 {
-    public class GetDeviceResponse: WebDevice
+    public class GetDeviceResponse
     {
+        public long IMEI { get; set; }
+        public long StudentID { get; set; }
     }
 }
