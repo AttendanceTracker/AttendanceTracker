@@ -127,5 +127,12 @@ namespace AttendanceTracker_Web.Models.DB
             var query = new Query(queryString, connectionString);
             query.ExecuteQuery();
         }
+
+        //public override Attendance AddAttendance(Attendance attendance)
+        //{
+        //    var queryString = string.Format("exec Students_RemoveStudent {0};", cwid);
+        //    var query = new Query(queryString, connectionString);
+        //    query.ExecuteQuery();
+        //}
     }
 }

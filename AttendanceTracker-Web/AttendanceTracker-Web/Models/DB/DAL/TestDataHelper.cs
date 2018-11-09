@@ -59,5 +59,11 @@ namespace AttendanceTracker_Web.Models.DB
         {
             // remove student with cwid
         }
+
+        public override Attendance CheckIn(Attendance attendance)
+        {
+            var resultAttendance = attendance;
+            return resultAttendance;
+        }
     }
 }

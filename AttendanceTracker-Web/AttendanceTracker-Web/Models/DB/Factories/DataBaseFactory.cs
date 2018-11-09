@@ -24,5 +24,17 @@ namespace AttendanceTracker_Web.Models.DB
             dto.Email = email;
             return dto;
         }
+
+        public Attendance Attendance(long id, long classID, long studentID, DateTime attendedDate, double latitude, double longitude)
+        {
+            var dto = new Attendance();
+            dto.id = id;
+            dto.ClassID = classID;
+            dto.StudentID = studentID;
+            dto.attendedDate = attendedDate;
+            dto.latitude = latitude;
+            dto.longitude = longitude;
+            return dto;
+        }
     }
 }
