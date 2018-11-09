@@ -156,8 +156,13 @@ public class QRScanner extends Activity {
         }
     }
     private void takePicture() {
+        final int REQUEST_IMAGE_CAPTURE = 1;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        }
+        File photo = new File(Environment.getExternalStorageDirectory(), "qrPicture.jpg");
+
         imageUri = FileProvider.getUriForFile(QRScanner.this,
                 BuildConfig.APPLICATION_ID + ".provider", photo);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
