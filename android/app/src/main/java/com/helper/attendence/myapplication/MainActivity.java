@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.IOException;
+
+import static java.util.logging.Level.FINEST;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
@@ -27,42 +32,53 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Student x = new Student();
+        try {
+            x = x.getStudent(54321L);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        x.printAll();
         //Retreiving device IMEI to make sure it's not a new device
-        String IMEINumber = "-1";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
-            } else {
-                IMEINumber = getDeviceImei();
-                Log.d("msg", "Final IMEI = " + IMEINumber);
-            }
-        }
-        else {
-            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
-        }
-        //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
-
-        // Get the app's shared preferences
-        final SharedPreferences app_preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-
-        // See if device has been seen before based off of shared Pref. Can prob take this out
-        // after IMEI checks are finalized.
-        Boolean newDeviceFlag = app_preferences.getBoolean("deviceFlag", false);
-
-        //Should show 4 boxes to enter the fname, lname, username, and CWID
-        if (!newDeviceFlag) {
-            Intent i = new Intent(MainActivity.this, InfoLogging.class);
-            startActivity(i);
-        } else {
-            TextView text = (TextView) findViewById(R.id.txtCount);
-            text.setText("Welcome. Your info is stored.\n");
-            displayInfo(app_preferences);
-        }
-        displayInfo(app_preferences);
-        mainMenu();
+//        String IMEINumber = "-1";
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+//                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+//            } else {
+//                IMEINumber = getDeviceImei();
+//                Log.d("msg", "Final IMEI = " + IMEINumber);
+//            }
+//        }
+//        else {
+//            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
+//        }
+//        //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
+//
+//        // Get the app's shared preferences
+//        final SharedPreferences app_preferences =
+//                PreferenceManager.getDefaultSharedPreferences(this);
+//
+//        // See if device has been seen before based off of shared Pref. Can prob take this out
+//        // after IMEI checks are finalized.
+//        Boolean newDeviceFlag = app_preferences.getBoolean("deviceFlag", false);
+//
+//        //Should show 4 boxes to enter the fname, lname, username, and CWID
+//        if (!newDeviceFlag) {
+//            Intent i = new Intent(MainActivity.this, InfoLogging.class);
+//            startActivity(i);
+//        } else {
+//            TextView text = (TextView) findViewById(R.id.txtCount);
+//            text.setText("Welcome. Your info is stored.\n");
+//            displayInfo(app_preferences);
+//        }
+//        displayInfo(app_preferences);
+//        mainMenu();
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
