@@ -14,6 +14,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         Student genericStudent3;
         Device genericDevice1;
         Device genericDevice2;
+        Attendance genericAttendance1;
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
         [TestInitialize]
@@ -21,11 +22,15 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             dbHelper = new DataBaseHelper();
             dbFactory = new DataBaseFactory();
+
             genericStudent1 = dbFactory.Student(8, "Grace", "Hopper", "email");
             genericStudent2 = dbFactory.Student(4, "Grace", "Hopper", "email");
             genericStudent3 = dbFactory.Student(5, "Grace", "Hopper", "email");
+
             genericDevice1 = dbFactory.Device(5, 5);
             genericDevice2 = dbFactory.Device(8, 8);
+            genericAttendance1 = dbFactory.Attendance(0, 1, 5, DateTime.Now, 33.216111, -87.538623);
+
             AddDBTestStudent(genericStudent1);
             AddDBTestStudent(genericStudent3);
             AddDBTestDevice(genericDevice1);
@@ -57,6 +62,25 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 Console.WriteLine(e);
             }
+        }
+
+        void AddDBTestAttendance(Attendance attendance)
+        {
+            try
+            {
+                var queryString = string.Format("exec Attendance_GetAttendanceByID {0};", attendance.ClassID, attendance.StudentID, attendance.attendedDate, attendance.latitude, attendance.longitude);
+                var query = new Query(queryString, connectionString);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void RemoveDBTestAttendance(Attendance attendance)
+        {
+            throw new NotImplementedException();
         }
 
         [TestCleanup]
@@ -180,6 +204,37 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             Assert.AreEqual(expected.FirstName, actual.FirstName);
             Assert.AreEqual(expected.LastName, actual.LastName);
             Assert.AreEqual(expected.Email, actual.Email);
+        }
+
+        [TestMethod]
+        public void AddAttendance()
+        {
+
+        }
+
+        [TestMethod]
+        public void GetAttendanceByID()
+        {
+
+        }
+
+        [TestMethod]
+        public void GetAttendanceByDate()
+        {
+        }
+
+        [TestMethod]
+        public void GetAttendanceByDateRange()
+        {
+        }
+
+        private void AssertAreAttendancesEqual(Attendance expected, Attendance actual)
+        {
+            Assert.AreEqual(expected.ClassID, actual.ClassID);
+            Assert.AreEqual(expected.StudentID, actual.StudentID);
+            Assert.AreEqual(expected.attendedDate, actual.attendedDate);
+            Assert.AreEqual(expected.latitude, actual.longitude);
+            Assert.AreEqual(expected.longitude, actual.longitude);
         }
     }
 }

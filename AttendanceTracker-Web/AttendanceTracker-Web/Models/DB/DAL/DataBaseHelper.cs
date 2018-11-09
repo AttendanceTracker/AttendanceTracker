@@ -10,7 +10,7 @@ namespace AttendanceTracker_Web.Models.DB
     public class DataBaseHelper : DataSource
     {
         string connectionString;
-        DataBaseFactory dbDTOFactory;
+        DataBaseFactory dbFactory;
 
         public DataBaseHelper()
         {
@@ -25,14 +25,13 @@ namespace AttendanceTracker_Web.Models.DB
         private void Init(string connectionSource)
         {
             connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[connectionSource].ConnectionString;
-            dbDTOFactory = new DataBaseFactory();
+            dbFactory = new DataBaseFactory();
         }
 
         public override Device AddDevice(Device device)
         {
             var queryString = string.Format("exec Devices_AddDevice {0}, {1};", device.DeviceID, device.StudentID);
-            var query = new Query(queryString, connectionString);
-            query.ExecuteQuery();
+            ExecuteStoredProcedure(queryString);
 
             var resultDevice = GetDevice(device.DeviceID);
             return resultDevice;
@@ -41,8 +40,7 @@ namespace AttendanceTracker_Web.Models.DB
         public override Device UpdateDevice(Device device)
         {
             var queryString = string.Format("exec Devices_UpdateDevice {0}, {1}", device.DeviceID, device.StudentID);
-            var query = new Query(queryString, connectionString);
-            query.ExecuteQuery();
+            ExecuteStoredProcedure(queryString);
 
             var resultDevice = GetDevice(device.DeviceID);
             return resultDevice;
@@ -54,9 +52,9 @@ namespace AttendanceTracker_Web.Models.DB
             if (results.Rows.Count != 0)
             {
                 var data = results.Rows[0];
-                var imeiResult = (long)data[0];
-                var resultStudentID = (long)data[1];
-                var device = dbDTOFactory.Device(imeiResult, resultStudentID);
+                var imeiResult = data.Field<long>(0);
+                var resultStudentID = data.Field<long>(1);
+                var device = dbFactory.Device(imeiResult, resultStudentID);
                 return device;
             }
             return null;
@@ -65,23 +63,20 @@ namespace AttendanceTracker_Web.Models.DB
         private DataTable GetDeviceData(long imei)
         {
             var queryString = string.Format("exec Devices_GetDevice {0};", imei);
-            var query = new Query(queryString, connectionString);
-            var results = query.ExecuteQuery();
+            var results = ExecuteStoredProcedure(queryString);
             return results;
         }
 
         public override void RemoveDevice(long imei)
         {
             var queryString = string.Format("exec Devices_RemoveDevice {0}", imei);
-            var query = new Query(queryString, connectionString);
-            query.ExecuteQuery();
+            ExecuteStoredProcedure(queryString);
         }
 
         public override Student AddStudent(Student student)
         {
             var queryString = string.Format("exec Students_AddStudent {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
-            var query = new Query(queryString, connectionString);
-            query.ExecuteQuery();
+            ExecuteStoredProcedure(queryString);
 
             var resultStudent = GetStudent(student.CWID);
             return resultStudent;
@@ -90,8 +85,7 @@ namespace AttendanceTracker_Web.Models.DB
         public override Student UpdateStudent(Student student)
         {
             var queryString = string.Format("exec Students_UpdateStudent {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
-            var query = new Query(queryString, connectionString);
-            query.ExecuteQuery();
+            ExecuteStoredProcedure(queryString);
 
             var resultStudent = GetStudent(student.CWID);
             return resultStudent;
@@ -103,11 +97,11 @@ namespace AttendanceTracker_Web.Models.DB
             if (results.Rows.Count != 0)
             {
                 var studentData = results.Rows[0];
-                var cwidResult = (long)studentData[0];
-                var firstName = (string)studentData[1];
-                var lastName = (string)studentData[2];
-                var email = (string)studentData[3];
-                var resultStudent = dbDTOFactory.Student(cwidResult, firstName, lastName, email);
+                var cwidResult = studentData.Field<long>(0);
+                var firstName = studentData.Field<string>(1);
+                var lastName = studentData.Field<string>(2);
+                var email = studentData.Field<string>(3);
+                var resultStudent = dbFactory.Student(cwidResult, firstName, lastName, email);
                 return resultStudent;
             }
             return null;
@@ -116,23 +110,76 @@ namespace AttendanceTracker_Web.Models.DB
         private DataTable GetStudentData(long cwid)
         {
             var queryString = string.Format("exec Students_GetStudent {0};", cwid);
-            var query = new Query(queryString, connectionString);
-            var results = query.ExecuteQuery();
+            var results = ExecuteStoredProcedure(queryString);
             return results;
         }
 
         public override void RemoveStudent(long cwid)
         {
             var queryString = string.Format("exec Students_RemoveStudent {0};", cwid);
-            var query = new Query(queryString, connectionString);
-            query.ExecuteQuery();
+            ExecuteStoredProcedure(queryString);
         }
 
-        //public override Attendance AddAttendance(Attendance attendance)
-        //{
-        //    var queryString = string.Format("exec Students_RemoveStudent {0};", cwid);
-        //    var query = new Query(queryString, connectionString);
-        //    query.ExecuteQuery();
-        //}
+        public override Attendance AddAttendance(Attendance attendance)
+        {
+            var addQueryString = string.Format("exec Attendance_GetAttendanceByID {0};", attendance.ClassID, attendance.StudentID, attendance.attendedDate, attendance.latitude, attendance.longitude);
+            ExecuteStoredProcedure(addQueryString);
+
+            var getQueryString = string.Format("exec Attendance_GetAttendanceByID {0};", attendance.id);
+            var result = GetAttendance(getQueryString);
+            return result;
+        }
+
+        public override Attendance GetAttendance(long id)
+        {
+            var queryString = string.Format("exec Attendance_GetAttendanceByID {0};", id);
+            var result = GetAttendance(queryString);
+            return result;
+        }
+
+        public override Attendance GetAttendance(DateTime date)
+        {
+            var queryString = string.Format("exec Attendance_GetAttendanceByDateRange {0};", date);
+            var result = GetAttendance(queryString);
+            return result;
+        }
+
+        public override Attendance GetAttendance(DateTime start, DateTime end)
+        {
+            var queryString = string.Format("exec Attendance_GetAttendanceByDateRange {0}, {1};", start, end);
+            var result = GetAttendance(queryString);
+            return result;
+        }
+
+        private Attendance GetAttendance(string queryString)
+        {
+            var results = ExecuteStoredProcedure(queryString);
+            if (results.Rows.Count != 0)
+            {
+                var attendanceData = results.Rows[0];
+                var resultAttendance = BuildAttendance(attendanceData);
+                return resultAttendance;
+            }
+            return null;
+        }
+
+        private Attendance BuildAttendance(DataRow row)
+        {
+            var idResult = row.Field<long>(0);
+            var classIDResult = row.Field<long>(1);
+            var studentIDResult = row.Field<long>(2);
+            var attendedDateResult = row.Field<DateTime>(3);
+            var latitudeResult = row.Field<double>(4);
+            var longitudeResult = row.Field<double>(5);
+            var resultAttendance = dbFactory.Attendance(idResult, classIDResult, studentIDResult, attendedDateResult, latitudeResult, longitudeResult);
+            return resultAttendance;
+        }
+
+        private DataTable ExecuteStoredProcedure(string queryString)
+        {
+            var query = new Query(queryString, connectionString);
+            var results = query.ExecuteQuery();
+            return results;
+        }
     }
 }

@@ -60,10 +60,25 @@ namespace AttendanceTracker_Web.Models.DB
             // remove student with cwid
         }
 
-        public override Attendance CheckIn(Attendance attendance)
+        public override Attendance AddAttendance(Attendance attendance)
         {
             var resultAttendance = attendance;
             return resultAttendance;
+        }
+
+        public override Attendance GetAttendance(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Attendance GetAttendance(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Attendance GetAttendance(DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
         }
     }
 }
