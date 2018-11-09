@@ -25,8 +25,12 @@ namespace AttendanceTracker_Web.Controllers.API
             try
             {
                 var device = dal.GetDevice(imei);
-                var responseDevice = webFactory.GetDeviceResponse(device.DeviceID, device.StudentID);
-                return Ok(responseDevice);
+                if (device != null)
+                {
+                    var responseDevice = webFactory.GetDeviceResponse(device.DeviceID, device.StudentID);
+                    return Ok(responseDevice);
+                }
+                return Ok();
             }
             catch (Exception)
             {

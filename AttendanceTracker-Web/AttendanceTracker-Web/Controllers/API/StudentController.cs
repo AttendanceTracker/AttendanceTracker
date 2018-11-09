@@ -25,8 +25,12 @@ namespace AttendanceTracker_Web.Controllers.API
             try
             {
                 var student = dal.GetStudent(cwid);
-                var response = webFactory.GetStudentResponse(student.CWID, student.FirstName, student.LastName, student.Email);
-                return Ok(response);
+                if (student != null)
+                {
+                    var response = webFactory.GetStudentResponse(student.CWID, student.FirstName, student.LastName, student.Email);
+                    return Ok(response);
+                }
+                return Ok();
             }
             catch (Exception)
             {
