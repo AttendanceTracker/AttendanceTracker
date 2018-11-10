@@ -34,56 +34,86 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
-//        Student x = new Student();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Student tb = new Student("Dick", "Butt", "dButt@crimson.ua.edu", 108L);
+        tb.printAll();
+//        tb.registerStudent(tb);
+//        tb.printAll();
+//
+//
+//        tb.registerDeviceToStudent(tb, 9898989898L);
+
+//        Device x = new Device(321654456123L);
+//        x.registerDevice(tb.getCwid(), x.getImei());
+//        tb.updateDevice(tb, x);
+//        tb.printAll();
+        System.out.println("The registered CWID = " + tb.getCwidFromDevice(321654456123L));
+//        tb.printAll();
+//        tb.getCwidFromDevice(6565656565L);
+
+//        Student x = new Student("Zack", "Witherspoon", "zbwitherspoon", 54321L);
 //        try {
 //            x = x.getStudent(54321L);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //        x.printAll();
-//
-//        Student dick = new Student();
-//        dick = dick.registerStudent("Dick", "VanDyke", "xboob@boob.ua.edu", 100L);
+//        Student dick = new Student("Dick", "VanDyke", "xboob@boob.ua.edu", 100L);
+//        dick.registerStudent(dick);
 //        dick.printAll();
+//
+//        System.out.println("Printing Get version of DICk");
+//        try {
+//            dick = dick.getStudent(100L);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        dick.printAll();
+//
+//        System.out.println("Printing new student Testy Boi");
+//        Student tb = new Student("Testy", "Boi", "tBoi@crimson.ua.edu", 104L);
+//
+//        System.out.println("Printing new student Clark Heys");
+//        tb.updateStudent(tb, "Clark", "Heys", "cheys@kingsridgecs.cs.edu", 104L);
+//        tb.printAll();
 
 //        Retrieving device IMEI to make sure it's not a new device
-        String IMEINumber = "-1";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
-            } else {
-                IMEINumber = getDeviceImei();
-                Log.d("msg", "Final IMEI = " + IMEINumber);
-            }
-        }
-        else {
-            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
-        }
-        //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
-
-        // Get the app's shared preferences
-        final SharedPreferences app_preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-
-        // See if device has been seen before based off of shared Pref. Can prob take this out
-        // after IMEI checks are finalized.
-        Boolean newDeviceFlag = app_preferences.getBoolean("deviceFlag", false);
-
-        //Should show 4 boxes to enter the fname, lname, username, and CWID
-        if (!newDeviceFlag) {
-            Intent i = new Intent(MainActivity.this, InfoLogging.class);
-            startActivity(i);
-        } else {
-            TextView text = (TextView) findViewById(R.id.txtCount);
-            text.setText("Welcome. Your info is stored.\n");
-            displayInfo(app_preferences);
-        }
-        displayInfo(app_preferences);
-        mainMenu();
+//        String IMEINumber = "-1";
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+//                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+//            } else {
+//                IMEINumber = getDeviceImei();
+//                Log.d("msg", "Final IMEI = " + IMEINumber);
+//            }
+//        }
+//        else {
+//            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
+//        }
+//        //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
+//
+//        // Get the app's shared preferences
+//        final SharedPreferences app_preferences =
+//                PreferenceManager.getDefaultSharedPreferences(this);
+//
+//        // See if device has been seen before based off of shared Pref. Can prob take this out
+//        // after IMEI checks are finalized.
+//        Boolean newDeviceFlag = app_preferences.getBoolean("deviceFlag", false);
+//
+//        //Should show 4 boxes to enter the fname, lname, username, and CWID
+//        if (!newDeviceFlag) {
+//            Intent i = new Intent(MainActivity.this, InfoLogging.class);
+//            startActivity(i);
+//        } else {
+//            TextView text = (TextView) findViewById(R.id.txtCount);
+//            text.setText("Welcome. Your info is stored.\n");
+//            displayInfo(app_preferences);
+//        }
+//        displayInfo(app_preferences);
+//        mainMenu();
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main

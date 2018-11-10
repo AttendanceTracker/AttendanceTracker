@@ -26,12 +26,11 @@ public class HttpClient {
 
         String urlString = baseURL + apiString + "?" + parameters;
         System.out.println("StringBoi" + urlString);
+        String response = "";
         try {
             URL obj = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            // optional default is GET
             con.setRequestMethod("GET");
-            //add request header
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             int responseCode = con.getResponseCode();
             System.out.println("\nSending 'GET' request to URL : " + "https://attendancetracker.us/api/Student/Get");
@@ -41,27 +40,24 @@ public class HttpClient {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(con.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuffer buff = new StringBuffer();
                 while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    buff.append(inputLine);
                 }
-                System.out.println(response.toString());
+                System.out.println(buff.toString());
                 in.close();
-                return response.toString();
+                response = buff.toString();
             }
             else {
                 Log.d(TAG, "ERROR, getCall returned with response code " + Integer.toString(responseCode));
-                return "Failed";
-
+                response = "Failed";
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-
-        Log.d(TAG, "ERROR, no response code.");
-        return "Failed";
+        return response;
     }
 
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException{
@@ -117,8 +113,52 @@ public class HttpClient {
                 }
             }
             else {
-                response="";
+                Log.d(TAG, "ERROR, postCall returned with response code " + Integer.toString(responseCode));
+                response = "Failed";
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public String putCall(String apiString, String urlParameters, HashMap<String, String> putDataParams) {
+        URL url;
+        String response = "";
+
+        String urlString = baseURL + apiString + "?" + urlParameters;
+        System.out.println("StringBoi= " + urlString);
+        try {
+            url = new URL(urlString);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("PUT");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getPostDataString(putDataParams));
+
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode=conn.getResponseCode();
+            System.out.println("Response code= " + responseCode);
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    response+=line;
+                }
+            }
+            else {
+                Log.d(TAG, "ERROR, getCall returned with response code " + Integer.toString(responseCode));
+                response = "Failed";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,7 +166,4 @@ public class HttpClient {
 
         return response;
     }
-
-
-
 }
