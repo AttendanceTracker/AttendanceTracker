@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AttendanceTracker_Web.Models.DB;
+using System.Data;
 
 namespace AttendanceTracker_Web.Tests.Models.DAL
 {
@@ -15,6 +16,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         Device genericDevice1;
         Device genericDevice2;
         Attendance genericAttendance1;
+        Attendance genericAttendance2;
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
         [TestInitialize]
@@ -29,11 +31,14 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
 
             genericDevice1 = dbFactory.Device(5, 5);
             genericDevice2 = dbFactory.Device(8, 8);
-            genericAttendance1 = dbFactory.Attendance(0, 1, 5, DateTime.Now, 33.216111, -87.538623);
+
+            genericAttendance1 = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
+            genericAttendance2 = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
 
             AddDBTestStudent(genericStudent1);
             AddDBTestStudent(genericStudent3);
             AddDBTestDevice(genericDevice1);
+            AddDBTestAttendance(ref genericAttendance1);
         }
 
         void AddDBTestStudent(Student student)
@@ -64,23 +69,23 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             }
         }
 
-        void AddDBTestAttendance(Attendance attendance)
+        void AddDBTestAttendance(ref Attendance attendance)
         {
             try
             {
-                var queryString = string.Format("exec Attendance_GetAttendanceByID {0};", attendance.ClassID, attendance.StudentID, attendance.attendedDate, attendance.latitude, attendance.longitude);
-                var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                var addQueryString = "exec Attendance_AddAttendance @classID, @studentID, @attendedDate, @latitude, @longitude";
+                var addQuery = new Query(addQueryString, connectionString);
+                addQuery.AddParameter("@classID", attendance.ClassID);
+                addQuery.AddParameter("@studentID", attendance.StudentID);
+                addQuery.AddParameter("@attendedDate", attendance.attendedDate);
+                addQuery.AddParameter("@latitude", attendance.latitude);
+                addQuery.AddParameter("@longitude", attendance.longitude);
+                attendance.id = (long)addQuery.ExecuteScalar();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-        }
-
-        void RemoveDBTestAttendance(Attendance attendance)
-        {
-            throw new NotImplementedException();
         }
 
         [TestCleanup]
@@ -91,6 +96,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             RemoveDBTestStudent(genericStudent3.CWID);
             RemoveDBTestDevice(genericDevice1.DeviceID);
             RemoveDBTestDevice(genericDevice2.DeviceID);
+            RemoveDBTestAttendance(genericAttendance1.id);
         }
 
         void RemoveDBTestStudent(long cwid)
@@ -112,6 +118,20 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             try
             {
                 var queryString = string.Format("exec Devices_RemoveDevice {0}", imei);
+                var query = new Query(queryString, connectionString);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void RemoveDBTestAttendance(long id)
+        {
+            try
+            {
+                var queryString = string.Format("exec Attendance_RemoveAttendance {0}", id);
                 var query = new Query(queryString, connectionString);
                 query.ExecuteQuery();
             }
@@ -209,7 +229,9 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         [TestMethod]
         public void AddAttendance()
         {
-
+            var expected = genericAttendance2;
+            var actual = dbHelper.AddAttendance(expected);
+            AssertAreAttendancesEqual(expected, actual);
         }
 
         [TestMethod]
@@ -230,11 +252,20 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
 
         private void AssertAreAttendancesEqual(Attendance expected, Attendance actual)
         {
+            var span = new TimeSpan(0, 1, 0);
+            var expectedDate = RoundDateTime(expected.attendedDate, span);
+            var actualDate = RoundDateTime(actual.attendedDate, span);
             Assert.AreEqual(expected.ClassID, actual.ClassID);
             Assert.AreEqual(expected.StudentID, actual.StudentID);
-            Assert.AreEqual(expected.attendedDate, actual.attendedDate);
-            Assert.AreEqual(expected.latitude, actual.longitude);
+            Assert.AreEqual(expectedDate, actualDate);
+            Assert.AreEqual(expected.latitude, actual.latitude);
             Assert.AreEqual(expected.longitude, actual.longitude);
+        }
+
+        private DateTime RoundDateTime(DateTime date, TimeSpan span)
+        {
+            long ticks = (date.Ticks + (span.Ticks / 2) + 1) / span.Ticks;
+            return new DateTime(ticks * span.Ticks);
         }
     }
 }

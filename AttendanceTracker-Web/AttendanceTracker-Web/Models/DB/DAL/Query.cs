@@ -11,20 +11,22 @@ namespace AttendanceTracker_Web.Models.DB
     {
         private string connectionString;
         private string queryString;
+        private List<SqlParameter> parameters;
 
         public Query(string queryString, string connectionString)
         {
             this.connectionString = connectionString;
             this.queryString = queryString;
+            parameters = new List<SqlParameter>();
+        }
+
+        public void AddParameter(string parameterName, object value)
+        {
+            var parameter = new SqlParameter(parameterName, value);
+            parameters.Add(parameter);
         }
 
         public DataTable ExecuteQuery()
-        {
-            var emptyDictionary = new Dictionary<string, object>();
-            return ExecuteQuery(emptyDictionary);
-        }
-
-        public DataTable ExecuteQuery(Dictionary<string, object> parameters)
         {
             var resultTable = new DataTable();
             using (var connection = new SqlConnection(connectionString))
@@ -32,7 +34,7 @@ namespace AttendanceTracker_Web.Models.DB
             {
                 foreach (var param in parameters)
                 {
-                    command.Parameters.AddWithValue(param.Key, param.Value);
+                    command.Parameters.Add(param);
                 }
 
                 connection.Open();
@@ -41,6 +43,23 @@ namespace AttendanceTracker_Web.Models.DB
                 reader.Close();
             }
             return resultTable;
+        }
+
+        public object ExecuteScalar()
+        {
+            object result = null;
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand(queryString, connection))
+            {
+                foreach (var param in parameters)
+                {
+                    command.Parameters.Add(param);
+                }
+
+                connection.Open();
+                result = command.ExecuteScalar();
+            }
+            return result;
         }
     }
 }

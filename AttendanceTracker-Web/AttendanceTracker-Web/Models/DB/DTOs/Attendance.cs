@@ -11,7 +11,7 @@ namespace AttendanceTracker_Web.Models.DB
         public long ClassID { get; set; }
         public long StudentID { get; set; }
         public DateTime attendedDate { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public decimal latitude { get; set; }
+        public decimal longitude { get; set; }
     }
 }

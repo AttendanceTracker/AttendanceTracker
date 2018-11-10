@@ -25,7 +25,7 @@ namespace AttendanceTracker_Web.Models.DB
             return dto;
         }
 
-        public Attendance Attendance(long id, long classID, long studentID, DateTime attendedDate, double latitude, double longitude)
+        public Attendance Attendance(long id, long classID, long studentID, DateTime attendedDate, decimal latitude, decimal longitude)
         {
             var dto = new Attendance();
             dto.id = id;

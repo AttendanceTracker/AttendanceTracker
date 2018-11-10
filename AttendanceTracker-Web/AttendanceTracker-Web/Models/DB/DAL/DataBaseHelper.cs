@@ -122,10 +122,16 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override Attendance AddAttendance(Attendance attendance)
         {
-            var addQueryString = string.Format("exec Attendance_GetAttendanceByID {0};", attendance.ClassID, attendance.StudentID, attendance.attendedDate, attendance.latitude, attendance.longitude);
-            ExecuteStoredProcedure(addQueryString);
+            var addQueryString = "exec Attendance_AddAttendance @classID, @studentID, @attendedDate, @latitude, @longitude";
+            var addQuery = new Query(addQueryString, connectionString);
+            addQuery.AddParameter("@classID", attendance.ClassID);
+            addQuery.AddParameter("@studentID", attendance.StudentID);
+            addQuery.AddParameter("@attendedDate", attendance.attendedDate);
+            addQuery.AddParameter("@latitude", attendance.latitude);
+            addQuery.AddParameter("@longitude", attendance.longitude);
+            var id = (long)addQuery.ExecuteScalar();
 
-            var getQueryString = string.Format("exec Attendance_GetAttendanceByID {0};", attendance.id);
+            var getQueryString = string.Format("exec Attendance_GetAttendanceByID {0};", id);
             var result = GetAttendance(getQueryString);
             return result;
         }
@@ -169,8 +175,8 @@ namespace AttendanceTracker_Web.Models.DB
             var classIDResult = row.Field<long>(1);
             var studentIDResult = row.Field<long>(2);
             var attendedDateResult = row.Field<DateTime>(3);
-            var latitudeResult = row.Field<double>(4);
-            var longitudeResult = row.Field<double>(5);
+            var latitudeResult = row.Field<decimal>(4);
+            var longitudeResult = row.Field<decimal>(5);
             var resultAttendance = dbFactory.Attendance(idResult, classIDResult, studentIDResult, attendedDateResult, latitudeResult, longitudeResult);
             return resultAttendance;
         }
