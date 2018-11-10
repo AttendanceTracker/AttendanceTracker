@@ -109,7 +109,7 @@ namespace AttendanceTracker_Web.Models.DB
         {
             if (id == 1)
             {
-                var qrCode = dbFactory.QRCode(id, 3, "testasdf", DateTime.Now, 10);
+                var qrCode = dbFactory.QRCode(id, 3, "testasdf", DateTime.Now, 1000);
                 return qrCode;
             }
             return null;
@@ -119,7 +119,7 @@ namespace AttendanceTracker_Web.Models.DB
         {
             if (payload != "wrong")
             {
-                var qrCode = dbFactory.QRCode(0, 3, payload, DateTime.Now, 10);
+                var qrCode = dbFactory.QRCode(0, 3, payload, DateTime.Now, 10000);
                 return qrCode;
             }
             return null;

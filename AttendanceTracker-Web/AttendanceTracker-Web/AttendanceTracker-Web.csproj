@@ -185,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DateTimeExtensions.cs" />
     <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
     <Compile Include="Models\DB\DAL\DataBaseHelper.cs" />
     <Compile Include="Models\DB\DAL\DataSource.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Models\DB\DTOs\QRCode.cs" />
     <Compile Include="Models\DB\DTOs\Student.cs" />
     <Compile Include="Models\StringExtensions.cs" />
+    <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />
     <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetStudentResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />

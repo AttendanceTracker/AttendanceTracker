@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AttendanceTracker_Web.Models.DB;
+using AttendanceTracker_Web.Models;
 using System.Data;
 using System.Collections.Generic;
 
@@ -320,8 +321,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         private void AssertAreAttendancesEqual(Attendance expected, Attendance actual)
         {
             var span = new TimeSpan(0, 1, 0);
-            var expectedDate = RoundDateTime(expected.attendedDate, span);
-            var actualDate = RoundDateTime(actual.attendedDate, span);
+            var expectedDate = expected.attendedDate.Round(span);
+            var actualDate = actual.attendedDate.Round(span);
             Assert.AreEqual(expected.ClassID, actual.ClassID);
             Assert.AreEqual(expected.StudentID, actual.StudentID);
             Assert.AreEqual(expectedDate, actualDate);
@@ -356,18 +357,12 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         private void AssertAreQRCodesEqual(QRCode expected, QRCode actual)
         {
             var span = new TimeSpan(0, 1, 0);
-            var expectedDate = RoundDateTime(expected.Issued, span);
-            var actualDate = RoundDateTime(actual.Issued, span);
+            var expectedDate = expected.Issued.Round(span);
+            var actualDate = actual.Issued.Round(span);
             Assert.AreEqual(expected.ClassID, actual.ClassID);
             Assert.AreEqual(expected.Payload, actual.Payload);
             Assert.AreEqual(expectedDate, actualDate);
             Assert.AreEqual(expected.ExpiresIn, actual.ExpiresIn);
-        }
-
-        private DateTime RoundDateTime(DateTime date, TimeSpan span)
-        {
-            long ticks = (date.Ticks + (span.Ticks / 2) + 1) / span.Ticks;
-            return new DateTime(ticks * span.Ticks);
         }
     }
 }

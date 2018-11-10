@@ -218,8 +218,12 @@ namespace AttendanceTracker_Web.Models.DB
         {
             var queryString = string.Format("exec QRCodes_GetQRCodeByID {0};", id);
             var results = ExecuteStoredProcedure(queryString);
-            var qrCodeResults = BuildQRCode(results.Rows[0]);
-            return qrCodeResults;
+            if (results.Rows.Count != 0)
+            {
+                var qrCodeResults = BuildQRCode(results.Rows[0]);
+                return qrCodeResults;
+            }
+            return null;
         }
 
         public override QRCode GetQRCode(long classID, string payload)
@@ -229,8 +233,12 @@ namespace AttendanceTracker_Web.Models.DB
             query.AddParameter("@class_id", classID);
             query.AddParameter("@payload", payload);
             var results = query.ExecuteQuery();
-            var qrCodeResults = BuildQRCode(results.Rows[0]);
-            return qrCodeResults;
+            if (results.Rows.Count != 0)
+            {
+                var qrCodeResults = BuildQRCode(results.Rows[0]);
+                return qrCodeResults;
+            }
+            return null;
         }
 
         private QRCode BuildQRCode(DataRow row)

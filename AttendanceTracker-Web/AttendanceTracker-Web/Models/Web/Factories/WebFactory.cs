@@ -94,5 +94,15 @@ namespace AttendanceTracker_Web.Models.Web
             dto.Email = email;
             return dto;
         }
+
+        public CheckInRequest CheckInRequest(long studentID, string payload, decimal latitude, decimal longitude)
+        {
+            var dto = new CheckInRequest();
+            dto.StudentID = studentID;
+            dto.Payload = payload;
+            dto.Latitude = latitude;
+            dto.Longitude = longitude;
+            return dto;
+        }
     }
 }
