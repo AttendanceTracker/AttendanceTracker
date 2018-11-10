@@ -23,7 +23,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             long imei = 1;
             long studentID = 1;
             var device = dbFactory.Device(imei, studentID);
-            var dto = dal.AddDevice(device);
+            var dto = dal.Source.AddDevice(device);
             Assert.AreEqual(imei, dto.DeviceID);
             Assert.AreEqual(studentID, dto.StudentID);
         }
@@ -37,7 +37,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             string email = "jdoe@a.com";
             var student = dbFactory.Student(cwid, firstName, lastName, email);
 
-            var dto = dal.AddStudent(student);
+            var dto = dal.Source.AddStudent(student);
 
             Assert.AreEqual(cwid, dto.CWID);
             Assert.AreEqual(firstName, dto.FirstName);

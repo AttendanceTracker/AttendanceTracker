@@ -24,7 +24,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                var student = dal.GetStudent(cwid);
+                var student = dal.Source.GetStudent(cwid);
                 if (student != null)
                 {
                     var response = webFactory.GetStudentResponse(student.CWID, student.FirstName, student.LastName, student.Email);
@@ -44,7 +44,7 @@ namespace AttendanceTracker_Web.Controllers.API
             try
             {
                 var student = dbFactory.Student(request.CWID, request.FirstName, request.LastName, request.Email);
-                var resultStudent = dal.AddStudent(student);
+                var resultStudent = dal.Source.AddStudent(student);
                 var response = webFactory.RegisterStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
             }
@@ -60,7 +60,7 @@ namespace AttendanceTracker_Web.Controllers.API
             try
             {
                 var student = dbFactory.Student(cwid, request.FirstName, request.LastName, request.Email);
-                var resultStudent = dal.UpdateStudent(student);
+                var resultStudent = dal.Source.UpdateStudent(student);
                 var response = webFactory.UpdateStudentResponse(resultStudent.CWID, resultStudent.FirstName, resultStudent.LastName, resultStudent.Email);
                 return Ok(response);
             }
