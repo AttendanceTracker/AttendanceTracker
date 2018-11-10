@@ -122,7 +122,7 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override Attendance AddAttendance(Attendance attendance)
         {
-            var addQueryString = "exec Attendance_AddAttendance @classID, @studentID, @attendedDate, @latitude, @longitude";
+            var addQueryString = "exec Attendance_AddAttendance @classID, @studentID, @attendedDate, @latitude, @longitude;";
             var addQuery = new Query(addQueryString, connectionString);
             addQuery.AddParameter("@classID", attendance.ClassID);
             addQuery.AddParameter("@studentID", attendance.StudentID);
@@ -143,18 +143,25 @@ namespace AttendanceTracker_Web.Models.DB
             return result;
         }
 
-        public override Attendance GetAttendance(DateTime date)
+        public override List<Attendance> GetAttendance(DateTime date)
         {
-            var queryString = string.Format("exec Attendance_GetAttendanceByDateRange {0};", date);
-            var result = GetAttendance(queryString);
-            return result;
+            var queryString = "exec Attendance_GetAttendanceByDate @date;";
+            var addQuery = new Query(queryString, connectionString);
+            addQuery.AddParameter("@date", date);
+            var results = addQuery.ExecuteQuery();
+            var attendanceResults = BuildAttendanceList(results);
+            return attendanceResults;
         }
 
-        public override Attendance GetAttendance(DateTime start, DateTime end)
+        public override List<Attendance> GetAttendance(DateTime start, DateTime end)
         {
-            var queryString = string.Format("exec Attendance_GetAttendanceByDateRange {0}, {1};", start, end);
-            var result = GetAttendance(queryString);
-            return result;
+            var queryString = "exec Attendance_GetAttendanceByDateRange @start_date, @end_date;";
+            var addQuery = new Query(queryString, connectionString);
+            addQuery.AddParameter("@start_date", start);
+            addQuery.AddParameter("@end_date", end);
+            var results = addQuery.ExecuteQuery();
+            var attendanceResults = BuildAttendanceList(results);
+            return attendanceResults;
         }
 
         private Attendance GetAttendance(string queryString)
@@ -167,6 +174,18 @@ namespace AttendanceTracker_Web.Models.DB
                 return resultAttendance;
             }
             return null;
+        }
+
+        private List<Attendance> BuildAttendanceList(DataTable table)
+        {
+            var results = new List<Attendance>();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                var row = table.Rows[i];
+                var attendance = BuildAttendance(row);
+                results.Add(attendance);
+            }
+            return results;
         }
 
         private Attendance BuildAttendance(DataRow row)

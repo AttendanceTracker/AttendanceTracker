@@ -17,7 +17,7 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract void RemoveStudent(long cwid);
         public abstract Attendance AddAttendance(Attendance attendance);
         public abstract Attendance GetAttendance(long id);
-        public abstract Attendance GetAttendance(DateTime date);
-        public abstract Attendance GetAttendance(DateTime start, DateTime end);
+        public abstract List<Attendance> GetAttendance(DateTime date);
+        public abstract List<Attendance> GetAttendance(DateTime start, DateTime end);
     }
 }

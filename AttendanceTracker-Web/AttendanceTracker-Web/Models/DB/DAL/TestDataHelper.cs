@@ -71,12 +71,12 @@ namespace AttendanceTracker_Web.Models.DB
             throw new NotImplementedException();
         }
 
-        public override Attendance GetAttendance(DateTime date)
+        public override List<Attendance> GetAttendance(DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public override Attendance GetAttendance(DateTime start, DateTime end)
+        public override List<Attendance> GetAttendance(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }

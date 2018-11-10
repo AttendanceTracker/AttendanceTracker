@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AttendanceTracker_Web.Models.DB;
 using System.Data;
+using System.Collections.Generic;
 
 namespace AttendanceTracker_Web.Tests.Models.DAL
 {
@@ -237,17 +238,44 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         [TestMethod]
         public void GetAttendanceByID()
         {
-
+            var expected = genericAttendance1;
+            var actual = dbHelper.GetAttendance(genericAttendance1.id);
+            AssertAreAttendancesEqual(expected, actual);
         }
 
         [TestMethod]
         public void GetAttendanceByDate()
         {
+            var expectedList = new List<Attendance>();
+            expectedList.Add(genericAttendance1);
+            var actualList = dbHelper.GetAttendance(genericAttendance1.attendedDate);
+            AssertAreAttendanceListsEqual(expectedList, actualList);
         }
 
         [TestMethod]
         public void GetAttendanceByDateRange()
         {
+            var expectedList = new List<Attendance>();
+            var actualList = dbHelper.GetAttendance(genericAttendance1.attendedDate, genericAttendance1.attendedDate.AddSeconds(1));
+            AssertAreAttendanceListsEqual(expectedList, actualList);
+        }
+
+        private void AssertAreAttendanceListsEqual(List<Attendance> expectedList, List<Attendance> actualList)
+        {
+            if (expectedList.Count == actualList.Count)
+            {
+                for (int i = 0; i < actualList.Count; i++)
+                {
+                    var expected = expectedList[i];
+                    var actual = actualList[i];
+                    AssertAreAttendancesEqual(expected, actual);
+                }
+            }
+            else
+            {
+                Assert.Fail();
+            }
+
         }
 
         private void AssertAreAttendancesEqual(Attendance expected, Attendance actual)
