@@ -67,5 +67,25 @@ namespace AttendanceTracker_Web.Models.DB
         {
             Source.RemoveDevice(cwid);
         }
+
+        public  Attendance AddAttendance(Attendance attendance)
+        {
+            return Source.AddAttendance(attendance);
+        }
+
+        public Attendance GetAttendance(long id)
+        {
+            return Source.GetAttendance(id);
+        }
+
+        public List<Attendance> GetAttendance(DateTime date)
+        {
+            return Source.GetAttendance(date);
+        }
+
+        public List<Attendance> GetAttendance(DateTime start, DateTime end)
+        {
+            return Source.GetAttendance(start, end);
+        }
     }
 }

@@ -7,12 +7,12 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
     [TestClass]
     public class DataBaseFactoryTest
     {
-        DataBaseFactory dbDTOFactory;
+        DataBaseFactory dbFactory;
 
         [TestInitialize]
         public void Setup()
         {
-            dbDTOFactory = new DataBaseFactory();
+            dbFactory = new DataBaseFactory();
         }
 
         [TestMethod]
@@ -20,7 +20,7 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
         {
             long deviceID = 1;
             long studentID = 1;
-            var dto = dbDTOFactory.Device(deviceID, studentID);
+            var dto = dbFactory.Device(deviceID, studentID);
             var expectedDTO = new Device();
             expectedDTO.DeviceID = deviceID;
             expectedDTO.StudentID = studentID;
@@ -36,7 +36,7 @@ namespace AttendanceTracker_Web.Tests.Models.Factories
             string lastName = "Doe";
             string email = "jdoe@a.com";
 
-            var dto = dbDTOFactory.Student(cwid, firstName, lastName, email);
+            var dto = dbFactory.Student(cwid, firstName, lastName, email);
 
             Assert.AreEqual(cwid, dto.CWID);
             Assert.AreEqual(firstName, dto.FirstName);

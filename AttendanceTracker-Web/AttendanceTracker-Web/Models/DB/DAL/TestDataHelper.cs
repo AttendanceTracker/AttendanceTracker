@@ -7,11 +7,11 @@ namespace AttendanceTracker_Web.Models.DB
 {
     public class TestDataHelper : DataSource
     {
-        DataBaseFactory dbDTOFactory;
+        DataBaseFactory dbFactory;
 
         public TestDataHelper()
         {
-            dbDTOFactory = new DataBaseFactory();
+            dbFactory = new DataBaseFactory();
         }
 
         public override Device AddDevice(Device device)
@@ -28,7 +28,7 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override Device GetDevice(long imei)
         {
-            var resultDevice = dbDTOFactory.Device(imei, imei);
+            var resultDevice = dbFactory.Device(imei, imei);
             return resultDevice;
         }
 
@@ -51,7 +51,7 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override Student GetStudent(long cwid)
         {
-            var student = dbDTOFactory.Student(cwid, "Jane", "Doe", "jdoe@a.com");
+            var student = dbFactory.Student(cwid, "Jane", "Doe", "jdoe@a.com");
             return student;
         }
 
@@ -66,19 +66,37 @@ namespace AttendanceTracker_Web.Models.DB
             return resultAttendance;
         }
 
-        public override Attendance GetAttendance(long id)
-        {
-            throw new NotImplementedException();
-        }
-
         public override List<Attendance> GetAttendance(DateTime date)
         {
-            throw new NotImplementedException();
+            if (date.Year >= 2018)
+            {
+                var attendance = GetAttendance(1);
+                var list = new List<Attendance>();
+                list.Add(attendance);
+                return list;
+            }
+            return null;
         }
 
         public override List<Attendance> GetAttendance(DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            if (start.Year == end.Year)
+            {
+                var attendance = GetAttendance(1);
+                var list = new List<Attendance>();
+                list.Add(attendance);
+                return list;
+            }
+            return null;
+        }
+
+        public override Attendance GetAttendance(long id)
+        {
+            if (id == 1) {
+                var attendance = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
+                return attendance;
+            }
+            return null;
         }
     }
 }

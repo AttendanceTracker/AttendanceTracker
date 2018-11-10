@@ -8,29 +8,21 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
     public class DataAccessLayerTest
     {
         DataAccessLayer dal;
-        DataBaseFactory dbDTOFactory;
+        DataBaseFactory dbFactory;
 
         [TestInitialize]
         public void Setup()
         {
             dal = new DataAccessLayer(DALDataSource.Test);
-            dbDTOFactory = new DataBaseFactory();
+            dbFactory = new DataBaseFactory();
         }
-
-        //[TestMethod]
-        //public void DoesDeviceExist()
-        //{
-        //    long imei = 1;
-        //    var doesExist = dal.DoesDeviceExist(imei);
-        //    Assert.IsTrue(doesExist);
-        //}
 
         [TestMethod]
         public void AddDevice()
         {
             long imei = 1;
             long studentID = 1;
-            var device = dbDTOFactory.Device(imei, studentID);
+            var device = dbFactory.Device(imei, studentID);
             var dto = dal.AddDevice(device);
             Assert.AreEqual(imei, dto.DeviceID);
             Assert.AreEqual(studentID, dto.StudentID);
@@ -43,7 +35,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             string firstName = "Jane";
             string lastName = "Doe";
             string email = "jdoe@a.com";
-            var student = dbDTOFactory.Student(cwid, firstName, lastName, email);
+            var student = dbFactory.Student(cwid, firstName, lastName, email);
 
             var dto = dal.AddStudent(student);
 
