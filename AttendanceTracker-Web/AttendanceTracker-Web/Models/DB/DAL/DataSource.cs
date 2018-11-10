@@ -19,5 +19,8 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract Attendance GetAttendance(long id);
         public abstract List<Attendance> GetAttendance(DateTime date);
         public abstract List<Attendance> GetAttendance(DateTime start, DateTime end);
+        public abstract QRCode AddQRCode(QRCode qrCode);
+        public abstract QRCode GetQRCode(long id);
+        public abstract QRCode GetQRCode(long classID, string payload);
     }
 }

@@ -200,6 +200,50 @@ namespace AttendanceTracker_Web.Models.DB
             return resultAttendance;
         }
 
+        public override QRCode AddQRCode(QRCode qrCode)
+        {
+            var addQueryString = "exec QRCodes_AddQRCode @classID, @payload, @issued, @expires_in;";
+            var addQuery = new Query(addQueryString, connectionString);
+            addQuery.AddParameter("@classID", qrCode.ClassID);
+            addQuery.AddParameter("@payload", qrCode.Payload);
+            addQuery.AddParameter("@issued", qrCode.Issued);
+            addQuery.AddParameter("@expires_in", qrCode.ExpiresIn);
+            var id = (long)addQuery.ExecuteScalar();
+
+            var qrCodeResult = GetQRCode(id);
+            return qrCodeResult;
+        }
+
+        public override QRCode GetQRCode(long id)
+        {
+            var queryString = string.Format("exec QRCodes_GetQRCodeByID {0};", id);
+            var results = ExecuteStoredProcedure(queryString);
+            var qrCodeResults = BuildQRCode(results.Rows[0]);
+            return qrCodeResults;
+        }
+
+        public override QRCode GetQRCode(long classID, string payload)
+        {
+            var queryString = "exec QRCodes_GetQRCode @class_id, @payload;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.AddParameter("@payload", payload);
+            var results = query.ExecuteQuery();
+            var qrCodeResults = BuildQRCode(results.Rows[0]);
+            return qrCodeResults;
+        }
+
+        private QRCode BuildQRCode(DataRow row)
+        {
+            var idResult = row.Field<long>(0);
+            var classIDResult = row.Field<long>(1);
+            var payloadResult = row.Field<string>(2);
+            var issuedResult = row.Field<DateTime>(3);
+            var expiresIn = row.Field<int>(4);
+            var resultQRCode = dbFactory.QRCode(idResult, classIDResult, payloadResult, issuedResult, expiresIn);
+            return resultQRCode;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

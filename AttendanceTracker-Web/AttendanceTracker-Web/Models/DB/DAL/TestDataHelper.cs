@@ -98,5 +98,31 @@ namespace AttendanceTracker_Web.Models.DB
             }
             return null;
         }
+
+        public override QRCode AddQRCode(QRCode qrCode)
+        {
+            var resultQRCode = qrCode;
+            return resultQRCode;
+        }
+
+        public override QRCode GetQRCode(long id)
+        {
+            if (id == 1)
+            {
+                var qrCode = dbFactory.QRCode(id, 3, "testasdf", DateTime.Now, 10);
+                return qrCode;
+            }
+            return null;
+        }
+
+        public override QRCode GetQRCode(long classID, string payload)
+        {
+            if (payload != "wrong")
+            {
+                var qrCode = dbFactory.QRCode(0, 3, payload, DateTime.Now, 10);
+                return qrCode;
+            }
+            return null;
+        }
     }
 }

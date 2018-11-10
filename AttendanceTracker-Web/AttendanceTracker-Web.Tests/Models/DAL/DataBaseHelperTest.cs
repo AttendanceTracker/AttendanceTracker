@@ -18,6 +18,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         Device genericDevice2;
         Attendance genericAttendance1;
         Attendance genericAttendance2;
+        QRCode genericQRCode1;
+        QRCode genericQRCode2;
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
         [TestInitialize]
@@ -36,10 +38,14 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             genericAttendance1 = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
             genericAttendance2 = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
 
+            genericQRCode1 = dbFactory.QRCode(0, 3, "testasdf", DateTime.Now, 10);
+            genericQRCode2 = dbFactory.QRCode(0, 3, "testasdf", DateTime.Now, 10);
+
             AddDBTestStudent(genericStudent1);
             AddDBTestStudent(genericStudent3);
             AddDBTestDevice(genericDevice1);
             AddDBTestAttendance(ref genericAttendance1);
+            AddDBTestQRCode(ref genericQRCode1);
         }
 
         void AddDBTestStudent(Student student)
@@ -81,7 +87,25 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 addQuery.AddParameter("@attendedDate", attendance.attendedDate);
                 addQuery.AddParameter("@latitude", attendance.latitude);
                 addQuery.AddParameter("@longitude", attendance.longitude);
-                attendance.id = (long)addQuery.ExecuteScalar();
+                attendance.ID = (long)addQuery.ExecuteScalar();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void AddDBTestQRCode(ref QRCode qrCode)
+        {
+            try
+            {
+                var addQueryString = "exec QRCodes_AddQRCode @classID, @payload, @issued, @expires_in;";
+                var addQuery = new Query(addQueryString, connectionString);
+                addQuery.AddParameter("@classID", qrCode.ClassID);
+                addQuery.AddParameter("@payload", qrCode.Payload);
+                addQuery.AddParameter("@issued", qrCode.Issued);
+                addQuery.AddParameter("@expires_in", qrCode.ExpiresIn);
+                qrCode.ID = (long)addQuery.ExecuteScalar();
             }
             catch (Exception e)
             {
@@ -97,7 +121,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             RemoveDBTestStudent(genericStudent3.CWID);
             RemoveDBTestDevice(genericDevice1.DeviceID);
             RemoveDBTestDevice(genericDevice2.DeviceID);
-            RemoveDBTestAttendance(genericAttendance1.id);
+            RemoveDBTestAttendance(genericAttendance1.ID);
+            RemoveDBTestQRCode(genericQRCode1.ID);
         }
 
         void RemoveDBTestStudent(long cwid)
@@ -133,6 +158,20 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             try
             {
                 var queryString = string.Format("exec Attendance_RemoveAttendance {0}", id);
+                var query = new Query(queryString, connectionString);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void RemoveDBTestQRCode(long id)
+        {
+            try
+            {
+                var queryString = string.Format("exec QRCodes_RemoveQRCode {0}", id);
                 var query = new Query(queryString, connectionString);
                 query.ExecuteQuery();
             }
@@ -239,7 +278,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         public void GetAttendanceByID()
         {
             var expected = genericAttendance1;
-            var actual = dbHelper.GetAttendance(genericAttendance1.id);
+            var actual = dbHelper.GetAttendance(genericAttendance1.ID);
             AssertAreAttendancesEqual(expected, actual);
         }
 
@@ -288,6 +327,41 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             Assert.AreEqual(expectedDate, actualDate);
             Assert.AreEqual(expected.latitude, actual.latitude);
             Assert.AreEqual(expected.longitude, actual.longitude);
+        }
+
+        [TestMethod]
+        public void AddQRCode()
+        {
+            var expected = genericQRCode2;
+            var actual = dbHelper.AddQRCode(expected);
+            AssertAreQRCodesEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetQRCodeByID()
+        {
+            var expected = genericQRCode1;
+            var actual = dbHelper.GetQRCode(genericQRCode1.ID);
+            AssertAreQRCodesEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetQRCode()
+        {
+            var expected = genericQRCode1;
+            var actual = dbHelper.GetQRCode(expected.ClassID, expected.Payload);
+            AssertAreQRCodesEqual(expected, actual);
+        }
+
+        private void AssertAreQRCodesEqual(QRCode expected, QRCode actual)
+        {
+            var span = new TimeSpan(0, 1, 0);
+            var expectedDate = RoundDateTime(expected.Issued, span);
+            var actualDate = RoundDateTime(actual.Issued, span);
+            Assert.AreEqual(expected.ClassID, actual.ClassID);
+            Assert.AreEqual(expected.Payload, actual.Payload);
+            Assert.AreEqual(expectedDate, actualDate);
+            Assert.AreEqual(expected.ExpiresIn, actual.ExpiresIn);
         }
 
         private DateTime RoundDateTime(DateTime date, TimeSpan span)

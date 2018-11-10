@@ -28,12 +28,23 @@ namespace AttendanceTracker_Web.Models.DB
         public Attendance Attendance(long id, long classID, long studentID, DateTime attendedDate, decimal latitude, decimal longitude)
         {
             var dto = new Attendance();
-            dto.id = id;
+            dto.ID = id;
             dto.ClassID = classID;
             dto.StudentID = studentID;
             dto.attendedDate = attendedDate;
             dto.latitude = latitude;
             dto.longitude = longitude;
+            return dto;
+        }
+
+        public QRCode QRCode(long id, long classID, string payload, DateTime issued, int expiresIn)
+        {
+            var dto = new QRCode();
+            dto.ID = id;
+            dto.ClassID = classID;
+            dto.Payload = payload;
+            dto.Issued = issued;
+            dto.ExpiresIn = expiresIn;
             return dto;
         }
     }
