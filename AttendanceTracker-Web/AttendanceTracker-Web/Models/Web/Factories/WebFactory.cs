@@ -104,5 +104,16 @@ namespace AttendanceTracker_Web.Models.Web
             dto.Longitude = longitude;
             return dto;
         }
+
+        public CreateAccountRequest CreateAccountRequest(long cwid, string firstName, string lastName, string email, string password)
+        {
+            var dto = new CreateAccountRequest();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Email = email;
+            dto.Password = password;
+            return dto;
+        }
     }
 }

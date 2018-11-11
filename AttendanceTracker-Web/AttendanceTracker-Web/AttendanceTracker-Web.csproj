@@ -200,6 +200,7 @@
     <Compile Include="Models\DB\DTOs\Teacher.cs" />
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />
+    <Compile Include="Models\Web\DTOs\CreateAccountRequest.cs" />
     <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetStudentResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />
