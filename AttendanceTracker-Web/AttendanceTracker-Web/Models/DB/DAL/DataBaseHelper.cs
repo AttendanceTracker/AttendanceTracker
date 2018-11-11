@@ -352,6 +352,41 @@ namespace AttendanceTracker_Web.Models.DB
             return resultAccount;
         }
 
+        public override Teacher AddTeacher(Teacher teacher)
+        {
+            var queryString = "exec Teachers_AddTeacher @cwid, @first_name, @last_name, @email;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@cwid", teacher.CWID);
+            query.AddParameter("@first_name", teacher.FirstName);
+            query.AddParameter("@last_name", teacher.LastName);
+            query.AddParameter("@email", teacher.email);
+            query.ExecuteQuery();
+
+            var resultTeacher = GetTeacher(teacher.CWID);
+            return resultTeacher;
+        }
+
+        public override Teacher GetTeacher(long cwid)
+        {
+            var queryString = "exec Teachers_GetTeacher @cwid;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@cwid", cwid);
+            var results = query.ExecuteQuery();
+            var resultTeacher = BuildTeacher(results.Rows[0]);
+            return resultTeacher;
+        }
+
+        private Teacher BuildTeacher(DataRow row)
+        {
+            var cwid = row.Field<long>(0);
+            var userID = row.Field<long>(1);
+            var firstName = row.Field<string>(2);
+            var lastName = row.Field<string>(3);
+            var email = row.Field<string>(4);
+            var resultTeacher = dbFactory.Teacher(cwid, userID, firstName, lastName, email);
+            return resultTeacher;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

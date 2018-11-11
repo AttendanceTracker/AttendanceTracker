@@ -154,5 +154,15 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override Teacher AddTeacher(Teacher teacher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Teacher GetTeacher(long cwid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
