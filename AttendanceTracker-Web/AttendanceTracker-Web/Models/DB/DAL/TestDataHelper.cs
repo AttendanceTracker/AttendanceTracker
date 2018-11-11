@@ -124,5 +124,45 @@ namespace AttendanceTracker_Web.Models.DB
             }
             return null;
         }
+
+        public override AccessToken AddAccessToken(AccessToken accessToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override AccessToken GetAccessToken(long userID, string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RemoveAccessToken(long userID, string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Account AddAccount(Account account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Account UpdateAccount(Account account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Account GetAccount(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Teacher AddTeacher(Teacher teacher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Teacher GetTeacher(long cwid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

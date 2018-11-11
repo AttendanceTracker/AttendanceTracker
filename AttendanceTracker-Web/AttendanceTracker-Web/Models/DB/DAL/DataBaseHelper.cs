@@ -252,6 +252,146 @@ namespace AttendanceTracker_Web.Models.DB
             return resultQRCode;
         }
 
+        public override AccessToken AddAccessToken(AccessToken accessToken)
+        {
+            var queryString = "exec Access_Tokens_AddAccess_Token @user_id, @token, @expires_in, @issued, @does_expire;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", accessToken.UserID);
+            query.AddParameter("@token", accessToken.Token);
+            query.AddParameter("@expires_in", accessToken.ExpiresIn);
+            query.AddParameter("@issued", accessToken.Issued);
+            query.AddParameter("@does_expire", accessToken.DoesExpire);
+            query.ExecuteQuery();
+
+            var insertedToken = GetAccessToken(accessToken.UserID, accessToken.Token);
+            return insertedToken;
+        }
+
+        public override AccessToken GetAccessToken(long userID, string token)
+        {
+            var queryString = "exec Access_Tokens_GetAccess_Token @user_id, @token";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", userID);
+            query.AddParameter("@token", token);
+            var results = query.ExecuteQuery();
+            if (results.Rows.Count != 0)
+            {
+                var resultToken = BuildAccessToken(results.Rows[0]);
+                return resultToken;
+            }
+            return null;
+        }
+
+        public override void RemoveAccessToken(long userID, string token)
+        {
+            var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", userID);
+            query.AddParameter("@token", token);
+            query.ExecuteQuery();
+        }
+
+        private AccessToken BuildAccessToken(DataRow row)
+        {
+            var userID = row.Field<long>(0);
+            var token = row.Field<string>(1);
+            var expiresIn = row.Field<int>(2);
+            var issued = row.Field<DateTime>(3);
+            var doesExpire = row.Field<bool>(4);
+            var resultToken = dbFactory.AccessToken(userID, token, expiresIn, issued, doesExpire);
+            return resultToken;
+        }
+
+        public override Account AddAccount(Account account)
+        {
+            var queryString = "exec Accounts_AddAccount @username, @password, @salt;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@username", account.username);
+            query.AddParameter("@password", account.password);
+            query.AddParameter("@salt", account.salt);
+            query.ExecuteQuery();
+
+            var resultAccount = GetAccount(account.username);
+            return resultAccount;
+        }
+
+        public override Account UpdateAccount(Account account)
+        {
+            var queryString = "exec Accounts_UpdateAccount @username, @password, @salt;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@username", account.username);
+            query.AddParameter("@password", account.password);
+            query.AddParameter("@salt", account.salt);
+            query.ExecuteQuery();
+
+            var resultAccount = GetAccount(account.username);
+            return resultAccount;
+        }
+
+        public override Account GetAccount(string username)
+        {
+            var queryString = "exec Accounts_GetAccount @username;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@username", username);
+            var results = query.ExecuteQuery();
+            if (results.Rows.Count != 0)
+            {
+                var resultAccount = BuildAccount(results.Rows[0]);
+                return resultAccount;
+            }
+            return null;
+        }
+
+        private Account BuildAccount(DataRow row)
+        {
+            var id = row.Field<long>(0);
+            var username = row.Field<string>(1);
+            var password = row.Field<string>(2);
+            var salt = row.Field<string>(3);
+            var resultAccount = dbFactory.Account(id, username, password, salt);
+            return resultAccount;
+        }
+
+        public override Teacher AddTeacher(Teacher teacher)
+        {
+            var queryString = "exec Teachers_AddTeacher @cwid, @user_id, @first_name, @last_name, @email;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@cwid", teacher.CWID);
+            query.AddParameter("@user_id", teacher.UserID);
+            query.AddParameter("@first_name", teacher.FirstName);
+            query.AddParameter("@last_name", teacher.LastName);
+            query.AddParameter("@email", teacher.email);
+            query.ExecuteQuery();
+
+            var resultTeacher = GetTeacher(teacher.CWID);
+            return resultTeacher;
+        }
+
+        public override Teacher GetTeacher(long cwid)
+        {
+            var queryString = "exec Teachers_GetTeacher @cwid;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@cwid", cwid);
+            var results = query.ExecuteQuery();
+            if (results.Rows.Count != 0)
+            {
+                var resultTeacher = BuildTeacher(results.Rows[0]);
+                return resultTeacher;
+            }
+            return null;
+        }
+
+        private Teacher BuildTeacher(DataRow row)
+        {
+            var cwid = row.Field<long>(0);
+            var userID = row.Field<long>(1);
+            var firstName = row.Field<string>(2);
+            var lastName = row.Field<string>(3);
+            var email = row.Field<string>(4);
+            var resultTeacher = dbFactory.Teacher(cwid, userID, firstName, lastName, email);
+            return resultTeacher;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

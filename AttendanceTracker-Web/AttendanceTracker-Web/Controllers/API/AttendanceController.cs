@@ -23,21 +23,21 @@ namespace AttendanceTracker_Web.Controllers.API
         [HttpPost]
         public IHttpActionResult CheckIn(long classID, [FromBody] CheckInRequest request)
         {
-            //try
-            //{
-            var qrCode = dal.Source.GetQRCode(classID, request.Payload);
-            if (IsQRCodeValid(qrCode))
+            try
             {
-                var attendance = dbFactory.Attendance(0, classID, request.StudentID, DateTime.Now, request.Latitude, request.Longitude);
-                dal.Source.AddAttendance(attendance);
-                return Ok(true);
+                var qrCode = dal.Source.GetQRCode(classID, request.Payload);
+                if (IsQRCodeValid(qrCode))
+                {
+                    var attendance = dbFactory.Attendance(0, classID, request.StudentID, DateTime.Now, request.Latitude, request.Longitude);
+                    dal.Source.AddAttendance(attendance);
+                    return Ok(true);
+                }
+                return Ok(false);
             }
-            return Ok(false);
-            //}
-            //catch (Exception)
-            //{
-            //    return BadRequest();
-            //}
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         private bool IsQRCodeValid(QRCode qrCode)

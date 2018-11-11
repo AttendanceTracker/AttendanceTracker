@@ -191,10 +191,13 @@
     <Compile Include="Models\DB\DAL\DataSource.cs" />
     <Compile Include="Models\DB\DAL\Query.cs" />
     <Compile Include="Models\DB\DAL\TestDataHelper.cs" />
+    <Compile Include="Models\DB\DTOs\AccessToken.cs" />
+    <Compile Include="Models\DB\DTOs\Account.cs" />
     <Compile Include="Models\DB\DTOs\Attendance.cs" />
     <Compile Include="Models\DB\DTOs\Device.cs" />
     <Compile Include="Models\DB\DTOs\QRCode.cs" />
     <Compile Include="Models\DB\DTOs\Student.cs" />
+    <Compile Include="Models\DB\DTOs\Teacher.cs" />
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />
     <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
@@ -232,8 +235,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Resources\qrcode.svg" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
