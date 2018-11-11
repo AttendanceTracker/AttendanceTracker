@@ -354,9 +354,10 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override Teacher AddTeacher(Teacher teacher)
         {
-            var queryString = "exec Teachers_AddTeacher @cwid, @first_name, @last_name, @email;";
+            var queryString = "exec Teachers_AddTeacher @cwid, @user_id, @first_name, @last_name, @email;";
             var query = new Query(queryString, connectionString);
             query.AddParameter("@cwid", teacher.CWID);
+            query.AddParameter("@user_id", teacher.UserID);
             query.AddParameter("@first_name", teacher.FirstName);
             query.AddParameter("@last_name", teacher.LastName);
             query.AddParameter("@email", teacher.email);
@@ -372,8 +373,12 @@ namespace AttendanceTracker_Web.Models.DB
             var query = new Query(queryString, connectionString);
             query.AddParameter("@cwid", cwid);
             var results = query.ExecuteQuery();
-            var resultTeacher = BuildTeacher(results.Rows[0]);
-            return resultTeacher;
+            if (results.Rows.Count != 0)
+            {
+                var resultTeacher = BuildTeacher(results.Rows[0]);
+                return resultTeacher;
+            }
+            return null;
         }
 
         private Teacher BuildTeacher(DataRow row)

@@ -21,10 +21,12 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         Attendance genericAttendance2;
         QRCode genericQRCode1;
         QRCode genericQRCode2;
-        AccessToken genericAccessToken1;
-        AccessToken genericAccessToken2;
         Account genericAccount1;
         Account genericAccount2;
+        AccessToken genericAccessToken1;
+        AccessToken genericAccessToken2;
+        Teacher genericTeacher1;
+        Teacher genericTeacher2;
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
         [TestInitialize]
@@ -62,6 +64,10 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             genericAccessToken1 = dbFactory.AccessToken(genericAccount1.ID, token1, 100000, date, true);
             genericAccessToken2 = dbFactory.AccessToken(genericAccount1.ID, token2, 100000, date, true);
             AddDBTestAccessToken(genericAccessToken1);
+
+            genericTeacher1 = dbFactory.Teacher(3, genericAccount1.ID, "john", "doe", genericAccount1.username);
+            genericTeacher2 = dbFactory.Teacher(4, genericAccount1.ID, "john", "doe", genericAccount1.username);
+            AddDBTestTeacher(genericTeacher1);
         }
 
         void AddDBTestStudent(Student student)
@@ -165,6 +171,25 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             }
         }
 
+        void AddDBTestTeacher(Teacher teacher)
+        {
+            try
+            {
+                var queryString = "exec Teachers_AddTeacher @cwid, @user_id, @first_name, @last_name, @email;";
+                var query = new Query(queryString, connectionString);
+                query.AddParameter("@cwid", teacher.CWID);
+                query.AddParameter("@user_id", teacher.UserID);
+                query.AddParameter("@first_name", teacher.FirstName);
+                query.AddParameter("@last_name", teacher.LastName);
+                query.AddParameter("@email", teacher.email);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         [TestCleanup]
         public void TearDown()
         {
@@ -177,6 +202,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             RemoveDBTestQRCode(genericQRCode1.ID);
             RemoveDBTestAccessToken(genericAccessToken1);
             RemoveDBTestAccessToken(genericAccessToken2);
+            RemoveDBTestTeacher(genericTeacher1.CWID);
+            RemoveDBTestTeacher(genericTeacher2.CWID);
             RemoveDBTestAccount(genericAccount1.ID);
         }
 
@@ -259,6 +286,21 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 var queryString = "exec Accounts_RemoveAccount @id;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@id", id);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void RemoveDBTestTeacher(long cwid)
+        {
+            try
+            {
+                var queryString = "exec Teachers_RemoveTeacher @cwid;";
+                var query = new Query(queryString, connectionString);
+                query.AddParameter("@cwid", cwid);
                 query.ExecuteQuery();
             }
             catch (Exception e)
@@ -517,6 +559,31 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             Assert.AreEqual(expected.username, actual.username);
             Assert.AreEqual(expected.password, actual.password);
             Assert.AreEqual(expected.salt, actual.salt);
+        }
+
+        [TestMethod]
+        public void AddTeacher()
+        {
+            var expected = genericTeacher2;
+            var actual = dbHelper.AddTeacher(expected);
+            AssertAreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetTeacher()
+        {
+            var expected = genericTeacher1;
+            var actual = dbHelper.GetTeacher(expected.CWID);
+            AssertAreEqual(expected, actual);
+        }
+
+        private void AssertAreEqual(Teacher expected, Teacher actual)
+        {
+            Assert.AreEqual(expected.CWID, actual.CWID);
+            Assert.AreEqual(expected.UserID, actual.UserID);
+            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            Assert.AreEqual(expected.LastName, actual.LastName);
+            Assert.AreEqual(expected.email, actual.email);
         }
     }
 }
