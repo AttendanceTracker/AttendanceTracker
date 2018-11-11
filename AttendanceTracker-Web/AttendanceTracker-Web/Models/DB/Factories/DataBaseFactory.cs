@@ -47,5 +47,37 @@ namespace AttendanceTracker_Web.Models.DB
             dto.ExpiresIn = expiresIn;
             return dto;
         }
+
+        public Teacher Teacher(long cwid, long userID, string firstName, string lastName, string email)
+        {
+            var dto = new Teacher();
+            dto.CWID = cwid;
+            dto.UserID = userID;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.email = email;
+            return dto;
+        }
+
+        public Account Account(long id, string username, string password, string salt)
+        {
+            var dto = new Account();
+            dto.ID = id;
+            dto.username = username;
+            dto.password = password;
+            dto.salt = salt;
+            return dto;
+        }
+
+        public AccessToken AccessToken(long userID, string token, int expiresIn, DateTime issued, bool doesExpire)
+        {
+            var dto = new AccessToken();
+            dto.UserID = userID;
+            dto.Token = token;
+            dto.ExpiresIn = expiresIn;
+            dto.Issued = issued;
+            dto.DoesExpire = doesExpire;
+            return dto;
+        }
     }
 }
