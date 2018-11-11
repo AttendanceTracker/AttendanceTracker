@@ -21,6 +21,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         Attendance genericAttendance2;
         QRCode genericQRCode1;
         QRCode genericQRCode2;
+        AccessToken genericAccessToken1;
+        AccessToken genericAccessToken2;
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
         [TestInitialize]
@@ -42,11 +44,19 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             genericQRCode1 = dbFactory.QRCode(0, 3, "testasdf", DateTime.Now, 10);
             genericQRCode2 = dbFactory.QRCode(0, 3, "testasdf", DateTime.Now, 10);
 
+            var token1 = Guid.NewGuid().ToString();
+            var token2 = Guid.NewGuid().ToString();
+            var now = DateTime.Now;
+            var date = new DateTime(now.Year, now.Month, now.Day);
+            genericAccessToken1 = dbFactory.AccessToken(1, token1, 100000, date, true);
+            genericAccessToken2 = dbFactory.AccessToken(3, token2, 100000, date, true);
+
             AddDBTestStudent(genericStudent1);
             AddDBTestStudent(genericStudent3);
             AddDBTestDevice(genericDevice1);
             AddDBTestAttendance(ref genericAttendance1);
             AddDBTestQRCode(ref genericQRCode1);
+            AddDBTestAccessToken(genericAccessToken1);
         }
 
         void AddDBTestStudent(Student student)
@@ -114,6 +124,25 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             }
         }
 
+        void AddDBTestAccessToken(AccessToken accessToken)
+        {
+            try
+            {
+                var queryString = "exec Access_Tokens_AddAccess_Token @user_id, @token, @expires_in, @issued, @does_expire;";
+                var query = new Query(queryString, connectionString);
+                query.AddParameter("@user_id", accessToken.UserID);
+                query.AddParameter("@token", accessToken.Token);
+                query.AddParameter("@expires_in", accessToken.ExpiresIn);
+                query.AddParameter("@issued", accessToken.Issued);
+                query.AddParameter("@does_expire", accessToken.DoesExpire);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         [TestCleanup]
         public void TearDown()
         {
@@ -124,6 +153,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             RemoveDBTestDevice(genericDevice2.DeviceID);
             RemoveDBTestAttendance(genericAttendance1.ID);
             RemoveDBTestQRCode(genericQRCode1.ID);
+            RemoveDBTestAccessToken(genericAccessToken1);
+            RemoveDBTestAccessToken(genericAccessToken2);
         }
 
         void RemoveDBTestStudent(long cwid)
@@ -174,6 +205,22 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec QRCodes_RemoveQRCode {0}", id);
                 var query = new Query(queryString, connectionString);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void RemoveDBTestAccessToken(AccessToken accessToken)
+        {
+            try
+            {
+                var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token";
+                var query = new Query(queryString, connectionString);
+                query.AddParameter("@user_id", accessToken.UserID);
+                query.AddParameter("@token", accessToken.Token);
                 query.ExecuteQuery();
             }
             catch (Exception e)
@@ -272,7 +319,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expected = genericAttendance2;
             var actual = dbHelper.AddAttendance(expected);
-            AssertAreAttendancesEqual(expected, actual);
+            AssertAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -280,7 +327,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expected = genericAttendance1;
             var actual = dbHelper.GetAttendance(genericAttendance1.ID);
-            AssertAreAttendancesEqual(expected, actual);
+            AssertAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -289,7 +336,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             var expectedList = new List<Attendance>();
             expectedList.Add(genericAttendance1);
             var actualList = dbHelper.GetAttendance(genericAttendance1.attendedDate);
-            AssertAreAttendanceListsEqual(expectedList, actualList);
+            AssertAreEqual(expectedList, actualList);
         }
 
         [TestMethod]
@@ -297,10 +344,10 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expectedList = new List<Attendance>();
             var actualList = dbHelper.GetAttendance(genericAttendance1.attendedDate, genericAttendance1.attendedDate.AddSeconds(1));
-            AssertAreAttendanceListsEqual(expectedList, actualList);
+            AssertAreEqual(expectedList, actualList);
         }
 
-        private void AssertAreAttendanceListsEqual(List<Attendance> expectedList, List<Attendance> actualList)
+        private void AssertAreEqual(List<Attendance> expectedList, List<Attendance> actualList)
         {
             if (expectedList.Count == actualList.Count)
             {
@@ -308,7 +355,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 {
                     var expected = expectedList[i];
                     var actual = actualList[i];
-                    AssertAreAttendancesEqual(expected, actual);
+                    AssertAreEqual(expected, actual);
                 }
             }
             else
@@ -318,7 +365,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
 
         }
 
-        private void AssertAreAttendancesEqual(Attendance expected, Attendance actual)
+        private void AssertAreEqual(Attendance expected, Attendance actual)
         {
             var span = new TimeSpan(0, 1, 0);
             var expectedDate = expected.attendedDate.Round(span);
@@ -335,7 +382,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expected = genericQRCode2;
             var actual = dbHelper.AddQRCode(expected);
-            AssertAreQRCodesEqual(expected, actual);
+            AssertAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -343,7 +390,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expected = genericQRCode1;
             var actual = dbHelper.GetQRCode(genericQRCode1.ID);
-            AssertAreQRCodesEqual(expected, actual);
+            AssertAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -351,10 +398,10 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expected = genericQRCode1;
             var actual = dbHelper.GetQRCode(expected.ClassID, expected.Payload);
-            AssertAreQRCodesEqual(expected, actual);
+            AssertAreEqual(expected, actual);
         }
 
-        private void AssertAreQRCodesEqual(QRCode expected, QRCode actual)
+        private void AssertAreEqual(QRCode expected, QRCode actual)
         {
             var span = new TimeSpan(0, 1, 0);
             var expectedDate = expected.Issued.Round(span);
@@ -363,6 +410,43 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             Assert.AreEqual(expected.Payload, actual.Payload);
             Assert.AreEqual(expectedDate, actualDate);
             Assert.AreEqual(expected.ExpiresIn, actual.ExpiresIn);
+        }
+
+        [TestMethod]
+        public void AddAccessToken()
+        {
+            var expected = genericAccessToken2;
+            var actual = dbHelper.AddAccessToken(expected);
+            AssertAreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetAccessToken()
+        {
+            var expected = genericAccessToken1;
+            var actual = dbHelper.GetAccessToken(expected.UserID, expected.Token);
+            AssertAreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void RemoveAccessToken()
+        {
+            var accessToken = genericAccessToken1;
+            dbHelper.RemoveAccessToken(accessToken.UserID, accessToken.Token);
+            var result = dbHelper.GetAccessToken(accessToken.UserID, accessToken.Token);
+            Assert.IsNull(result);
+        }
+
+        private void AssertAreEqual(AccessToken expected, AccessToken actual)
+        {
+            var span = new TimeSpan(0, 1, 0);
+            var expectedDate = expected.Issued.Round(span);
+            var actualDate = actual.Issued.Round(span);
+            Assert.AreEqual(expected.UserID, actual.UserID);
+            Assert.AreEqual(expected.Token, actual.Token);
+            Assert.AreEqual(expected.ExpiresIn, actual.ExpiresIn);
+            Assert.AreEqual(expectedDate, actualDate);
+            Assert.AreEqual(expected.DoesExpire, actual.DoesExpire);
         }
     }
 }

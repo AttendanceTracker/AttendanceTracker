@@ -252,6 +252,56 @@ namespace AttendanceTracker_Web.Models.DB
             return resultQRCode;
         }
 
+        public override AccessToken AddAccessToken(AccessToken accessToken)
+        {
+            var queryString = "exec Access_Tokens_AddAccess_Token @user_id, @token, @expires_in, @issued, @does_expire;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", accessToken.UserID);
+            query.AddParameter("@token", accessToken.Token);
+            query.AddParameter("@expires_in", accessToken.ExpiresIn);
+            query.AddParameter("@issued", accessToken.Issued);
+            query.AddParameter("@does_expire", accessToken.DoesExpire);
+            query.ExecuteQuery();
+
+            var insertedToken = GetAccessToken(accessToken.UserID, accessToken.Token);
+            return insertedToken;
+        }
+
+        public override AccessToken GetAccessToken(long userID, string token)
+        {
+            var queryString = "exec Access_Tokens_GetAccess_Token @user_id, @token";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", userID);
+            query.AddParameter("@token", token);
+            var results = query.ExecuteQuery();
+            if (results.Rows.Count != 0)
+            {
+                var resultToken = BuildAccessToken(results.Rows[0]);
+                return resultToken;
+            }
+            return null;
+        }
+
+        public override void RemoveAccessToken(long userID, string token)
+        {
+            var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", userID);
+            query.AddParameter("@token", token);
+            query.ExecuteQuery();
+        }
+
+        private AccessToken BuildAccessToken(DataRow row)
+        {
+            var userID = row.Field<long>(0);
+            var token = row.Field<string>(1);
+            var expiresIn = row.Field<int>(2);
+            var issued = row.Field<DateTime>(3);
+            var doesExpire = row.Field<bool>(4);
+            var resultToken = dbFactory.AccessToken(userID, token, expiresIn, issued, doesExpire);
+            return resultToken;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);
