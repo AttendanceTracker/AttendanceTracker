@@ -81,7 +81,6 @@ public class QRScanner extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_WRITE_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("ErrorMSG", "ENTERED IF STATEMENT, LENGTH SUFFICIENT, PERMISSION GRANTED");
                     takePicture();
                 } else {
                     Toast.makeText(QRScanner.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
@@ -91,13 +90,18 @@ public class QRScanner extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(LOG_TAG, "\n\t Entered OnActivityResult");
         if (requestCode == PHOTO_REQUEST && resultCode == RESULT_OK) {
+            Log.d(LOG_TAG, "\t\t Launching MediaScanIntent");
             launchMediaScanIntent();
             try {
+                Log.d(LOG_TAG, "\t\t\t Trying to Decode...");
                 Bitmap bitmap = decodeBitmapUri(this, imageUri);
                 if (detector.isOperational() && bitmap != null) {
+                    Log.d(LOG_TAG, "\t\t\t\t Working detector, bitmap is not null");
                     Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                     SparseArray<Barcode> barcodes = detector.detect(frame);
+                    Log.d(LOG_TAG, "\t\t\t\t Frame created, barcode array created, size is: " + barcodes.size());
                     for (int index = 0; index < barcodes.size(); index++) {
                         Barcode code = barcodes.valueAt(index);
                         scanResults.setText(scanResults.getText() + code.displayValue + "\n");
@@ -106,42 +110,55 @@ public class QRScanner extends AppCompatActivity {
                         int type = barcodes.valueAt(index).valueFormat;
                         switch (type) {
                             case Barcode.CONTACT_INFO:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Contact");
                                 Log.i(LOG_TAG, code.contactInfo.title);
                                 break;
                             case Barcode.EMAIL:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Email");
                                 Log.i(LOG_TAG, code.email.address);
                                 break;
                             case Barcode.ISBN:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: ISBN");
                                 Log.i(LOG_TAG, code.rawValue);
                                 break;
                             case Barcode.PHONE:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Phone Number");
                                 Log.i(LOG_TAG, code.phone.number);
                                 break;
                             case Barcode.PRODUCT:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Product");
                                 Log.i(LOG_TAG, code.rawValue);
                                 break;
                             case Barcode.SMS:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: SMS Message");
                                 Log.i(LOG_TAG, code.sms.message);
                                 break;
                             case Barcode.TEXT:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Text");
                                 Log.i(LOG_TAG, code.rawValue);
                                 break;
                             case Barcode.URL:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: URL");
                                 Log.i(LOG_TAG, "url: " + code.url.url);
                                 break;
                             case Barcode.WIFI:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Wifi");
                                 Log.i(LOG_TAG, code.wifi.ssid);
                                 break;
                             case Barcode.GEO:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Geolocation");
                                 Log.i(LOG_TAG, code.geoPoint.lat + ":" + code.geoPoint.lng);
                                 break;
                             case Barcode.CALENDAR_EVENT:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: Calender Event");
                                 Log.i(LOG_TAG, code.calendarEvent.description);
                                 break;
                             case Barcode.DRIVER_LICENSE:
+                                Log.d(LOG_TAG, "\t\t\t\t\t case: License");
                                 Log.i(LOG_TAG, code.driverLicense.licenseNumber);
                                 break;
                             default:
+                                Log.d(LOG_TAG, "\t\t\t\t\t default case: Raw Value");
                                 Log.i(LOG_TAG, code.rawValue);
                                 break;
                         }
@@ -165,27 +182,28 @@ public class QRScanner extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        final int REQUEST_IMAGE_CAPTURE = 1;
+                                                                                                        //          final int REQUEST_IMAGE_CAPTURE = 1;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-        }
-        else{
-            Log.d(LOG_TAG, "intent resolve activity is null");
-        }
-
-//        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
-//            imageUri = FileProvider.getUriForFile(getApplication().getApplicationContext(),
-//                    BuildConfig.APPLICATION_ID + ".provider", photo);
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                                                                                        //        if (intent.resolveActivity(getPackageManager()) != null) {
+                                                                                                        //            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                                                                                                        //        }
+                                                                                                        //        else{
+                                                                                                        //            Log.d(LOG_TAG, "intent resolve activity is null");
+                                                                                                        //        }
+//        startActivityForResult(intent, PHOTO_REQUEST);
+                                                                                                        //        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
+                                                                                                        //            imageUri = FileProvider.getUriForFile(getApplication().getApplicationContext(),
+                                                                                                        //                    BuildConfig.APPLICATION_ID + ".provider", photo);
+                                                                                                        //            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 
         imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
                 "tmp_avatar_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
 
+        Log.d(LOG_TAG, "image URI created: " + imageUri.getPath());
         intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
         intent.putExtra("return-data", true);
+        Log.d(LOG_TAG, "finished putExtra, starting activity, requesting photo");
         startActivityForResult(intent, PHOTO_REQUEST);
-
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
