@@ -302,6 +302,56 @@ namespace AttendanceTracker_Web.Models.DB
             return resultToken;
         }
 
+        public override Account AddAccount(Account account)
+        {
+            var queryString = "exec Accounts_AddAccount @username, @password, @salt;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@username", account.username);
+            query.AddParameter("@password", account.password);
+            query.AddParameter("@salt", account.salt);
+            query.ExecuteQuery();
+
+            var resultAccount = GetAccount(account.username);
+            return resultAccount;
+        }
+
+        public override Account UpdateAccount(Account account)
+        {
+            var queryString = "exec Accounts_UpdateAccount @username, @password, @salt;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@username", account.username);
+            query.AddParameter("@password", account.password);
+            query.AddParameter("@salt", account.salt);
+            query.ExecuteQuery();
+
+            var resultAccount = GetAccount(account.username);
+            return resultAccount;
+        }
+
+        public override Account GetAccount(string username)
+        {
+            var queryString = "exec Accounts_GetAccount @username;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@username", username);
+            var results = query.ExecuteQuery();
+            if (results.Rows.Count != 0)
+            {
+                var resultAccount = BuildAccount(results.Rows[0]);
+                return resultAccount;
+            }
+            return null;
+        }
+
+        private Account BuildAccount(DataRow row)
+        {
+            var id = row.Field<long>(0);
+            var username = row.Field<string>(1);
+            var password = row.Field<string>(2);
+            var salt = row.Field<string>(3);
+            var resultAccount = dbFactory.Account(id, username, password, salt);
+            return resultAccount;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

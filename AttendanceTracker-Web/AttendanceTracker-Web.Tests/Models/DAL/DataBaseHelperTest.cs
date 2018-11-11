@@ -23,6 +23,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         QRCode genericQRCode2;
         AccessToken genericAccessToken1;
         AccessToken genericAccessToken2;
+        Account genericAccount1;
+        Account genericAccount2;
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
         [TestInitialize]
@@ -34,28 +36,31 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             genericStudent1 = dbFactory.Student(8, "Grace", "Hopper", "email");
             genericStudent2 = dbFactory.Student(4, "Grace", "Hopper", "email");
             genericStudent3 = dbFactory.Student(5, "Grace", "Hopper", "email");
+            AddDBTestStudent(genericStudent1);
+            AddDBTestStudent(genericStudent3);
 
             genericDevice1 = dbFactory.Device(5, 5);
             genericDevice2 = dbFactory.Device(8, 8);
+            AddDBTestDevice(genericDevice1);
 
             genericAttendance1 = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
             genericAttendance2 = dbFactory.Attendance(0, 3, 5, DateTime.Now, 33.216111m, -87.538623m);
+            AddDBTestAttendance(ref genericAttendance1);
 
             genericQRCode1 = dbFactory.QRCode(0, 3, "testasdf", DateTime.Now, 10);
             genericQRCode2 = dbFactory.QRCode(0, 3, "testasdf", DateTime.Now, 10);
+            AddDBTestQRCode(ref genericQRCode1);
+
+            genericAccount1 = dbFactory.Account(0, "jdoe@a.com", "a;klsdjf", "a;ldskf");
+            genericAccount2 = dbFactory.Account(0, "jdoe@a.com", "jkl;", "a90dfs");
+            AddDBTestAccount(ref genericAccount1);
 
             var token1 = Guid.NewGuid().ToString();
             var token2 = Guid.NewGuid().ToString();
             var now = DateTime.Now;
             var date = new DateTime(now.Year, now.Month, now.Day);
-            genericAccessToken1 = dbFactory.AccessToken(1, token1, 100000, date, true);
-            genericAccessToken2 = dbFactory.AccessToken(3, token2, 100000, date, true);
-
-            AddDBTestStudent(genericStudent1);
-            AddDBTestStudent(genericStudent3);
-            AddDBTestDevice(genericDevice1);
-            AddDBTestAttendance(ref genericAttendance1);
-            AddDBTestQRCode(ref genericQRCode1);
+            genericAccessToken1 = dbFactory.AccessToken(genericAccount1.ID, token1, 100000, date, true);
+            genericAccessToken2 = dbFactory.AccessToken(genericAccount1.ID, token2, 100000, date, true);
             AddDBTestAccessToken(genericAccessToken1);
         }
 
@@ -143,6 +148,23 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             }
         }
 
+        void AddDBTestAccount(ref Account account)
+        {
+            try
+            {
+                var queryString = "exec Accounts_AddAccount @username, @password, @salt;";
+                var query = new Query(queryString, connectionString);
+                query.AddParameter("@username", account.username);
+                query.AddParameter("@password", account.password);
+                query.AddParameter("@salt", account.salt);
+                account.ID = (long)query.ExecuteScalar();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         [TestCleanup]
         public void TearDown()
         {
@@ -155,6 +177,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             RemoveDBTestQRCode(genericQRCode1.ID);
             RemoveDBTestAccessToken(genericAccessToken1);
             RemoveDBTestAccessToken(genericAccessToken2);
+            RemoveDBTestAccount(genericAccount1.ID);
         }
 
         void RemoveDBTestStudent(long cwid)
@@ -217,10 +240,25 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             try
             {
-                var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token";
+                var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@user_id", accessToken.UserID);
                 query.AddParameter("@token", accessToken.Token);
+                query.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        void RemoveDBTestAccount(long id)
+        {
+            try
+            {
+                var queryString = "exec Accounts_RemoveAccount @id;";
+                var query = new Query(queryString, connectionString);
+                query.AddParameter("@id", id);
                 query.ExecuteQuery();
             }
             catch (Exception e)
@@ -447,6 +485,38 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             Assert.AreEqual(expected.ExpiresIn, actual.ExpiresIn);
             Assert.AreEqual(expectedDate, actualDate);
             Assert.AreEqual(expected.DoesExpire, actual.DoesExpire);
+        }
+
+        [TestMethod]
+        public void AddAccount()
+        {
+            var expected = genericAccount2;
+            var actual = dbHelper.AddAccount(expected);
+            AssertAreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void UpdateAccount()
+        {
+            var expected = genericAccount2;
+            expected.ID = genericAccount1.ID;
+            var actual = dbHelper.UpdateAccount(expected);
+            AssertAreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetAccount()
+        {
+            var expected = genericAccount2;
+            var actual = dbHelper.GetAccount(expected.username);
+            AssertAreEqual(expected, actual);
+        }
+
+        private void AssertAreEqual(Account expected, Account actual)
+        {
+            Assert.AreEqual(expected.username, actual.username);
+            Assert.AreEqual(expected.password, actual.password);
+            Assert.AreEqual(expected.salt, actual.salt);
         }
     }
 }

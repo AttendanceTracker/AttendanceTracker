@@ -25,5 +25,8 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract AccessToken AddAccessToken(AccessToken accessToken);
         public abstract AccessToken GetAccessToken(long userID, string token);
         public abstract void RemoveAccessToken(long userID, string token);
+        public abstract Account AddAccount(Account account);
+        public abstract Account UpdateAccount(Account account);
+        public abstract Account GetAccount(string username);
     }
 }

@@ -139,5 +139,20 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override Account AddAccount(Account account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Account UpdateAccount(Account account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Account GetAccount(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
