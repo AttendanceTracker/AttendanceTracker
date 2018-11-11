@@ -25,7 +25,7 @@ public class License extends Activity{
 
         TextView policy = (TextView) findViewById(R.id.txtLicense);
         policy.setMovementMethod(new ScrollingMovementMethod());
-        policy.setText("MIT License\n" +
+        policy.setText("\n\n\nMIT License\n" +
                 "\n" +
                 "Copyright (c) 2018 Greyson Wright\n" +
                 "\n" +

@@ -8,13 +8,16 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
+        import android.os.Build;
+        import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
+        import android.os.StrictMode;
+        import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
+        import android.support.v7.app.AppCompatActivity;
+        import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +31,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class QRScanner extends Activity {
+public class QRScanner extends AppCompatActivity {
 
     private static final String LOG_TAG = "Barcode Scanner API";
     private static final int PHOTO_REQUEST = 10;
@@ -78,6 +81,7 @@ public class QRScanner extends Activity {
         switch (requestCode) {
             case REQUEST_WRITE_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("ErrorMSG", "ENTERED IF STATEMENT, LENGTH SUFFICIENT, PERMISSION GRANTED");
                     takePicture();
                 } else {
                     Toast.makeText(QRScanner.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
@@ -156,19 +160,33 @@ public class QRScanner extends Activity {
         }
     }
     private void takePicture() {
+
+        //Protects photo from exposure to other apps
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
         final int REQUEST_IMAGE_CAPTURE = 1;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
-        File photo = new File(Environment.getExternalStorageDirectory(), "qrPicture.jpg");
+        else{
+            Log.d(LOG_TAG, "intent resolve activity is null");
+        }
 
-        imageUri = FileProvider.getUriForFile(QRScanner.this,
-                BuildConfig.APPLICATION_ID + ".provider", photo);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
+//            imageUri = FileProvider.getUriForFile(getApplication().getApplicationContext(),
+//                    BuildConfig.APPLICATION_ID + ".provider", photo);
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+        imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
+                "tmp_avatar_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
+
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.putExtra("return-data", true);
         startActivityForResult(intent, PHOTO_REQUEST);
-    }
 
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (imageUri != null) {

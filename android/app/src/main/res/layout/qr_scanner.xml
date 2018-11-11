@@ -47,4 +47,7 @@
         android:text="Scan QR Code"/>
 
 
+
+
 </android.support.constraint.ConstraintLayout>
+
