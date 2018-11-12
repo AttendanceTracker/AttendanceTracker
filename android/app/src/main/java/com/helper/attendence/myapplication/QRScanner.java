@@ -1,23 +1,31 @@
 package com.helper.attendence.myapplication;
 
-        import android.Manifest;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
-        import android.os.Build;
-        import android.os.Bundle;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
-        import android.os.StrictMode;
-        import android.provider.MediaStore;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-        import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -34,16 +42,23 @@ import java.io.FileNotFoundException;
 public class QRScanner extends AppCompatActivity {
 
     private static final String LOG_TAG = "Barcode Scanner API";
+
     private static final int PHOTO_REQUEST = 10;
+
     private TextView scanResults;
     private BarcodeDetector detector;
     private Uri imageUri;
+
+
     private static final int REQUEST_WRITE_PERMISSION = 20;
+    private static final int REQUEST_FINE_LOCATION = 30;
     private static final String SAVED_INSTANCE_URI = "uri";
     private static final String SAVED_INSTANCE_RESULT = "result";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_scanner);
 
@@ -62,6 +77,10 @@ public class QRScanner extends AppCompatActivity {
             public void onClick(View view) {
                 ActivityCompat.requestPermissions(QRScanner.this, new
                         String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+
+                ActivityCompat.requestPermissions(QRScanner.this, new
+                        String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+
             }
 
         });
@@ -72,6 +91,22 @@ public class QRScanner extends AppCompatActivity {
         if (!detector.isOperational()) {
             scanResults.setText("Could not set up the detector!");
             return;
+        }
+        checkLocationPermission();
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_FINE_LOCATION);
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -85,6 +120,19 @@ public class QRScanner extends AppCompatActivity {
                 } else {
                     Toast.makeText(QRScanner.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
+            case REQUEST_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        getLocation();
+
+                    }
+
+                }
+
         }
     }
 
@@ -176,25 +224,14 @@ public class QRScanner extends AppCompatActivity {
             }
         }
     }
+
     private void takePicture() {
 
         //Protects photo from exposure to other apps
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-                                                                                                        //          final int REQUEST_IMAGE_CAPTURE = 1;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                                                                                        //        if (intent.resolveActivity(getPackageManager()) != null) {
-                                                                                                        //            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                                                                                                        //        }
-                                                                                                        //        else{
-                                                                                                        //            Log.d(LOG_TAG, "intent resolve activity is null");
-                                                                                                        //        }
-//        startActivityForResult(intent, PHOTO_REQUEST);
-                                                                                                        //        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
-                                                                                                        //            imageUri = FileProvider.getUriForFile(getApplication().getApplicationContext(),
-                                                                                                        //                    BuildConfig.APPLICATION_ID + ".provider", photo);
-                                                                                                        //            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 
         imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
                 "tmp_avatar_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
@@ -205,6 +242,28 @@ public class QRScanner extends AppCompatActivity {
         Log.d(LOG_TAG, "finished putExtra, starting activity, requesting photo");
         startActivityForResult(intent, PHOTO_REQUEST);
     }
+
+    private void getLocation() {
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        Log.d(LOG_TAG, longitude + " " + latitude);
+        System.out.println("Long: " + longitude + " Lat: " + latitude);
+    }
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (imageUri != null) {
@@ -236,4 +295,6 @@ public class QRScanner extends AppCompatActivity {
         return BitmapFactory.decodeStream(ctx.getContentResolver()
                 .openInputStream(uri), null, bmOptions);
     }
+
+
 }
