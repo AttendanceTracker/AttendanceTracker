@@ -63,7 +63,7 @@ namespace AttendanceTracker_Web.Controllers.API
             try
             {
                 var account = dal.Source.GetAccount(request.Username);
-                if (isPasswordValid(account.password, request.Password, account.salt))
+                if (account != null && isPasswordValid(account.password, request.Password, account.salt))
                 {
                     var accessToken = login(account.username, account.password);
                     if (accessToken != null)
