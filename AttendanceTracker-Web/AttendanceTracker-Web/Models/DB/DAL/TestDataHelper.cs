@@ -131,17 +131,17 @@ namespace AttendanceTracker_Web.Models.DB
             return token;
         }
 
-        public override AccessToken GetAccessToken(long userID, string token)
+        public override AccessToken GetAccessToken(string token)
         {
-            if (userID == 1)
+            if (token != "bad")
             {
-                var accessToken = dbFactory.AccessToken(userID, token, 1, DateTime.Now, true);
+                var accessToken = dbFactory.AccessToken(1, token, 1, DateTime.Now, true);
                 return accessToken;
             }
             return null;
         }
 
-        public override void RemoveAccessToken(long userID, string token)
+        public override void RemoveAccessToken(string token)
         {
             //remove token
         }

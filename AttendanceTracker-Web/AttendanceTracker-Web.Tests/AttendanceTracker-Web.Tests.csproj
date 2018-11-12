@@ -103,6 +103,7 @@
     <Compile Include="Controllers\API\DeviceControllerTest.cs" />
     <Compile Include="Controllers\API\StudentControllerTest.cs" />
     <Compile Include="Libraries\QRCoderTest.cs" />
+    <Compile Include="Models\AuthorizationManagerTest.cs" />
     <Compile Include="Models\DAL\DataAccessLayerTest.cs" />
     <Compile Include="Models\Factories\DataBaseFactoryTest.cs" />
     <Compile Include="Models\DAL\DataBaseHelperTest.cs" />

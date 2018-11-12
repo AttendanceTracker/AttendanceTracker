@@ -267,9 +267,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             try
             {
-                var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token;";
+                var queryString = "exec Access_Tokens_RemoveAccess_Token @token;";
                 var query = new Query(queryString, connectionString);
-                query.AddParameter("@user_id", accessToken.UserID);
                 query.AddParameter("@token", accessToken.Token);
                 query.ExecuteQuery();
             }
@@ -504,7 +503,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         public void GetAccessToken()
         {
             var expected = genericAccessToken1;
-            var actual = dbHelper.GetAccessToken(expected.UserID, expected.Token);
+            var actual = dbHelper.GetAccessToken(expected.Token);
             AssertAreEqual(expected, actual);
         }
 
@@ -512,8 +511,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         public void RemoveAccessToken()
         {
             var accessToken = genericAccessToken1;
-            dbHelper.RemoveAccessToken(accessToken.UserID, accessToken.Token);
-            var result = dbHelper.GetAccessToken(accessToken.UserID, accessToken.Token);
+            dbHelper.RemoveAccessToken(accessToken.Token);
+            var result = dbHelper.GetAccessToken(accessToken.Token);
             Assert.IsNull(result);
         }
 

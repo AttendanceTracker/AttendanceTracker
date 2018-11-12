@@ -185,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorizationManager.cs" />
     <Compile Include="Models\DateTimeExtensions.cs" />
     <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
     <Compile Include="Models\DB\DAL\DataBaseHelper.cs" />

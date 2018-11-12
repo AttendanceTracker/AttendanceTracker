@@ -263,15 +263,14 @@ namespace AttendanceTracker_Web.Models.DB
             query.AddParameter("@does_expire", accessToken.DoesExpire);
             query.ExecuteQuery();
 
-            var insertedToken = GetAccessToken(accessToken.UserID, accessToken.Token);
+            var insertedToken = GetAccessToken(accessToken.Token);
             return insertedToken;
         }
 
-        public override AccessToken GetAccessToken(long userID, string token)
+        public override AccessToken GetAccessToken(string token)
         {
-            var queryString = "exec Access_Tokens_GetAccess_Token @user_id, @token";
+            var queryString = "exec Access_Tokens_GetAccess_Token @token";
             var query = new Query(queryString, connectionString);
-            query.AddParameter("@user_id", userID);
             query.AddParameter("@token", token);
             var results = query.ExecuteQuery();
             if (results.Rows.Count != 0)
@@ -282,11 +281,10 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
-        public override void RemoveAccessToken(long userID, string token)
+        public override void RemoveAccessToken(string token)
         {
-            var queryString = "exec Access_Tokens_RemoveAccess_Token @user_id, @token";
+            var queryString = "exec Access_Tokens_RemoveAccess_Token @token";
             var query = new Query(queryString, connectionString);
-            query.AddParameter("@user_id", userID);
             query.AddParameter("@token", token);
             query.ExecuteQuery();
         }
