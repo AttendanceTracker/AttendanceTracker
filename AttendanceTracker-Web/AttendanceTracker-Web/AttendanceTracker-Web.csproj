@@ -261,6 +261,8 @@
     <Content Include="Content\Home\QRCodes.css" />
     <Content Include="Scripts\CookieUtils.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\SignUp.js" />
+    <Content Include="Scripts\WebserviceUtil.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

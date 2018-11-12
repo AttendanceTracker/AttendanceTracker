@@ -10,8 +10,16 @@
             <label class="mdl-textfield__label" for="cwid-input">CWID</label>
         </div>
         <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="username-input" />
-            <label class="mdl-textfield__label" for="username-input">Email</label>
+            <input class="mdl-textfield__input" type="text" id="firstname-input" />
+            <label class="mdl-textfield__label" for="firstname-input">First Name</label>
+        </div>
+        <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="lastname-input" />
+            <label class="mdl-textfield__label" for="lastname-input">Last Name</label>
+        </div>
+        <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="email-input" />
+            <label class="mdl-textfield__label" for="email-input">Email</label>
         </div>
         <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="password" id="password-input" />
@@ -22,5 +30,6 @@
             <label class="mdl-textfield__label" for="confirm-password-input">Confirm Password</label>
         </div>
     </div>
-<a href="/Home/Index" id="login-button" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Sign Up</a>
+<a id="login-button" onclick="signUpButtonClicked()" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Sign Up</a>
 <a href="/Login/Login" class="main-container-spacing mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Login</a>
+<script src="~/Scripts/SignUp.js"></script>

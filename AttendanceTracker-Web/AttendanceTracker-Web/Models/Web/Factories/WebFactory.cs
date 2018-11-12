@@ -116,7 +116,7 @@ namespace AttendanceTracker_Web.Models.Web
             return dto;
         }
 
-        public CreateAccountResponse CreateAccountResponse(long cwid, string firstName, string lastName, string username, string accessToken)
+        public CreateAccountResponse CreateAccountResponse(long cwid, string firstName, string lastName, string username, string accessToken, DateTime expires)
         {
             var dto = new CreateAccountResponse();
             dto.CWID = cwid;
@@ -124,6 +124,7 @@ namespace AttendanceTracker_Web.Models.Web
             dto.LastName = lastName;
             dto.Username = username;
             dto.AccessToken = accessToken;
+            dto.Expires = expires;
             return dto;
         }
 
@@ -135,15 +136,16 @@ namespace AttendanceTracker_Web.Models.Web
             return dto;
         }
 
-        public SignInResponse SignInResponse(long cwid, string firstName, string lastName, string username, string accessToken)
+        public SignInResponse SignInResponse(long cwid, string firstName, string lastName, string username, string accessToken, DateTime expires)
         {
-                var dto = new SignInResponse();
-                dto.CWID = cwid;
-                dto.FirstName = firstName;
-                dto.LastName = lastName;
-                dto.Username = username;
-                dto.AccessToken = accessToken;
-                return dto;
+            var dto = new SignInResponse();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Username = username;
+            dto.AccessToken = accessToken;
+            dto.Expires = expires;
+            return dto;
         }
 
         public UserCookie UserCookie(long cwid, string firstName, string lastName, string username, string accessToken)

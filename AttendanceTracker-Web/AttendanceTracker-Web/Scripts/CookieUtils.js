@@ -1,4 +1,8 @@
-﻿function getCookie(key) {
+﻿function setCookie(value, expires) {
+    document.cookie = "user=" + value + "; expires=" + expires + ";";
+}
+
+function getCookie(key) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + key + "=");
     if (parts.length === 2) {
