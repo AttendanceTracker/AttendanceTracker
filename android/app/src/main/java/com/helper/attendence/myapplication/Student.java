@@ -48,6 +48,35 @@ public class Student implements Serializable {
         this.studentDevice= new Device(imei);
     }
 
+    public void checkIn(Double lat, Double longitude, String payload, Long CWID){
+
+        /*handle in future
+        *
+        *
+        * */
+
+        HashMap<String, String> postDataParams = new HashMap<>();
+        postDataParams.put("StudentID", CWID.toString());
+        postDataParams.put("Payload", payload);
+        postDataParams.put("Latitude", lat.toString());
+        postDataParams.put("Longitude", longitude.toString());
+        String api = "/api/Attendance/CheckIn?classID=3";
+        Log.i(TAG, "Running POST call.");
+        String response = httpRequests.postCall(api,postDataParams);
+        if(!response.equals("Failed")) {
+
+            if (response.equals("false")) {
+                //handle this error
+            }
+            else {
+                //Implement feedback on success
+            }
+        }
+        else {
+            //handle this
+        }
+    }
+
     public Student getStudent(Student std) {
         String fname = "";
         String lname = "";

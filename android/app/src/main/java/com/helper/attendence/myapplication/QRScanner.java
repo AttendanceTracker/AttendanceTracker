@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -127,8 +128,6 @@ public class QRScanner extends AppCompatActivity {
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
 
-                        getLocation();
-
                     }
 
                 }
@@ -157,54 +156,15 @@ public class QRScanner extends AppCompatActivity {
                         //Required only if you need to extract the type of barcode
                         int type = barcodes.valueAt(index).valueFormat;
                         switch (type) {
-                            case Barcode.CONTACT_INFO:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Contact");
-                                Log.i(LOG_TAG, code.contactInfo.title);
-                                break;
-                            case Barcode.EMAIL:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Email");
-                                Log.i(LOG_TAG, code.email.address);
-                                break;
-                            case Barcode.ISBN:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: ISBN");
-                                Log.i(LOG_TAG, code.rawValue);
-                                break;
-                            case Barcode.PHONE:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Phone Number");
-                                Log.i(LOG_TAG, code.phone.number);
-                                break;
-                            case Barcode.PRODUCT:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Product");
-                                Log.i(LOG_TAG, code.rawValue);
-                                break;
-                            case Barcode.SMS:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: SMS Message");
-                                Log.i(LOG_TAG, code.sms.message);
-                                break;
+
                             case Barcode.TEXT:
                                 Log.d(LOG_TAG, "\t\t\t\t\t case: Text");
                                 Log.i(LOG_TAG, code.rawValue);
+
+                                //call send check-in
+                                checkIn(code.rawValue);
                                 break;
-                            case Barcode.URL:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: URL");
-                                Log.i(LOG_TAG, "url: " + code.url.url);
-                                break;
-                            case Barcode.WIFI:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Wifi");
-                                Log.i(LOG_TAG, code.wifi.ssid);
-                                break;
-                            case Barcode.GEO:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Geolocation");
-                                Log.i(LOG_TAG, code.geoPoint.lat + ":" + code.geoPoint.lng);
-                                break;
-                            case Barcode.CALENDAR_EVENT:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: Calender Event");
-                                Log.i(LOG_TAG, code.calendarEvent.description);
-                                break;
-                            case Barcode.DRIVER_LICENSE:
-                                Log.d(LOG_TAG, "\t\t\t\t\t case: License");
-                                Log.i(LOG_TAG, code.driverLicense.licenseNumber);
-                                break;
+
                             default:
                                 Log.d(LOG_TAG, "\t\t\t\t\t default case: Raw Value");
                                 Log.i(LOG_TAG, code.rawValue);
@@ -243,7 +203,7 @@ public class QRScanner extends AppCompatActivity {
         startActivityForResult(intent, PHOTO_REQUEST);
     }
 
-    private void getLocation() {
+    private void checkIn(String rawValue){
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -257,10 +217,18 @@ public class QRScanner extends AppCompatActivity {
             return;
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double longitude = location.getLongitude();
-        double latitude = location.getLatitude();
-        Log.d(LOG_TAG, longitude + " " + latitude);
-        System.out.println("Long: " + longitude + " Lat: " + latitude);
+        Double longitude = location.getLongitude();
+        Double latitude = location.getLatitude();
+        Log.d(LOG_TAG,  latitude + " " + longitude);
+        System.out.println(" Lat: " + latitude + " Long: " + longitude);
+
+        SharedPreferences pref = this.getSharedPreferences("MAIN_ACTIVITY", Context.MODE_PRIVATE);
+        Long cwid = pref.getLong("storedCwid", -1L);
+
+
+        //LATER CHECKIN WILL HAVE CLASSID PASSED IN
+        Student student = new Student();
+        student.checkIn(latitude,longitude, rawValue, cwid);
     }
 
 
