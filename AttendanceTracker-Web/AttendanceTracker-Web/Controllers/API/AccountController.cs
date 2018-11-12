@@ -29,6 +29,7 @@ namespace AttendanceTracker_Web.Controllers.API
                 var saltedPassword = request.Password + salt;
                 var saltedPasswordHash = saltedPassword.SHA256Hash();
                 var dto = dbFactory.Account(0, request.Email, saltedPasswordHash, salt);
+                return Ok();
             }
             catch (Exception)
             {

@@ -69,5 +69,19 @@ namespace AttendanceTracker_Web.Controllers.API
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        public IHttpActionResult Remove(long imei)
+        {
+            try
+            {
+                dal.Source.RemoveDevice(imei);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
