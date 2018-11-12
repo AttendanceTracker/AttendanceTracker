@@ -69,7 +69,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
                     return File(qrCodeStream, "image/bmp");
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null) ;
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null) ;
             }
             catch (Exception)
             {
