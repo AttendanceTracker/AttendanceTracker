@@ -60,15 +60,22 @@ public class Student implements Serializable {
         postDataParams.put("Payload", payload);
         postDataParams.put("Latitude", lat.toString());
         postDataParams.put("Longitude", longitude.toString());
+        System.out.println("id:" + CWID);
+        System.out.println("Lat" + lat);
+        System.out.println("Long:" + longitude);
+        System.out.println("Payload:" + payload);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         String api = "/api/Attendance/CheckIn?classID=3";
         Log.i(TAG, "Running POST call.");
         String response = httpRequests.postCall(api,postDataParams);
         if(!response.equals("Failed")) {
 
             if (response.equals("false")) {
+                System.out.println("FAILED BITCH");
                 //handle this error
             }
             else {
+                System.out.println("YASSSS BITCH");
                 //Implement feedback on success
             }
         }

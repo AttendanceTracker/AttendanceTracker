@@ -217,14 +217,14 @@ public class QRScanner extends AppCompatActivity {
             return;
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Double longitude = location.getLongitude();
-        Double latitude = location.getLatitude();
+        Double longitude = 78.9789;
+        Double latitude = 87.9898;
         Log.d(LOG_TAG,  latitude + " " + longitude);
         System.out.println(" Lat: " + latitude + " Long: " + longitude);
 
         SharedPreferences pref = this.getSharedPreferences("MAIN_ACTIVITY", Context.MODE_PRIVATE);
-        Long cwid = pref.getLong("storedCwid", -1L);
-
+//        Long cwid = pref.getLong("storedCwid", -1L);
+        Long cwid = 104L;
 
         //LATER CHECKIN WILL HAVE CLASSID PASSED IN
         Student student = new Student();
