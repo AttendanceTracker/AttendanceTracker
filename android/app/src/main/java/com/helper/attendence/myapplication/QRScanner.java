@@ -223,12 +223,15 @@ public class QRScanner extends AppCompatActivity {
         System.out.println(" Lat: " + latitude + " Long: " + longitude);
 
         SharedPreferences pref = this.getSharedPreferences("MAIN_ACTIVITY", Context.MODE_PRIVATE);
-//        Long cwid = pref.getLong("storedCwid", -1L);
-        Long cwid = 104L;
 
         //LATER CHECKIN WILL HAVE CLASSID PASSED IN
+        Long cwid = pref.getLong("storedCwid", -1L);
+
         Student student = new Student();
-        student.checkIn(latitude,longitude, rawValue, cwid);
+        boolean success = student.checkIn(latitude,longitude, rawValue, cwid);
+        if (success){
+
+        }
     }
 
 
