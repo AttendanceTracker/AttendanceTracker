@@ -9,6 +9,7 @@ using AttendanceTracker_Web.Models;
 using QRCoder;
 using System.Drawing;
 using System.IO;
+using System.Net;
 
 namespace AttendanceTracker_Web.Controllers.MVC
 {
@@ -64,22 +65,55 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var dbQRCode = dbFactory.QRCode(0, classID, payload, DateTime.Now, expiresIn);
                     var addedQRCode = dal.Source.AddQRCode(dbQRCode);
 
-                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                    QRCodeData qrCodeData = qrGenerator.CreateQrCode("C7FB8A0E9809A9D0C5646DCF859E35268B847AAFB2762D6E54D30C4251BB9B4E", QRCodeGenerator.ECCLevel.Q);
-                    QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
-                    Bitmap qrCodeImage = qrCode.GetGraphic(20);
-
-                    var a = new MemoryStream();
-                    qrCodeImage.Save(a, System.Drawing.Imaging.ImageFormat.Bmp);
-                    a.Position = 0;
-                    return File(a, "image/bmp");
+                    var qrCodeImage = GenerateQRCode(payload);
+                    var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
+                    return File(qrCodeStream, "image/bmp");
                 }
-                return null;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null) ;
             }
             catch (Exception)
             {
-                return null;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
             }
         }
+
+        [HttpGet]
+        public ActionResult GetQRCode(long qrCodeID)
+        {
+            try
+            {
+                var accessToken = Request.Headers.GetValues("AccessToken").FirstOrDefault();
+                if (authManager.IsAuthorized(accessToken))
+                {
+                    var qrCodeData = dal.Source.GetQRCode(qrCodeID);
+                    var qrCodeImage = GenerateQRCode(qrCodeData.Payload);
+                    var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
+                    return File(qrCodeStream, "image/bmp");
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        private Bitmap GenerateQRCode(string payload)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
+            QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            return qrCodeImage;
+        }
+
+        private MemoryStream bitmapToMemoryStream(Bitmap qrCodeImage)
+        {
+            var qrCodeStream = new MemoryStream();
+            qrCodeImage.Save(qrCodeStream, System.Drawing.Imaging.ImageFormat.Bmp);
+            qrCodeStream.Position = 0;
+            return qrCodeStream;
+        }
+
     }
 }
