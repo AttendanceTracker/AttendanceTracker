@@ -102,8 +102,7 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             try
             {
-                IEnumerable<string> headerValues = Request.Headers.GetValues("AccessToken");
-                var accessToken = headerValues.FirstOrDefault();
+                var accessToken = Request.Headers.GetValues("AccessToken").FirstOrDefault();
                 if (authManager.IsAuthorized(accessToken))
                 {
                     dal.Source.RemoveAccessToken(accessToken);
