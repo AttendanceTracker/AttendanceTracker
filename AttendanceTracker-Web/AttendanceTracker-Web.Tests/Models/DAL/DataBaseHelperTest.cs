@@ -577,6 +577,14 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             AssertAreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void GetTeacherByUserID()
+        {
+            var expected = genericTeacher1;
+            var actual = dbHelper.GetTeacherByUserID(expected.UserID);
+            AssertAreEqual(expected, actual);
+        }
+
         private void AssertAreEqual(Teacher expected, Teacher actual)
         {
             Assert.AreEqual(expected.CWID, actual.CWID);

@@ -201,6 +201,7 @@
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />
     <Compile Include="Models\Web\DTOs\CreateAccountRequest.cs" />
+    <Compile Include="Models\Web\DTOs\CreateAccountResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetStudentResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />
@@ -208,6 +209,8 @@
     <Compile Include="Models\Web\DTOs\RegisterStudentRequest.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentResponse.cs" />
     <Compile Include="Models\DB\Factories\DataBaseFactory.cs" />
+    <Compile Include="Models\Web\DTOs\SignInRequest.cs" />
+    <Compile Include="Models\Web\DTOs\SignInResponse.cs" />
     <Compile Include="Models\Web\DTOs\UpdateDeviceRequest.cs" />
     <Compile Include="Models\Web\DTOs\UpdateDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\UpdateStudentRequest.cs" />

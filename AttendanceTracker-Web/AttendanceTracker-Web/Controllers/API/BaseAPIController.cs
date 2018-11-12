@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using AttendanceTracker_Web.Models.DB;
 using AttendanceTracker_Web.Models.Web;
 
@@ -31,6 +32,12 @@ namespace AttendanceTracker_Web.Controllers.API
         {
             webFactory = new WebFactory();
             dbFactory = new DataBaseFactory();
+        }
+
+        public NegotiatedContentResult<T> Accepted<T>(T responseContent)
+        {
+            var response = new NegotiatedContentResult<T>(HttpStatusCode.Accepted, responseContent, this);
+            return response;
         }
     }
 }

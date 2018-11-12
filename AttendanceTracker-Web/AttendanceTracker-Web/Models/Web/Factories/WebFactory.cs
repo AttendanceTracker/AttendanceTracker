@@ -115,5 +115,35 @@ namespace AttendanceTracker_Web.Models.Web
             dto.Password = password;
             return dto;
         }
+
+        public CreateAccountResponse CreateAccountResponse(long cwid, string firstName, string lastName, string username, string accessToken)
+        {
+            var dto = new CreateAccountResponse();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Username = username;
+            dto.AccessToken = accessToken;
+            return dto;
+        }
+
+        public SignInRequest SignInRequest(string username, string password)
+        {
+            var dto = new SignInRequest();
+            dto.Username = username;
+            dto.Password = password;
+            return dto;
+        }
+
+        public SignInResponse SignInResponse(long cwid, string firstName, string lastName, string username, string accessToken)
+        {
+                var dto = new SignInResponse();
+                dto.CWID = cwid;
+                dto.FirstName = firstName;
+                dto.LastName = lastName;
+                dto.Username = username;
+                dto.AccessToken = accessToken;
+                return dto;
+            }
     }
 }

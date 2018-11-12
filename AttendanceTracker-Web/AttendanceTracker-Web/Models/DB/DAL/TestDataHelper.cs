@@ -127,42 +127,71 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override AccessToken AddAccessToken(AccessToken accessToken)
         {
-            throw new NotImplementedException();
+            var token = accessToken;
+            return token;
         }
 
         public override AccessToken GetAccessToken(long userID, string token)
         {
-            throw new NotImplementedException();
+            if (userID == 1)
+            {
+                var accessToken = dbFactory.AccessToken(userID, token, 1, DateTime.Now, true);
+                return accessToken;
+            }
+            return null;
         }
 
         public override void RemoveAccessToken(long userID, string token)
         {
-            throw new NotImplementedException();
+            //remove token
         }
 
         public override Account AddAccount(Account account)
         {
-            throw new NotImplementedException();
+            var newAccount = account;
+            return newAccount;
         }
 
         public override Account UpdateAccount(Account account)
         {
-            throw new NotImplementedException();
+            var updatedAccount = account;
+            return updatedAccount;
         }
 
         public override Account GetAccount(string username)
         {
-            throw new NotImplementedException();
+            if(username == "jdoe@a.com")
+            {
+                var account = dbFactory.Account(0, username, "asdf", "asdf");
+                return account;
+            }
+            return null;
         }
 
         public override Teacher AddTeacher(Teacher teacher)
         {
-            throw new NotImplementedException();
+            var newTeacher = teacher;
+            return newTeacher;
         }
 
         public override Teacher GetTeacher(long cwid)
         {
-            throw new NotImplementedException();
+            if (cwid == 1)
+            {
+                var teacher = dbFactory.Teacher(cwid, 1, "john", "doe", "jdoe@a.com");
+                return teacher;
+            }
+            return null;
+        }
+
+        public override Teacher GetTeacherByUserID(long userID)
+        {
+            if (userID == 1)
+            {
+                var teacher = dbFactory.Teacher(1, userID, "john", "doe", "jdoe@a.com");
+                return teacher;
+            }
+            return null;
         }
     }
 }

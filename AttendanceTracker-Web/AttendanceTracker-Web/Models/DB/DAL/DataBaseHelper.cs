@@ -381,6 +381,20 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
+        public override Teacher GetTeacherByUserID(long userID)
+        {
+            var queryString = "exec Teachers_GetTeacherByUserID @user_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@user_id", userID);
+            var results = query.ExecuteQuery();
+            if (results.Rows.Count != 0)
+            {
+                var resultTeacher = BuildTeacher(results.Rows[0]);
+                return resultTeacher;
+            }
+            return null;
+        }
+
         private Teacher BuildTeacher(DataRow row)
         {
             var cwid = row.Field<long>(0);

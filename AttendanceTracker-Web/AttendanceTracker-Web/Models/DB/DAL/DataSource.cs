@@ -30,5 +30,6 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract Account GetAccount(string username);
         public abstract Teacher AddTeacher(Teacher teacher);
         public abstract Teacher GetTeacher(long cwid);
+        public abstract Teacher GetTeacherByUserID(long userID);
     }
 }
