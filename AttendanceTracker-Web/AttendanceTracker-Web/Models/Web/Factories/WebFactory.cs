@@ -144,6 +144,25 @@ namespace AttendanceTracker_Web.Models.Web
                 dto.Username = username;
                 dto.AccessToken = accessToken;
                 return dto;
-            }
+        }
+
+        public UserCookie UserCookie(long cwid, string firstName, string lastName, string username, string accessToken)
+        {
+            var dto = new UserCookie();
+            dto.CWID = cwid;
+            dto.FirstName = firstName;
+            dto.LastName = lastName;
+            dto.Username = username;
+            dto.AccessToken = accessToken;
+            return dto;
+        }
+
+        public QRCodePayload QRCodePayload(long classID, string payload)
+        {
+            var dto = new QRCodePayload();
+            dto.ClassID = classID;
+            dto.Payload = payload;
+            return dto;
+        }
     }
 }

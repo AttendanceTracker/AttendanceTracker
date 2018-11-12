@@ -18,12 +18,14 @@ namespace AttendanceTracker_Web.Controllers.MVC
     {
         AuthorizationManager authManager;
         DataBaseFactory dbFactory;
+        WebFactory webFactory;
         DataAccessLayer dal;
 
         public HomeController()
         {
             authManager = new AuthorizationManager();
             dbFactory = new DataBaseFactory();
+            webFactory = new WebFactory();
             dal = new DataAccessLayer(DALDataSource.DB);
         }
 
@@ -154,9 +156,9 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var payload = guid + classID.ToString();
                     payload = payload.SHA256Hash();
                     var dbQRCode = dbFactory.QRCode(0, classID, payload, DateTime.Now, expiresIn);
+                    var fullPayload = webFactory.QRCodePayload(dbQRCode.ClassID, dbQRCode.Payload);
                     var addedQRCode = dal.Source.AddQRCode(dbQRCode);
-
-                    var qrCodeImage = GenerateQRCode(payload);
+                    var qrCodeImage = GenerateQRCode(fullPayload);
                     var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
                     return File(qrCodeStream, "image/bmp");
                 }
@@ -176,8 +178,9 @@ namespace AttendanceTracker_Web.Controllers.MVC
                 var accessToken = Request.Headers.GetValues("AccessToken").FirstOrDefault();
                 if (authManager.IsAuthorized(accessToken))
                 {
-                    var qrCodeData = dal.Source.GetQRCode(qrCodeID);
-                    var qrCodeImage = GenerateQRCode(qrCodeData.Payload);
+                    Models.DB.QRCode qrCodeData = dal.Source.GetQRCode(qrCodeID);
+                    var qrCodePayload = webFactory.QRCodePayload(qrCodeData.ClassID, qrCodeData.Payload);
+                    var qrCodeImage = GenerateQRCode(qrCodePayload);
                     var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
                     return File(qrCodeStream, "image/bmp");
                 }
@@ -189,10 +192,11 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
-        private Bitmap GenerateQRCode(string payload)
+        private Bitmap GenerateQRCode(QRCodePayload payload)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
+            var payloadJson = JsonConvert.SerializeObject(payload);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payloadJson, QRCodeGenerator.ECCLevel.Q);
             QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             return qrCodeImage;

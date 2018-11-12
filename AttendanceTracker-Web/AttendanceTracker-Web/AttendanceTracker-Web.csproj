@@ -207,6 +207,7 @@
     <Compile Include="Models\Web\DTOs\CreateAccountResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetStudentResponse.cs" />
+    <Compile Include="Models\Web\DTOs\QRCodePayload.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentRequest.cs" />
