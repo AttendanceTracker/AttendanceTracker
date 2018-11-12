@@ -96,5 +96,25 @@ namespace AttendanceTracker_Web.Controllers.API
             var addedAccessToken = dal.Source.AddAccessToken(accessToken);
             return addedAccessToken;
         }
+
+        [HttpDelete]
+        public IHttpActionResult SignOut()
+        {
+            try
+            {
+                IEnumerable<string> headerValues = Request.Headers.GetValues("AccessToken");
+                var accessToken = headerValues.FirstOrDefault();
+                if (authManager.IsAuthorized(accessToken))
+                {
+                    dal.Source.RemoveAccessToken(accessToken);
+                    return Ok();
+                }
+                return Unauthorized();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
