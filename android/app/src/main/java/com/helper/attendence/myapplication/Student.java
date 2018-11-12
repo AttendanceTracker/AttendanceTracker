@@ -1,15 +1,19 @@
 package com.helper.attendence.myapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.content.SharedPreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
+
+import java.io.Serializable;
 import java.util.HashMap;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class Student {
+public class Student implements Serializable {
 
     private HttpClient httpRequests;
     private String fname;
@@ -17,6 +21,11 @@ public class Student {
     private String email;
     private Long cwid;
     private Device studentDevice;
+
+    public Student(Long Imei) {
+        this.studentDevice= new Device(Imei);
+        this.httpRequests = new HttpClient();
+    }
 
     public Student() {httpRequests = new HttpClient();}
 
@@ -29,36 +38,52 @@ public class Student {
         this.httpRequests = new HttpClient();
     }
 
-    public Student getStudent(Long sCWID)  {
+    public Student(String sFName, String sLName, String sEmail, Long sCwid, Long imei) {
+        this.fname = sFName;
+        this.lname = sLName;
+        this.email = sEmail;
+        this.cwid = sCwid;
+        this.studentDevice = new Device();
+        this.httpRequests = new HttpClient();
+        this.studentDevice= new Device(imei);
+    }
+
+    public Student getStudent(Student std) {
         String fname = "";
         String lname = "";
         String email = "";
         Long cwid = -1L;
 
-        String params = "cwid=" + sCWID.toString();
+        String params = "cwid=" + std.getCwid().toString();
         Log.i(TAG, "Running GET call.");
         String response = httpRequests.getCall("/api/Student/Get", params);
         if(!response.equals("Failed")) {
-            try {
-                JSONObject myResponse = new JSONObject(response);
-                System.out.println("result after Reading JSON Response");
-                System.out.println("CWID- " + myResponse.getString("CWID"));
-                System.out.println("FirstName- " + myResponse.getString("FirstName"));
-                System.out.println("LastName- " + myResponse.getString("LastName"));
-                System.out.println("Email- " + myResponse.getString("Email"));
-
-                fname = myResponse.getString("FirstName");
-                lname = myResponse.getString("LastName");
-                ;
-                email = myResponse.getString("Email");
-                ;
-                cwid = Long.parseLong(myResponse.getString("CWID"));
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(response.equals("")) {
+                std.registerStudent(std);
+            }
+            else {
                 try {
-                    throw e;
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
+                    JSONObject myResponse = new JSONObject(response);
+                    System.out.println("result after Reading JSON Response");
+                    System.out.println("CWID- " + myResponse.getString("CWID"));
+                    System.out.println("FirstName- " + myResponse.getString("FirstName"));
+                    System.out.println("LastName- " + myResponse.getString("LastName"));
+                    System.out.println("Email- " + myResponse.getString("Email"));
+
+                    fname = myResponse.getString("FirstName");
+                    lname = myResponse.getString("LastName");
+                    email = myResponse.getString("Email");
+                    cwid = Long.parseLong(myResponse.getString("CWID"));
+                    std.setFname(fname);
+                    std.setLname(lname);
+                    std.setEmail(email);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    try {
+                        throw e;
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
             Log.i(TAG, "*****************************************************************\n" +
@@ -68,7 +93,7 @@ public class Student {
         else {
             Log.d(TAG, "ERROR, the getStudent call did not work");
         }
-        return  new Student(fname, lname, email, cwid);
+        return std;
     }
 
     public void printAll() {
@@ -96,7 +121,10 @@ public class Student {
         postDataParams.put("email", std.getEmail());
         Log.i(TAG, "Running POST call.");
         String response = httpRequests.postCall("/api/Student/Register",postDataParams);
-        if(!response.equals("Failed")) {
+        if (response.equals("Already Exists")) {
+            return null;
+        }
+        else if(!response.equals("Failed")) {
             try {
                 JSONObject myResponse = new JSONObject(response);
                 System.out.println("result after Reading JSON Response");
@@ -145,8 +173,10 @@ public class Student {
         String params = "cwid=" + permanentCWID.toString();
         Log.i(TAG, "Running PUT call.");
         String response = httpRequests.putCall("api/Student/Update", params, putDataParams);
-
-        if(!response.equals("Failed")) {
+        if (response.equals("Already Exists")) {
+            bResponse = false;
+        }
+        else if(!response.equals("Failed")) {
             try {
                 JSONObject myResponse = new JSONObject(response);
                 System.out.println("result after Reading JSON Response");
@@ -222,8 +252,10 @@ public class Student {
         Long newImei = -1L;
 
         String response = std.studentDevice.registerDevice(std.getCwid(), sImei);
-
-        if(!response.equals("Failed")) {
+        if (response.equals("Already Exists")) {
+            bResponse = false;
+        }
+        else if(!response.equals("Failed")) {
             try {
                 JSONObject myResponse = new JSONObject(response);
                 System.out.println("result after Reading JSON Response");
@@ -233,7 +265,8 @@ public class Student {
 
                 newCwid = Long.parseLong(myResponse.getString("StudentID"));
                 newImei= Long.parseLong(myResponse.getString("IMEI"));
-                setImei(newImei);
+                std.setImei(newImei);
+//                bResponse = true;
                 Log.i(TAG, "*****************************************************************\n" +
                         "Registered a device: " + newImei+ " to student : " + newCwid + "\n" +
                         "*****************************************************************");
@@ -256,7 +289,6 @@ public class Student {
 
     // /api/Device/Update
     public Boolean updateDevice(Student std, Device sDevice) {
-
         Boolean bResponse = false;
         Long newCwid = -1L;
         Long newImei= -1L;
@@ -269,7 +301,10 @@ public class Student {
         String params = "imei=" + sDevice.getImei().toString();
         Log.i(TAG, "Running PUT call.");
         String response = httpRequests.putCall("api/Device/Update", params, putDataParams);
-        if(!response.isEmpty() || !response.equals("Failed")) {
+        if (response.equals("Already Exists")) {
+            bResponse = false;
+        }
+        else if(!response.isEmpty() || !response.equals("Failed")) {
             try {
                 JSONObject myResponse = new JSONObject(response);
                 System.out.println("result after Reading JSON Response");
@@ -289,6 +324,7 @@ public class Student {
                     e1.printStackTrace();
                 }
             }
+            bResponse = true;
             Log.i(TAG, " *****************************************************************\n" +
                     "Updated a new Device. New Imei: " + newImei + " is linked to CWID : " + newCwid +
                     "*****************************************************************");
@@ -332,7 +368,11 @@ public class Student {
         this.cwid = cwid;
     }
 
+    public Device getStudentDevice() { return studentDevice; }
+
     public Long getImei() { return this.studentDevice.getImei(); }
 
-    public void setImei(Long imei) { this.studentDevice.setImei(imei); }
+    public void setImei(Device d) { this.studentDevice = d; }
+
+    public void setImei(Long i) {Device d = new Device(i); setImei(d);}
 }

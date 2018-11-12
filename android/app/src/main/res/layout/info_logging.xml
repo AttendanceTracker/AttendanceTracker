@@ -23,7 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/submitBtn"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginStart="176dp"
@@ -56,11 +56,11 @@
         android:layout_marginRight="76dp"
         android:layout_marginBottom="24dp"
         android:hint="@string/last_name"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="229dp"
         android:layout_height="55dp"
         android:layout_marginEnd="76dp"
@@ -80,7 +80,7 @@
         android:layout_marginRight="76dp"
         android:layout_marginBottom="72dp"
         android:hint="@string/CWID"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.985"
         app:layout_constraintStart_toStartOf="parent" />

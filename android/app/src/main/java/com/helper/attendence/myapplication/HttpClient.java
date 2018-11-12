@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,12 +19,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class HttpClient {
+public class HttpClient implements Serializable{
 
-    private String baseURL = "https://attendancetracker.us/";
+    private String baseURL = "https://attendancetracker.us";
 
     public String getCall(String apiString, String parameters) {
-
         String urlString = baseURL + apiString + "?" + parameters;
         System.out.println("StringBoi" + urlString);
         String response = "";
@@ -105,12 +105,16 @@ public class HttpClient {
             os.close();
             int responseCode=conn.getResponseCode();
 
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
+            if (responseCode == 200) {
+                Log.i(TAG, "pstCall returned with 200 response code");
                 String line;
                 BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 while ((line=br.readLine()) != null) {
                     response+=line;
                 }
+            }
+            else if(responseCode == 400) {
+                response = "Already Exists";
             }
             else {
                 Log.d(TAG, "ERROR, postCall returned with response code " + Integer.toString(responseCode));
@@ -128,7 +132,7 @@ public class HttpClient {
         String response = "";
 
         String urlString = baseURL + apiString + "?" + urlParameters;
-        System.out.println("StringBoi= " + urlString);
+//        System.out.println("StringBoi= " + urlString);
         try {
             url = new URL(urlString);
 
@@ -149,12 +153,16 @@ public class HttpClient {
             os.close();
             int responseCode=conn.getResponseCode();
             System.out.println("Response code= " + responseCode);
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
+            if (responseCode == 200) {
+                Log.i(TAG, "getCall returned with 200 response code");
                 String line;
                 BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 while ((line=br.readLine()) != null) {
                     response+=line;
                 }
+            }
+            else if(responseCode == 400) {
+                response = "Already Exists";
             }
             else {
                 Log.d(TAG, "ERROR, getCall returned with response code " + Integer.toString(responseCode));

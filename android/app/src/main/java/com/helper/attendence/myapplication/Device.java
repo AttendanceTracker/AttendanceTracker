@@ -5,11 +5,12 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class Device {
+public class Device implements Serializable {
 
     private Long imei;
     private HttpClient httpRequests;

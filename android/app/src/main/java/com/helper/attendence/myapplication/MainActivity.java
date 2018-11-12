@@ -1,15 +1,12 @@
 package com.helper.attendence.myapplication;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -18,10 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import java.io.IOException;
-
-import static java.util.logging.Level.FINEST;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,92 +29,84 @@ public class MainActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        Student tb = new Student("Dick", "Butt", "dButt@crimson.ua.edu", 108L);
-        tb.printAll();
-        tb.registerStudent(tb);
-        tb.printAll();
 
-
-        tb.registerDeviceToStudent(tb, 9898989898L);
-
-        System.out.println("The registered CWID = " + tb.getCwidFromDevice(321654456123L));
-        tb.printAll();
-        tb.getCwidFromDevice(6565656565L);
-
-        Student x = new Student("Zack", "Witherspoon", "zbwitherspoon", 54321L);
-//        try {
-//            x = x.getStudent(54321L);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        x.printAll();
-        Student dick = new Student("Dick", "VanDyke", "xboob@boob.ua.edu", 100L);
-        dick.registerStudent(dick);
-        dick.printAll();
-
-        System.out.println("Printing Get version of DICk");
-//        try {
-//            dick = dick.getStudent(100L);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        dick.printAll();
-
-//        System.out.println("Printing new student Testy Boi");
-//        Student tb = new Student("Testy", "Boi", "tBoi@crimson.ua.edu", 104L);
-
-        System.out.println("Printing new student Clark Heys");
-        tb.updateStudent(tb, "Clark", "Heys", "cheys@kingsridgecs.cs.edu", 104L);
-        tb.printAll();
-
-//        Retrieving device IMEI to make sure it's not a new device
-        String IMEINumber = "-1";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
-            } else {
-                IMEINumber = getDeviceImei();
-                Log.d("msg", "Final IMEI = " + IMEINumber);
-            }
-        }
-        else {
-            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
-        }
+        String IMEINumber = "3003";
+        Student std = new Student(Long.parseLong(IMEINumber));
         //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
 
         // Get the app's shared preference
-        final SharedPreferences app_preferences =
-        PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences pref = this.getSharedPreferences("MAIN_ACTIVITY", Context.MODE_PRIVATE);
+        Boolean newDeviceFlag = pref.getBoolean("deviceFlag", true);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putLong("storedIMEINumber", Long.parseLong(IMEINumber)); // value to store
+        editor.apply();
 
-        // See if device has been seen before based off of shared Pref. Can prob take this out
-        // after IMEI checks are finalized.
-        Boolean newDeviceFlag = app_preferences.getBoolean("deviceFlag", false);
-
-        //Should show 4 boxes to enter the fname, lname, username, and CWID
-        if (!newDeviceFlag) {
-            Intent i = new Intent(MainActivity.this, InfoLogging.class);
-            startActivity(i);
-        } else {
-            TextView text = (TextView) findViewById(R.id.txtCount);
-            text.setText("Welcome. Your info is stored.\n");
-            displayInfo(app_preferences);
+        if(newDeviceFlag) {
+            Long cwid = std.getCwidFromDevice(std.getImei());
+            if (cwid.equals(-1L)) //IMEI not attached to any student
+            {
+                //switch to infoLogging and create new student
+                // get info
+                //check if student exists already
+                    //if he do then register the device to him
+                    //if he don't then create him then register device to him :)
+                System.out.println("ENTERING INFOLOGGING()");
+                Intent i = new Intent(MainActivity.this, InfoLogging.class);
+                startActivity(i);
+            }
+            else { //get student from cwid and move on, don'go to infoLogging
+                std.setCwid(cwid);
+                std.setImei(Long.parseLong(IMEINumber));
+                std.printAll();
+                System.out.println("GOING INTO THE MATRIX");
+                std = std.getStudent(std);
+                System.out.println("JUST GOT OUT OF MATRIX");
+                std.printAll();
+            }
+                //Save shared preferences off
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("storedFirstName", std.getFname());
+                edit.putString("storedLastName", std.getLname());
+                edit.putString("storedEmail", std.getEmail());
+                edit.putLong("storedCwid", cwid);
+                edit.putBoolean("deviceFlag", true); //set's boolean to True bc user has been seen before
+                edit.apply(); // Very important
         }
-        displayInfo(app_preferences);
+
+        String firstName = pref.getString("storedFirstName", "ERROR");
+        String lastName = pref.getString("storedLastName", "ERROR");
+        String email = pref.getString("storedEmail", "ERROR");
+        Long cwid = pref.getLong("storedCwid", -1L);
+
+        Student x = new Student(firstName, lastName, email, cwid, Long.parseLong(IMEINumber));
+        x.printAll();
+
+//        Intent i = new Intent(MainActivity.this, InfoLogging.class);
+//        i.putExtra("serialize_data", std);
+//        startActivity(i);
+
+//        //Should show 4 boxes to enter the fname, lname, username, and CWID
+//        if (!newDeviceFlag) {
+//            Intent i = new Intent(MainActivity.this, InfoLogging.class);
+//            i.putExtra("student_imei", (Parcelable) std);
+//            startActivity(i);
+//        } else {
+//            SharedPreferences.Editor editor = app_preferences.edit();
+//            editor.putBoolean("deviceFlag", true); //set's boolean to True bc user has been seen before
+//            editor.apply(); // Very important
+//            TextView text = (TextView) findViewById(R.id.txtCount);
+//            text.setText("Welcome. Your info is stored.\n");
+//            displayInfo(app_preferences);
+//        }
+        displayInfo(x);
         mainMenu();
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
-    public void displayInfo(SharedPreferences app_preferences) {
+    public void displayInfo(Student std) {
         setContentView(R.layout.activity_main);
-
-        String fName = app_preferences.getString("fName", "null");
-        String lName= app_preferences.getString("lName", "null");
-        String userName = app_preferences.getString("userName", "null");
-        String CWID = app_preferences.getString("CWID", "null");
         TextView text = (TextView) findViewById(R.id.txtCount);
-        text.setText("\nFirst name =" + fName + "\n Last name =" + lName + "\n Username =" + userName + "\n CWID =" + CWID + ". ");
+        text.setText("\nFirst name =" + std.getFname() + "\n Last name =" + std.getLname()+ "\n Username =" + std.getEmail()+ "\n CWID =" + std.getCwid()+ ". ");
     }
 
     public void mainMenu() {
@@ -144,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-//        displayInfo();
     }
 
     @Override
