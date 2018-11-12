@@ -230,7 +230,10 @@ public class QRScanner extends AppCompatActivity {
         Student student = new Student();
         boolean success = student.checkIn(latitude,longitude, rawValue, cwid);
         if (success){
-
+            scanResults.setText("Check-in successful!");
+        }
+        else{
+            scanResults.setText("Check-in failed.!");
         }
     }
 
