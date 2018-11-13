@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        String IMEINumber = "3003";
+        String IMEINumber = "3006";
         Student std = new Student(Long.parseLong(IMEINumber));
         //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
 
