@@ -25,7 +25,7 @@ public class HttpClient implements Serializable{
 
     public String getCall(String apiString, String parameters) {
         String urlString = baseURL + apiString + "?" + parameters;
-        System.out.println("StringBoi" + urlString);
+        System.out.println("StringBoi: " + urlString);
         String response = "";
         try {
             URL obj = new URL(urlString);
@@ -132,7 +132,7 @@ public class HttpClient implements Serializable{
         String response = "";
 
         String urlString = baseURL + apiString + "?" + urlParameters;
-//        System.out.println("StringBoi= " + urlString);
+        System.out.println("StringBoi= " + urlString);
         try {
             url = new URL(urlString);
 

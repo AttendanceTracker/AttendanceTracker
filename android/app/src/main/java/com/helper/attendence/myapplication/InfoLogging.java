@@ -43,19 +43,22 @@ public class InfoLogging extends Activity {
                 editor.putBoolean("deviceFlag", false); //set's boolean to True bc user has been seen before
                 editor.apply(); // Very important
                 System.out.println("Checking getStudent");
-                Student std = new Student();
-                std.setCwid(cwid);
-                std.setImei(imeiNumber);
+                Student std = new Student(fn, ln, email, cwid, imeiNumber);
+                System.out.println("Created my student");
+                std.printAll();
+                System.out.println("Getting student");
                 std = std.getStudent(std);
                 if(std.equals(null)) {
-                    std.registerStudent(std);
+                    System.out.println("Dood is null ");
+                }
+                else {
+                    System.out.println("Dood is not null");
                 }
                 std.printAll();
                 std.getStudentDevice().registerDevice(std.getCwid(), imeiNumber);
                 Intent i = new Intent(InfoLogging.this, MainActivity.class);
                 startActivity(i);
             }
-
         });
 
     }

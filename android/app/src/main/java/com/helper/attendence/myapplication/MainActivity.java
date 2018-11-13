@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        String IMEINumber = "3006";
+        String IMEINumber = "3015";
         Student std = new Student(Long.parseLong(IMEINumber));
         //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
 
@@ -43,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(newDeviceFlag) {
             Long cwid = std.getCwidFromDevice(std.getImei());
+            System.out.println("Found CWID = " + cwid);
             if (cwid.equals(-1L)) //IMEI not attached to any student
             {
+                System.out.println("In no cwid found for device");
                 //switch to infoLogging and create new student
                 // get info
                 //check if student exists already

@@ -114,9 +114,14 @@ public class Student implements Serializable {
         String params = "cwid=" + std.getCwid().toString();
         Log.i(TAG, "Running GET call.");
         String response = httpRequests.getCall("/api/Student/Get", params);
+        System.out.println("Response for getStudent:|" + response + "|");
         if(!response.equals("Failed")) {
             if(response.equals("")) {
+                System.out.println("RESPONSE + ''");
                 std.registerStudent(std);
+                Student x = std.getStudent(std);
+                System.out.println("New student  = ");
+                x.printAll();
             }
             else {
                 try {
@@ -178,6 +183,7 @@ public class Student implements Serializable {
         postDataParams.put("email", std.getEmail());
         Log.i(TAG, "Running POST call.");
         String response = httpRequests.postCall("/api/Student/Register",postDataParams);
+        System.out.println("Response =|" + response + "|");
         if (response.equals("Already Exists")) {
             return null;
         }
@@ -230,6 +236,7 @@ public class Student implements Serializable {
         String params = "cwid=" + permanentCWID.toString();
         Log.i(TAG, "Running PUT call.");
         String response = httpRequests.putCall("api/Student/Update", params, putDataParams);
+        System.out.println("Response =|" + response + "|");
         if (response.equals("Already Exists")) {
             bResponse = false;
         }
@@ -280,24 +287,26 @@ public class Student implements Serializable {
         String params = "imei=" + deviceID.toString();
         Log.i(TAG, "Running GET call.");
         String response = httpRequests.getCall("/api/Device/Get", params);
+        System.out.println("Response =|" + response + "|");
         if(!response.equals("Failed")) {
-            try {
-                JSONObject myResponse = new JSONObject(response);
-                System.out.println("result after Reading JSON Response");
-                System.out.println("CWID- " + myResponse.getString("StudentID"));
-                sCwid = Long.parseLong(myResponse.getString("StudentID"));
-                Log.i(TAG, "*****************************************************************\n" +
-                        "Returning CWID:  " + sCwid + " from imei: " + deviceID + "\n" +
-                        "*****************************************************************\n");
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(!response.equals("")) {
+                try {
+                    JSONObject myResponse = new JSONObject(response);
+                    System.out.println("result after Reading JSON Response");
+                    System.out.println("CWID- " + myResponse.getString("StudentID"));
+                    sCwid = Long.parseLong(myResponse.getString("StudentID"));
+                    Log.i(TAG, "*****************************************************************\n" +
+                            "Returning CWID:  " + sCwid + " from imei: " + deviceID + "\n" +
+                            "*****************************************************************\n");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         else
         {
             Log.d(TAG, "ERROR, the GET call did not work");
         }
-
         return  sCwid;
     }
 
