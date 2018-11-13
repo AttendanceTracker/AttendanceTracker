@@ -9,6 +9,6 @@ namespace AttendanceTracker_Web.Models
     public class QRCodesViewModel
     {
         public List<ClassData> ClassData { get; set; }
-        public List<long> QRCodes { get; set; }
+        public List<List <long>> QRCodes { get; set; }
     }
 }

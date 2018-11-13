@@ -126,7 +126,12 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
                         var classData = dal.Source.GetClassData(userCookie.CWID);
-                        var qrCodes = dal.Source.GetQRCodes(3);
+                        var qrCodes = new List<List<long>>();
+                        foreach (var c in classData)
+                        {
+                            var codes = dal.Source.GetQRCodes(c.ID);
+                            qrCodes.Add(codes);
+                        }
                         var viewModel = viewModelsFactory.QRCodesViewModel(classData, qrCodes);
                         return View(viewModel);
                     }

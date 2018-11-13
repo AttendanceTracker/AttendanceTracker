@@ -1,4 +1,16 @@
-﻿function getQRCode(id, completed) {
+﻿function addQRCodeButtonClicked() {
+    var dialog = document.querySelector('dialog');
+    dialog.showModal();
+}
+
+function showToast(message) {
+    var snackbarContainer = document.querySelector('#toast-container');
+    'use strict';
+    var data = { message: message };
+    snackbarContainer.MaterialSnackbar.showSnackbar(data);
+}
+
+function getQRCode(id, completed) {
     var headers = { "AccessToken": getCookie("user").AccessToken };
     request("/Home/GetQRCode?qrCodeID=" + id, "get", "text", null, headers, completed,
         function (e) {

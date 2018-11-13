@@ -7,11 +7,13 @@
 <script src="~/Scripts/WebserviceUtil.js"></script>
 <script src="~/Scripts/CookieUtils.js"></script>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/getmdl-select.min.js"></script>
 <script src="~/Scripts/QRCodes.js"></script>
 
-@foreach (var c in Model.ClassData)
+@for (int i = 0; i < Model.ClassData.Count; i++)
 {
-    foreach (var qrCode in Model.QRCodes)
+    var c = Model.ClassData[i];
+    foreach (var qrCode in Model.QRCodes[i])
     {
         <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop">
             <div class="mdl-card__title mdl-card--expand mdl-color--primary">
@@ -33,7 +35,6 @@
         </div>
         <script>
             $(document).ready(function () {
-                console.log("hello");
                 getQRCode(@qrCode, function (data) {
                     $("@string.Format("#qr-image{0}", qrCode)").attr("src", "data:image/bmp;base64," + base64Encode(data));
                 });
@@ -42,7 +43,72 @@
     }
 }
 
-<button id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+<button onclick="addQRCodeButtonClicked()" id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
     <i class="material-icons">add</i>
 </button>
 
+<body>
+    <dialog class="mdl-dialog">
+        <div class="mdl-dialog__content">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                <input type="text" value="" class="mdl-textfield__input" id="class-select" readonly>
+                <input type="hidden" value="" name="class-select">
+                <label for="class-select" class="mdl-textfield__label">Class</label>
+                <ul for="class-select" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                    @foreach (var c in Model.ClassData)
+                    {
+                        <li class="mdl-menu__item" data-val="@c.ID">@c.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button onclick="addModalButtonClicked()" type="button" class="mdl-button">Create</button>
+            <button onclick="dialog.close()" type="button" class="mdl-button close">Cancel</button>
+        </div>
+    </dialog>
+    <script>
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#show-dialog');
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+
+        function addModalButtonClicked() {
+            var classSelectText = $("#class-select").val();
+            if (classSelectText == "") {
+                return showToast("Please select a class");
+            }
+            var classDataJsonString = "@Json.Encode(Model.ClassData)";
+            var parser = new DOMParser;
+            var dom = parser.parseFromString('<!doctype html><body>' + classDataJsonString, 'text/html');
+            var decodedClassDataJsonString = dom.body.textContent;
+            var classData = JSON.parse(decodedClassDataJsonString);
+            var c = classData.find(function (element) {
+                return element.Name == classSelectText;
+            });
+            var headers = { "AccessToken": getCookie("user").AccessToken };
+            request("/Home/AddQRCode?classid=" + c.ID +"&expiresin=10000", "POST", "text", null, headers,
+                function () {
+                    dialog.close();
+                    showToast("QR code created");
+                    window.location = "/home/qrcodes/"
+                },
+                function (e) {
+                    console.log(e);
+                    showToast("Failed to create QR code");
+                }
+            );
+        }
+    </script>
+</body>
+
+<div id="toast-container" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
+<script>
+    (function () {
+        'use strict';
+    }());
+</script>

@@ -9,7 +9,7 @@ namespace AttendanceTracker_Web.Models
 {
     public class ViewModelsFactory
     {
-        public QRCodesViewModel QRCodesViewModel(List<ClassData> classData, List<long> qrCodes)
+        public QRCodesViewModel QRCodesViewModel(List<ClassData> classData, List<List<long>> qrCodes)
         {
             var viewModel = new QRCodesViewModel();
             viewModel.ClassData = classData;
