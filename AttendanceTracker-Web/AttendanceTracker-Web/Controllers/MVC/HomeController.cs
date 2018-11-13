@@ -115,6 +115,30 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
+        [HttpGet]
+        public ActionResult GetAttendance(long classID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var attendanceResults = dal.Source.GetAttendanceByClassID(classID);
+                        var attendanceResultsJSON = JsonConvert.SerializeObject(attendanceResults);
+                        return Content(attendanceResultsJSON);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
         public ActionResult QRCodes()
         {
             try

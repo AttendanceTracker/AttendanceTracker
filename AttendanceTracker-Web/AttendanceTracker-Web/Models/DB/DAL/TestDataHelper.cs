@@ -99,6 +99,18 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
+        public override List<Attendance> GetAttendanceByClassID(long classID)
+        {
+            if (classID == 1)
+            {
+                var attendance = GetAttendance(1);
+                var list = new List<Attendance>();
+                list.Add(attendance);
+                return list;
+            }
+            return null;
+        }
+
         public override QRCode AddQRCode(QRCode qrCode)
         {
             var resultQRCode = qrCode;

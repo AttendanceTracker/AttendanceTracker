@@ -164,6 +164,16 @@ namespace AttendanceTracker_Web.Models.DB
             return attendanceResults;
         }
 
+        public override List<Attendance> GetAttendanceByClassID(long classID)
+        {
+            var queryString = "exec Attendance_GetAttendanceByClassID @class_id";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            var results = query.ExecuteQuery();
+            var attendanceList = BuildAttendanceList(results);
+            return attendanceList;
+        }
+
         private Attendance GetAttendance(string queryString)
         {
             var results = ExecuteStoredProcedure(queryString);
