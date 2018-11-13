@@ -22,6 +22,7 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract QRCode AddQRCode(QRCode qrCode);
         public abstract QRCode GetQRCode(long id);
         public abstract QRCode GetQRCode(long classID, string payload);
+        public abstract List<long> GetQRCodes(long classID);
         public abstract AccessToken AddAccessToken(AccessToken accessToken);
         public abstract AccessToken GetAccessToken(string token);
         public abstract void RemoveAccessToken(string token);
@@ -31,5 +32,6 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract Teacher AddTeacher(Teacher teacher);
         public abstract Teacher GetTeacher(long cwid);
         public abstract Teacher GetTeacherByUserID(long userID);
+        public abstract List<ClassData> GetClassData(long teacherID);
     }
 }

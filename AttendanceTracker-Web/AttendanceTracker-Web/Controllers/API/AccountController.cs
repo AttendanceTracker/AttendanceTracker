@@ -42,9 +42,7 @@ namespace AttendanceTracker_Web.Controllers.API
                         var accessToken = login(request.Email, saltedPasswordHash);
                         if (accessToken != null)
                         {
-                            var now = DateTime.Now;
-                            var expirationDate = new DateTime(now.Year, now.Month, now.Day).AddSeconds(accessToken.ExpiresIn);
-                            var responseContent = webFactory.CreateAccountResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.email, accessToken.Token, expirationDate);
+                            var responseContent = webFactory.CreateAccountResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.email, accessToken.Token);
                             var response = Accepted(responseContent);
                             return response;
                         }
@@ -71,9 +69,7 @@ namespace AttendanceTracker_Web.Controllers.API
                     if (accessToken != null)
                     {
                         var teacher = dal.Source.GetTeacherByUserID(account.ID);
-                        var now = DateTime.Now;
-                        var expirationDate = new DateTime(now.Year, now.Month, now.Day).AddSeconds(accessToken.ExpiresIn);
-                        var responseContent = webFactory.SignInResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.email, accessToken.Token, expirationDate);
+                        var responseContent = webFactory.SignInResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.email, accessToken.Token);
                         return Accepted(responseContent);
                     }
                 }

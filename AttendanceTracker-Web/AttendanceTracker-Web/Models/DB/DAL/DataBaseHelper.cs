@@ -241,6 +241,22 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
+        public override List<long> GetQRCodes(long classID)
+        {
+            var queryString = "exec QRCodes_GetForClassID @class_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            var results = query.ExecuteQuery();
+            var qrCodeIDs = new List<long>();
+            for (int i = 0; i < results.Rows.Count; i++)
+            {
+                var row = results.Rows[i];
+                var id = row.Field<long>(0);
+                qrCodeIDs.Add(id);
+            }
+            return qrCodeIDs;
+        }
+
         private QRCode BuildQRCode(DataRow row)
         {
             var idResult = row.Field<long>(0);
@@ -402,6 +418,31 @@ namespace AttendanceTracker_Web.Models.DB
             var email = row.Field<string>(4);
             var resultTeacher = dbFactory.Teacher(cwid, userID, firstName, lastName, email);
             return resultTeacher;
+        }
+
+        public override List<ClassData> GetClassData(long teacherID)
+        {
+            var queryString = "exec Class_Data_GetForTeacherID @teacher_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            var results = query.ExecuteQuery();
+            var classDataList = new List<ClassData>();
+            for (int i = 0; i < results.Rows.Count; i++)
+            {
+                var row = results.Rows[i];
+                var resultClassData = BuildClassData(row);
+                classDataList.Add(resultClassData);
+            }
+            return classDataList;
+        }
+
+        private ClassData BuildClassData(DataRow row)
+        {
+            var id = row.Field<long>(0);
+            var name = row.Field<string>(1);
+            var teacherID = row.Field<long>(2);
+            var classData = dbFactory.ClassData(id, name, teacherID);
+            return classData;
         }
 
         private DataTable ExecuteStoredProcedure(string queryString)

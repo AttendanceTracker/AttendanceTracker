@@ -19,6 +19,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
         AuthorizationManager authManager;
         DataBaseFactory dbFactory;
         WebFactory webFactory;
+        ViewModelsFactory viewModelsFactory;
         DataAccessLayer dal;
 
         public HomeController()
@@ -26,6 +27,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
             authManager = new AuthorizationManager();
             dbFactory = new DataBaseFactory();
             webFactory = new WebFactory();
+            viewModelsFactory = new ViewModelsFactory();
             dal = new DataAccessLayer(DALDataSource.DB);
         }
 
@@ -123,7 +125,10 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        return View();
+                        var classData = dal.Source.GetClassData(userCookie.CWID);
+                        var qrCodes = dal.Source.GetQRCodes(3);
+                        var viewModel = viewModelsFactory.QRCodesViewModel(classData, qrCodes);
+                        return View(viewModel);
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
@@ -191,6 +196,26 @@ namespace AttendanceTracker_Web.Controllers.MVC
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
             }
         }
+
+        //[HttpGet]
+        //public ActionResult GetQRCodes(long classID)
+        //{
+        //    try
+        //    {
+        //        var accessToken = Request.Headers.GetValues("AccessToken").FirstOrDefault();
+        //        if (authManager.IsAuthorized(accessToken))
+        //        {
+        //            var qrCodes = dal.Source.GetQRCodes(classID);
+        //            var qrCodesJson = JsonConvert.SerializeObject(qrCodes);
+        //            return Content(qrCodesJson);
+        //        }
+        //        return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+        //    }
+        //}
 
         private Bitmap GenerateQRCode(QRCodePayload payload)
         {

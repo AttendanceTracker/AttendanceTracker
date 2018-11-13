@@ -25,7 +25,7 @@
     requestData["LastName"] = $("#lastname-input").val();
     requestData["Email"] = email;
     requestData["Password"] = password;
-    request("/api/account/createaccount", "POST", requestData, signUpSuccess, signUpError);
+    request("/api/account/createaccount", "POST", "json", requestData, null, signUpSuccess, signUpError);
 }
 
 function signUpSuccess(response) {

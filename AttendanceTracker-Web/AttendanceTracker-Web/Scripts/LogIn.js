@@ -2,7 +2,7 @@
     var requestData = {};
     requestData["Username"] = $("#username-input").val();
     requestData["Password"] = $("#password-input").val();
-    request("/api/Account/SignIn", "POST", requestData, loginSuccess, loginError);
+    request("/api/Account/SignIn", "POST", "json", requestData, null, loginSuccess, loginError);
 }
 
 function loginSuccess(response) {

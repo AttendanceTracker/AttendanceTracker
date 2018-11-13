@@ -4,12 +4,13 @@ if (window.location.hostname === "localhost") {
 }
 var apiAddress = serviceAddress + "api/";
 
-function request(requestUrl, type, data, success, error) {
+function request(requestUrl, type, dataType, data, headers, success, error) {
     var xhr = $.ajax({
         url: requestUrl,
         type: type,
-        dataType: "json",
+        dataType: dataType,
         contentType: "application/json",
+        headers: headers,
         data: data === null ? null : type === "get" ? data : JSON.stringify(data),
         success: success,
         error: error

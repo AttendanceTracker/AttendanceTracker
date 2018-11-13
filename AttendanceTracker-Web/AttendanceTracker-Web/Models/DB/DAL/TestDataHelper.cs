@@ -125,6 +125,19 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
+        public override List<long> GetQRCodes(long classID)
+        {
+            var qrCodeIDs = new List<long>();
+            if (classID == 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    qrCodeIDs.Add(i);
+                }
+            }
+            return qrCodeIDs;
+        }
+
         public override AccessToken AddAccessToken(AccessToken accessToken)
         {
             var token = accessToken;
@@ -192,6 +205,11 @@ namespace AttendanceTracker_Web.Models.DB
                 return teacher;
             }
             return null;
+        }
+
+        public override List<ClassData> GetClassData(long teacherID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,6 +12,5 @@ namespace AttendanceTracker_Web.Models.Web
         public string LastName { get; set; }
         public string Username { get; set; }
         public string AccessToken { get; set; }
-        public DateTime Expires { get; set; }
     }
 }

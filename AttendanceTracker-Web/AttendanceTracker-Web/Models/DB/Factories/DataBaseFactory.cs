@@ -79,5 +79,14 @@ namespace AttendanceTracker_Web.Models.DB
             dto.DoesExpire = doesExpire;
             return dto;
         }
+
+        public ClassData ClassData(long id, string name, long teacherID)
+        {
+            var dto = new ClassData();
+            dto.ID = id;
+            dto.Name = name;
+            dto.TeacherID = teacherID;
+            return dto;
+        }
     }
 }

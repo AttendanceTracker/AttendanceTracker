@@ -480,6 +480,20 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             AssertAreEqual(expected, actual);
         }
 
+        //[TestMethod]
+        //public void GetQRCodes()
+        //{
+        //    var classID = 1;
+        //    long[] expected = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        //    var actual = dbHelper.GetQRCodes(classID);
+
+        //    Assert.AreEqual(expected.Length, actual.Count);
+        //    for (int i = 0; i < expected.Length; i++)
+        //    {
+        //        Assert.AreEqual(expected[i], actual[i]);
+        //    }
+        //}
+
         private void AssertAreEqual(QRCode expected, QRCode actual)
         {
             var span = new TimeSpan(0, 1, 0);
