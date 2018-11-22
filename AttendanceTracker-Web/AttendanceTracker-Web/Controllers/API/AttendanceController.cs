@@ -20,6 +20,19 @@ namespace AttendanceTracker_Web.Controllers.API
         {
         }
 
+        [HttpGet]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public IHttpActionResult CheckIn(long classID, [FromBody] CheckInRequest request)
         {

@@ -226,26 +226,6 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
-        //[HttpGet]
-        //public ActionResult GetQRCodes(long classID)
-        //{
-        //    try
-        //    {
-        //        var accessToken = Request.Headers.GetValues("AccessToken").FirstOrDefault();
-        //        if (authManager.IsAuthorized(accessToken))
-        //        {
-        //            var qrCodes = dal.Source.GetQRCodes(classID);
-        //            var qrCodesJson = JsonConvert.SerializeObject(qrCodes);
-        //            return Content(qrCodesJson);
-        //        }
-        //        return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
-        //    }
-        //}
-
         private Bitmap GenerateQRCode(QRCodePayload payload)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();

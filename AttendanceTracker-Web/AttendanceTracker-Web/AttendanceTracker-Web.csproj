@@ -180,6 +180,7 @@
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\AttendanceController.cs" />
     <Compile Include="Controllers\API\BaseAPIController.cs" />
+    <Compile Include="Controllers\API\ClassController.cs" />
     <Compile Include="Controllers\API\DeviceController.cs" />
     <Compile Include="Controllers\API\StudentController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
