@@ -49,7 +49,7 @@ namespace AttendanceTracker_Web.Tests.Models
                 query.AddParameter("@expires_in", accessToken.ExpiresIn);
                 query.AddParameter("@issued", accessToken.Issued);
                 query.AddParameter("@does_expire", accessToken.DoesExpire);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -63,9 +63,9 @@ namespace AttendanceTracker_Web.Tests.Models
             {
                 var queryString = "exec Accounts_AddAccount @username, @password, @salt;";
                 var query = new Query(queryString, connectionString);
-                query.AddParameter("@username", account.username);
-                query.AddParameter("@password", account.password);
-                query.AddParameter("@salt", account.salt);
+                query.AddParameter("@username", account.Username);
+                query.AddParameter("@password", account.Password);
+                query.AddParameter("@salt", account.Salt);
                 account.ID = (long)query.ExecuteScalar();
             }
             catch (Exception e)
@@ -90,7 +90,7 @@ namespace AttendanceTracker_Web.Tests.Models
                 var queryString = "exec Access_Tokens_RemoveAccess_Token @token;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@token", accessToken.Token);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -105,7 +105,7 @@ namespace AttendanceTracker_Web.Tests.Models
                 var queryString = "exec Accounts_RemoveAccount @id;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@id", id);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {

@@ -26,7 +26,7 @@ namespace AttendanceTracker_Web.Models.DB
             parameters.Add(parameter);
         }
 
-        public DataTable ExecuteQuery()
+        public DataTable Execute()
         {
             var resultTable = new DataTable();
             using (var connection = new SqlConnection(connectionString))

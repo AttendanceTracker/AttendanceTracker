@@ -31,9 +31,9 @@ namespace AttendanceTracker_Web.Models.DB
             dto.ID = id;
             dto.ClassID = classID;
             dto.StudentID = studentID;
-            dto.attendedDate = attendedDate;
-            dto.latitude = latitude;
-            dto.longitude = longitude;
+            dto.AttendedDate = attendedDate;
+            dto.Latitude = latitude;
+            dto.Longitude = longitude;
             return dto;
         }
 
@@ -55,7 +55,7 @@ namespace AttendanceTracker_Web.Models.DB
             dto.UserID = userID;
             dto.FirstName = firstName;
             dto.LastName = lastName;
-            dto.email = email;
+            dto.Email = email;
             return dto;
         }
 
@@ -63,9 +63,9 @@ namespace AttendanceTracker_Web.Models.DB
         {
             var dto = new Account();
             dto.ID = id;
-            dto.username = username;
-            dto.password = password;
-            dto.salt = salt;
+            dto.Username = username;
+            dto.Password = password;
+            dto.Salt = salt;
             return dto;
         }
 

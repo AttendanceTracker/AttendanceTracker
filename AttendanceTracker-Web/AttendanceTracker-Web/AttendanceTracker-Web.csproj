@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Models\AuthorizationManager.cs" />
     <Compile Include="Models\DateTimeExtensions.cs" />
+    <Compile Include="Models\DB\Mapper\DBMappableDataRowExtensions.cs" />
     <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
     <Compile Include="Models\DB\DAL\DataBaseHelper.cs" />
     <Compile Include="Models\DB\DAL\DataSource.cs" />
@@ -199,10 +200,13 @@
     <Compile Include="Models\DB\DTOs\Account.cs" />
     <Compile Include="Models\DB\DTOs\Attendance.cs" />
     <Compile Include="Models\DB\DTOs\ClassData.cs" />
+    <Compile Include="Models\DB\Mapper\DBMappable.cs" />
     <Compile Include="Models\DB\DTOs\Device.cs" />
     <Compile Include="Models\DB\DTOs\QRCode.cs" />
     <Compile Include="Models\DB\DTOs\Student.cs" />
     <Compile Include="Models\DB\DTOs\Teacher.cs" />
+    <Compile Include="Models\DB\Mapper\DBMapperDataRowCollectionExtensions.cs" />
+    <Compile Include="Models\DB\Mapper\DBPropertyMap.cs" />
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\View Models\Factories\ViewModelsFactory.cs" />
     <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />

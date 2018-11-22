@@ -12,32 +12,38 @@ namespace AttendanceTracker_Web.Models.DB.Mapper
 
         public DBPropertyMap()
         {
-            Map = new Dictionary<string, object>();
+            init();
         }
 
         public DBPropertyMap(DataRow row)
         {
+            init();
             var columns = row.Table.Columns;
             for (int i = 0; i < columns.Count; i++)
             {
                 var column = columns[i];
-                Map.Add(column.ColumnName, row[i]);
+                Add(column.ColumnName, row[i]);
             }
+        }
+
+        private void init()
+        {
+            Map = new Dictionary<string, object>();
         }
 
         public bool ContainsKey(string key)
         {
-            return Map.ContainsKey(key);
+            return Map.ContainsKey(key.ToUpper());
         }
 
         public void Add(string key, object value)
         {
-            Map.Add(key, value);
+            Map.Add(key.ToUpper(), value);
         }
 
         public T Get<T>(string key)
         {
-            var value = Map[key];
+            var value = Map[key.ToUpper()];
             return (T) value;
         }
     }

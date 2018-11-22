@@ -65,8 +65,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             genericAccessToken2 = dbFactory.AccessToken(genericAccount1.ID, token2, 100000, date, true);
             AddDBTestAccessToken(genericAccessToken1);
 
-            genericTeacher1 = dbFactory.Teacher(3, genericAccount1.ID, "john", "doe", genericAccount1.username);
-            genericTeacher2 = dbFactory.Teacher(4, genericAccount1.ID, "john", "doe", genericAccount1.username);
+            genericTeacher1 = dbFactory.Teacher(3, genericAccount1.ID, "john", "doe", genericAccount1.Username);
+            genericTeacher2 = dbFactory.Teacher(4, genericAccount1.ID, "john", "doe", genericAccount1.Username);
             AddDBTestTeacher(genericTeacher1);
         }
 
@@ -76,7 +76,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec Students_AddStudent {0}, '{1}', '{2}', '{3}';", student.CWID, student.FirstName, student.LastName, student.Email);
                 var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -90,7 +90,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec Devices_AddDevice {0}, {1};", device.DeviceID, device.StudentID);
                 var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -106,9 +106,9 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 var addQuery = new Query(addQueryString, connectionString);
                 addQuery.AddParameter("@classID", attendance.ClassID);
                 addQuery.AddParameter("@studentID", attendance.StudentID);
-                addQuery.AddParameter("@attendedDate", attendance.attendedDate);
-                addQuery.AddParameter("@latitude", attendance.latitude);
-                addQuery.AddParameter("@longitude", attendance.longitude);
+                addQuery.AddParameter("@attendedDate", attendance.AttendedDate);
+                addQuery.AddParameter("@latitude", attendance.Latitude);
+                addQuery.AddParameter("@longitude", attendance.Longitude);
                 attendance.ID = (long)addQuery.ExecuteScalar();
             }
             catch (Exception e)
@@ -146,7 +146,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 query.AddParameter("@expires_in", accessToken.ExpiresIn);
                 query.AddParameter("@issued", accessToken.Issued);
                 query.AddParameter("@does_expire", accessToken.DoesExpire);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -160,9 +160,9 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = "exec Accounts_AddAccount @username, @password, @salt;";
                 var query = new Query(queryString, connectionString);
-                query.AddParameter("@username", account.username);
-                query.AddParameter("@password", account.password);
-                query.AddParameter("@salt", account.salt);
+                query.AddParameter("@username", account.Username);
+                query.AddParameter("@password", account.Password);
+                query.AddParameter("@salt", account.Salt);
                 account.ID = (long)query.ExecuteScalar();
             }
             catch (Exception e)
@@ -181,8 +181,8 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 query.AddParameter("@user_id", teacher.UserID);
                 query.AddParameter("@first_name", teacher.FirstName);
                 query.AddParameter("@last_name", teacher.LastName);
-                query.AddParameter("@email", teacher.email);
-                query.ExecuteQuery();
+                query.AddParameter("@email", teacher.Email);
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -213,7 +213,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec Students_RemoveStudent {0};", cwid);
                 var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec Devices_RemoveDevice {0}", imei);
                 var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -241,7 +241,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec Attendance_RemoveAttendance {0}", id);
                 var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -255,7 +255,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             {
                 var queryString = string.Format("exec QRCodes_RemoveQRCode {0}", id);
                 var query = new Query(queryString, connectionString);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -270,7 +270,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 var queryString = "exec Access_Tokens_RemoveAccess_Token @token;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@token", accessToken.Token);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -285,7 +285,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 var queryString = "exec Accounts_RemoveAccount @id;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@id", id);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -300,7 +300,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
                 var queryString = "exec Teachers_RemoveTeacher @cwid;";
                 var query = new Query(queryString, connectionString);
                 query.AddParameter("@cwid", cwid);
-                query.ExecuteQuery();
+                query.Execute();
             }
             catch (Exception e)
             {
@@ -414,7 +414,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         {
             var expectedList = new List<Attendance>();
             expectedList.Add(genericAttendance1);
-            var actualList = dbHelper.GetAttendance(genericAttendance1.attendedDate);
+            var actualList = dbHelper.GetAttendance(genericAttendance1.AttendedDate);
             AssertAreEqual(expectedList, actualList);
         }
 
@@ -422,7 +422,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         public void GetAttendanceByDateRange()
         {
             var expectedList = new List<Attendance>();
-            var actualList = dbHelper.GetAttendance(genericAttendance1.attendedDate, genericAttendance1.attendedDate.AddSeconds(1));
+            var actualList = dbHelper.GetAttendance(genericAttendance1.AttendedDate, genericAttendance1.AttendedDate.AddSeconds(1));
             AssertAreEqual(expectedList, actualList);
         }
 
@@ -447,13 +447,13 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         private void AssertAreEqual(Attendance expected, Attendance actual)
         {
             var span = new TimeSpan(0, 1, 0);
-            var expectedDate = expected.attendedDate.Round(span);
-            var actualDate = actual.attendedDate.Round(span);
+            var expectedDate = expected.AttendedDate.Round(span);
+            var actualDate = actual.AttendedDate.Round(span);
             Assert.AreEqual(expected.ClassID, actual.ClassID);
             Assert.AreEqual(expected.StudentID, actual.StudentID);
             Assert.AreEqual(expectedDate, actualDate);
-            Assert.AreEqual(expected.latitude, actual.latitude);
-            Assert.AreEqual(expected.longitude, actual.longitude);
+            Assert.AreEqual(expected.Latitude, actual.Latitude);
+            Assert.AreEqual(expected.Longitude, actual.Longitude);
         }
 
         [TestMethod]
@@ -563,15 +563,15 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
         public void GetAccount()
         {
             var expected = genericAccount2;
-            var actual = dbHelper.GetAccount(expected.username);
+            var actual = dbHelper.GetAccount(expected.Username);
             AssertAreEqual(expected, actual);
         }
 
         private void AssertAreEqual(Account expected, Account actual)
         {
-            Assert.AreEqual(expected.username, actual.username);
-            Assert.AreEqual(expected.password, actual.password);
-            Assert.AreEqual(expected.salt, actual.salt);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.Password, actual.Password);
+            Assert.AreEqual(expected.Salt, actual.Salt);
         }
 
         [TestMethod]
@@ -604,7 +604,7 @@ namespace AttendanceTracker_Web.Tests.Models.DAL
             Assert.AreEqual(expected.UserID, actual.UserID);
             Assert.AreEqual(expected.FirstName, actual.FirstName);
             Assert.AreEqual(expected.LastName, actual.LastName);
-            Assert.AreEqual(expected.email, actual.email);
+            Assert.AreEqual(expected.Email, actual.Email);
         }
     }
 }
