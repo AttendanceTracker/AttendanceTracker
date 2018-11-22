@@ -149,7 +149,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        var classData = dal.Source.GetClassData(userCookie.CWID);
+                        var classData = dal.Source.GetClassDataForTeacher(userCookie.CWID);
                         var qrCodes = new List<List<long>>();
                         foreach (var c in classData)
                         {

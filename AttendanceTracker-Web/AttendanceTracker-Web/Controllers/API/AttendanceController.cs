@@ -21,11 +21,12 @@ namespace AttendanceTracker_Web.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetForClass(long classID)
         {
             try
             {
-                return Ok();
+                var attendance = dal.Source.GetAttendanceByClassID(classID);
+                return Ok(attendance);
             }
             catch (Exception)
             {

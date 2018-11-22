@@ -219,7 +219,12 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
-        public override List<ClassData> GetClassData(long teacherID)
+        public override List<ClassData> GetClassDataForTeacher(long teacherID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<ClassData> GetClassDataForStudent(long studentID)
         {
             throw new NotImplementedException();
         }

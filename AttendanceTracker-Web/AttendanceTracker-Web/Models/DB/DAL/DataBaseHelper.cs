@@ -334,11 +334,21 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
-        public override List<ClassData> GetClassData(long teacherID)
+        public override List<ClassData> GetClassDataForTeacher(long teacherID)
         {
             var queryString = "exec Class_Data_GetForTeacherID @teacher_id;";
             var query = new Query(queryString, connectionString);
             query.AddParameter("@teacher_id", teacherID);
+            var results = query.Execute();
+            var classDataList = results.Rows.ToDTOList<ClassData>();
+            return classDataList;
+        }
+
+        public override List<ClassData> GetClassDataForStudent(long studentID)
+        {
+            var queryString = "exec Class_Data_GetForStudentID @student_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@student_id", studentID);
             var results = query.Execute();
             var classDataList = results.Rows.ToDTOList<ClassData>();
             return classDataList;

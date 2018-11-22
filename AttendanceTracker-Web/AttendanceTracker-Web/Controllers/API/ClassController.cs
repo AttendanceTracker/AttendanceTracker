@@ -20,11 +20,13 @@ namespace AttendanceTracker_Web.Controllers.API
         {
         }
 
-        IHttpActionResult GetNames()
+        [HttpGet]
+        public IHttpActionResult GetForStudent(long studentID)
         {
             try
             {
-                return Ok();
+                var classData = dal.Source.GetClassDataForStudent(studentID);
+                return Ok(classData);
             }
             catch (Exception)
             {
