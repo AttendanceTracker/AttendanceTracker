@@ -365,6 +365,17 @@ namespace AttendanceTracker_Web.Models.DB
             return studentAttendanceResults;
         }
 
+        public override List<ClassAttendance> GetClassAttendance(long classID, DateTime date)
+        {
+            var queryString = "exec GetATtendanceForClassByDate @class_id, @date;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.AddParameter("@date", date);
+            var results = query.Execute();
+            var classAttendanceResults = results.Rows.ToDTOList<ClassAttendance>();
+            return classAttendanceResults;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

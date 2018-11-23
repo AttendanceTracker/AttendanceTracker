@@ -126,7 +126,11 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        var attendanceResults = dal.Source.GetAttendanceByClassID(classID);
+                        //var attendanceResults = dal.Source.GetAttendanceByClassID(classID);
+                        //var attendanceResultsJSON = JsonConvert.SerializeObject(attendanceResults);
+                        //return Content(attendanceResultsJSON);
+                        var date = new DateTime(2018, 11, 12);
+                        var attendanceResults = dal.Source.GetClassAttendance(4, date);
                         var attendanceResultsJSON = JsonConvert.SerializeObject(attendanceResults);
                         return Content(attendanceResultsJSON);
                     }
@@ -138,6 +142,8 @@ namespace AttendanceTracker_Web.Controllers.MVC
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
             }
         }
+
+        //[HttpGet] ActionResult
 
         public ActionResult QRCodes()
         {

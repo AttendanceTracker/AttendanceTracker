@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Models\AuthorizationManager.cs" />
     <Compile Include="Models\DateTimeExtensions.cs" />
+    <Compile Include="Models\DB\DTOs\ClassAttendance.cs" />
     <Compile Include="Models\DB\DTOs\StudentAttendance.cs" />
     <Compile Include="Models\DB\Mapper\DBMappableDataRowExtensions.cs" />
     <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
