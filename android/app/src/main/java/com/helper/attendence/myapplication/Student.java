@@ -1,14 +1,14 @@
 package com.helper.attendence.myapplication;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.content.SharedPreferences;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.support.constraint.Constraints.TAG;
@@ -21,6 +21,8 @@ public class Student implements Serializable {
     private String email;
     private Long cwid;
     private Device studentDevice;
+    private ArrayList<sClass> classes;
+
 
     public Student(Long Imei) {
         this.studentDevice= new Device(Imei);
@@ -35,6 +37,7 @@ public class Student implements Serializable {
         this.email = sEmail;
         this.cwid = sCwid;
         this.studentDevice = new Device();
+        this.classes = null;
         this.httpRequests = new HttpClient();
     }
 
@@ -45,6 +48,7 @@ public class Student implements Serializable {
         this.cwid = sCwid;
         this.studentDevice = new Device();
         this.httpRequests = new HttpClient();
+        this.classes = null;
         this.studentDevice= new Device(imei);
     }
 
@@ -370,7 +374,7 @@ public class Student implements Serializable {
         if (response.equals("Already Exists")) {
             bResponse = false;
         }
-        else if(!response.isEmpty() || !response.equals("Failed")) {
+        else if(!response.equals("Failed")) {
             try {
                 JSONObject myResponse = new JSONObject(response);
                 System.out.println("result after Reading JSON Response");
@@ -441,4 +445,16 @@ public class Student implements Serializable {
     public void setImei(Device d) { this.studentDevice = d; }
 
     public void setImei(Long i) {Device d = new Device(i); setImei(d);}
+
+    public ArrayList<sClass> getClasses() { return classes; }
+
+    public sClass getSpecificClass(int x) { return getClasses().get(x); }
+
+    public void setClasses(String classString) {
+        Type object = new TypeToken<ArrayList<sClass>>(){}.getType();
+        Gson gson = new Gson();
+        ArrayList<sClass> returnVal= gson.fromJson(classString, object);
+        this.classes = returnVal;
+    }
+
 }

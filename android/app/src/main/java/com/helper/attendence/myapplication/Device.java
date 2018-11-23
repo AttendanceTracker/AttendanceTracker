@@ -32,44 +32,6 @@ public class Device implements Serializable {
         return response;
     }
 
-    // /api/Device/Update
-//    public void updateDevice(Student std, Long phoneId) {
-//        Long newCwid = -1L;
-//        Long newImei= -1L;
-//
-//        System.out.println("Changing phoneID: " + phoneId + " to be with student id: " + std.getCwid() );
-//
-//        HashMap<String, String> putDataParams = new HashMap<>();
-//        putDataParams .put("StudentID", std.getCwid().toString());
-//
-//        String params = "imei=" + phoneId.toString();
-//        Log.i(TAG, "Running PUT call.");
-//        String response = httpRequests.putCall("api/Device/Update", params, putDataParams);
-//        try {
-//            JSONObject myResponse = new JSONObject(response);
-//            System.out.println("result after Reading JSON Response");
-//            System.out.println("IMEI- " + myResponse.getString("IMEI"));
-//            System.out.println("CWID- " + myResponse.getString("StudentID"));
-//
-//            newImei = Long.parseLong(myResponse.getString("IMEI"));
-//            newCwid = Long.parseLong(myResponse.getString("StudentID"));
-//
-////            std.setCwid(newCwid);
-//            std.setImei(newImei);
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//            try {
-//                throw e;
-//            } catch (JSONException e1) {
-//                e1.printStackTrace();
-//            }
-//        }
-//
-//        Log.i(TAG, "Updated a device IMEI: " + newCwid + " to cwid: " + newImei);
-//    }
-
 
 
     public Long getImei() {

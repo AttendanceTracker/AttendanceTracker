@@ -14,7 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,18 +104,23 @@ public class MainActivity extends AppCompatActivity {
 //            text.setText("Welcome. Your info is stored.\n");
 //            displayInfo(app_preferences);
 //        }
-        displayInfo(x);
-        mainMenu();
+//        displayInfo(x);
+
+        //NEED TO IMPLEMENT GETCLASSES
+        x.getClasses();
+        mainMenu(x.getClasses());
+
     }
 
     //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
-    public void displayInfo(Student std) {
-        setContentView(R.layout.activity_main);
-        TextView text = (TextView) findViewById(R.id.txtCount);
-        text.setText("\nFirst name =" + std.getFname() + "\n Last name =" + std.getLname()+ "\n Username =" + std.getEmail()+ "\n CWID =" + std.getCwid()+ ". ");
-    }
+//    public void displayInfo(Student std) {
+//        setContentView(R.layout.activity_main);
+//        TextView text = (TextView) findViewById(R.id.txtCount);
+//        text.setText("\nFirst name =" + std.getFname() + "\n Last name =" + std.getLname()+ "\n Username =" + std.getEmail()+ "\n CWID =" + std.getCwid()+ ". ");
+//    }
 
-    public void mainMenu() {
+    public void mainMenu(ArrayList<sClass> classes) {
+
 
          FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
        qrBtn.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +140,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        String[] mobileArray = classes.toArray(new String[classes.size()]);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                R.layout.activity_listview, mobileArray);
+
+        ListView listView = (ListView) findViewById(R.id.mobile_list);
+        listView.setAdapter(adapter);
+
     }
 
     @Override
