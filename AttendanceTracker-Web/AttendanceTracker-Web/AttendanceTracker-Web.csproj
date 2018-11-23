@@ -255,6 +255,9 @@
     <Content Include="Resources\qrcode.svg" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Scripts\Attendance.js" />
+    <Content Include="Scripts\Chart.bundle.js" />
+    <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\getmdl-select.min.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\getmdl-select.min.js" />
