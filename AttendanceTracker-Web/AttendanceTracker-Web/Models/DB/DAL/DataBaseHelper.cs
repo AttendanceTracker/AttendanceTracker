@@ -354,6 +354,17 @@ namespace AttendanceTracker_Web.Models.DB
             return classDataList;
         }
 
+        public override List<StudentAttendance> GetStudentAttendance(long studentID, long classID)
+        {
+            var queryString = "exec GetATtendanceForStudentByClass @student_id, @class_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@student_id", studentID);
+            query.AddParameter("@class_id", classID);
+            var results = query.Execute();
+            var studentAttendanceResults = results.Rows.ToDTOList<StudentAttendance>();
+            return studentAttendanceResults;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);
