@@ -16,5 +16,12 @@ namespace AttendanceTracker_Web.Models
             viewModel.QRCodes = qrCodes;
             return viewModel;
         }
+
+        public AttendanceViewModel AttendanceViewModel(IEnumerable<IGrouping<DateTime, TeacherMeetings>> classMeetings)
+        {
+            var viewModel = new AttendanceViewModel();
+            viewModel.ClassMeetings = classMeetings;
+            return viewModel;
+        }
     }
 }

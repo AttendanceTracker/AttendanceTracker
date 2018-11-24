@@ -13,5 +13,12 @@ namespace AttendanceTracker_Web.Models
             var newDate = new DateTime(ticks * span.Ticks);
             return newDate;
         }
+
+        public static DateTime WeekStart(this DateTime dateTime, DayOfWeek StartDay)
+        {
+            var differenceToStart = (7 + (dateTime.DayOfWeek - StartDay)) % 7;
+            var startDate = dateTime.AddDays(-1 * differenceToStart).Date;
+            return startDate;
+        }
     }
 }

@@ -6,7 +6,7 @@ using AttendanceTracker_Web.Models.DB.Mapper;
 
 namespace AttendanceTracker_Web.Models.DB
 {
-    public class ClassAttendance : DBMappable
+    public class TeacherAttendance : DBMappable
     {
         public DateTime MeetingDate { get; set; }
         public string ClassName { get; set; }

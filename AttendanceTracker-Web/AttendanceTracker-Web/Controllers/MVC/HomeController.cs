@@ -104,7 +104,16 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        return View();
+                        var startDate = DateTime.Now.WeekStart(DayOfWeek.Sunday);
+                        var endDate = startDate.AddDays(6);
+                        var classes = dal.Source.GetTeacherMeetings(userCookie.CWID, startDate, endDate);
+                        var groupedClasses = classes.GroupBy(x => x.MeetingDate);
+                        //foreach(var a in groupedClasses)
+                        //{
+
+                        //}
+                        var viewModel = viewModelsFactory.AttendanceViewModel(groupedClasses);
+                        return View(viewModel);
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
@@ -116,7 +125,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
         }
 
         [HttpGet]
-        public ActionResult GetAttendance(long classID)
+        public ActionResult GetAttendanceFile(long classID, DateTime date)
         {
             try
             {
@@ -126,13 +135,24 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        //var attendanceResults = dal.Source.GetAttendanceByClassID(classID);
-                        //var attendanceResultsJSON = JsonConvert.SerializeObject(attendanceResults);
-                        //return Content(attendanceResultsJSON);
-                        var date = new DateTime(2018, 11, 12);
-                        var attendanceResults = dal.Source.GetClassAttendance(4, date);
-                        var attendanceResultsJSON = JsonConvert.SerializeObject(attendanceResults);
-                        return Content(attendanceResultsJSON);
+                        var attendanceResults = dal.Source.GetClassAttendance(classID, date);
+                        if (attendanceResults.Count > 0)
+                        {
+                            var stream = new MemoryStream();
+                            var writer = new StreamWriter(stream);
+
+                            foreach (var row in attendanceResults)
+                            {
+                                writer.WriteLine("{0},{1},{2},{3},{4},{5}", row.MeetingDate, row.StudentID, row.FirstName, row.LastName, row.Email, row.DidAttend);
+                            }
+                            writer.Flush();
+                            stream.Position = 0;
+                            var fileContents = stream.ToArray();
+                            var fileFormattedDate = date.ToString("DD.MM.YYYY");
+                            var fileName = string.Format("{0}_{1}.csv", attendanceResults[0].ClassName, fileFormattedDate);
+                            return File(fileContents, "application/CSV", fileName);
+                        }
+                        return null;
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
@@ -143,9 +163,34 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
-        //[HttpGet] ActionResult
+        //[HttpGet]
+        //public ActionResult GetAttendance(long classID)
+        //{
+        //    try
+        //    {
+        //        var userCookieJson = GetCookie("user");
+        //        if (userCookieJson != null)
+        //        {
+        //            var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+        //            if (authManager.IsAuthorized(userCookie.AccessToken))
+        //            {
+        //                var startDate = DateTime.Now.WeekStart(DayOfWeek.Sunday);
+        //                var endDate = startDate.AddDays(6);
+        //                var attendanceResults = dal.Source.GetClassAttendance(4, startDate, endDate);
+        //                var groupedAttendance = attendanceResults.GroupBy(x => x.MeetingDate);
+        //                var groupedAttendanceJSON = JsonConvert.SerializeObject(groupedAttendance);
+        //                return Content(groupedAttendanceJSON);
+        //            }
+        //        }
+        //        return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+        //    }
+        //}
 
-        public ActionResult QRCodes()
+            public ActionResult QRCodes()
         {
             try
             {
@@ -199,7 +244,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var fullPayload = webFactory.QRCodePayload(dbQRCode.ClassID, dbQRCode.Payload);
                     var addedQRCode = dal.Source.AddQRCode(dbQRCode);
                     var qrCodeImage = GenerateQRCode(fullPayload);
-                    var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
+                    var qrCodeStream = BitmapToMemoryStream(qrCodeImage);
                     return File(qrCodeStream, "image/bmp");
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null) ;
@@ -221,7 +266,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     Models.DB.QRCode qrCodeData = dal.Source.GetQRCode(qrCodeID);
                     var qrCodePayload = webFactory.QRCodePayload(qrCodeData.ClassID, qrCodeData.Payload);
                     var qrCodeImage = GenerateQRCode(qrCodePayload);
-                    var qrCodeStream = bitmapToMemoryStream(qrCodeImage);
+                    var qrCodeStream = BitmapToMemoryStream(qrCodeImage);
                     return File(qrCodeStream, "image/bmp");
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
@@ -242,7 +287,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
             return qrCodeImage;
         }
 
-        private MemoryStream bitmapToMemoryStream(Bitmap qrCodeImage)
+        private MemoryStream BitmapToMemoryStream(Bitmap qrCodeImage)
         {
             var qrCodeStream = new MemoryStream();
             qrCodeImage.Save(qrCodeStream, System.Drawing.Imaging.ImageFormat.Bmp);

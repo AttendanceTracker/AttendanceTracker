@@ -44,7 +44,11 @@ namespace AttendanceTracker_Web.Models.DB.Mapper
         public T Get<T>(string key)
         {
             var value = Map[key.ToUpper()];
-            return (T) value;
+            if (value != DBNull.Value)
+            {
+                return (T)value;
+            }
+            return default(T);
         }
     }
 }

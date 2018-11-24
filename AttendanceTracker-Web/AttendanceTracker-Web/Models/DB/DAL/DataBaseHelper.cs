@@ -356,7 +356,7 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override List<StudentAttendance> GetStudentAttendance(long studentID, long classID)
         {
-            var queryString = "exec GetATtendanceForStudentByClass @student_id, @class_id;";
+            var queryString = "exec GetAttendanceForStudentByClass @student_id, @class_id;";
             var query = new Query(queryString, connectionString);
             query.AddParameter("@student_id", studentID);
             query.AddParameter("@class_id", classID);
@@ -367,13 +367,49 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override List<ClassAttendance> GetClassAttendance(long classID, DateTime date)
         {
-            var queryString = "exec GetATtendanceForClassByDate @class_id, @date;";
+            var queryString = "exec GetAttendanceForClassByDate @class_id, @date;";
             var query = new Query(queryString, connectionString);
             query.AddParameter("@class_id", classID);
             query.AddParameter("@date", date);
             var results = query.Execute();
             var classAttendanceResults = results.Rows.ToDTOList<ClassAttendance>();
             return classAttendanceResults;
+        }
+
+        public override List<ClassAttendance> GetClassAttendance(long classID, DateTime start, DateTime end)
+        {
+            var queryString = "exec GetAttendanceForClassByDateRange @class_id, @start_date, @end_date;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.AddParameter("@start_date", start);
+            query.AddParameter("@end_date", end);
+            var results = query.Execute();
+            var classAttendanceResults = results.Rows.ToDTOList<ClassAttendance>();
+            return classAttendanceResults;
+        }
+
+        public override List<TeacherAttendance> GetTeacherAttendance(long teacherID, DateTime start, DateTime end)
+        {
+            var queryString = "exec GetAttendanceForTeacherByDateRange @teacher_id, @start_date, @end_date;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            query.AddParameter("@start_date", start);
+            query.AddParameter("@end_date", end);
+            var results = query.Execute();
+            var teacherAttendanceResults = results.Rows.ToDTOList<TeacherAttendance>();
+            return teacherAttendanceResults;
+        }
+
+        public override List<TeacherMeetings> GetTeacherMeetings(long teacherID, DateTime start, DateTime end)
+        {
+            var queryString = "exec GetclassMeetingsForTeacherByDateRange @teacher_id, @start_date, @end_date;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            query.AddParameter("@start_date", start);
+            query.AddParameter("@end_date", end);
+            var results = query.Execute();
+            var classResults = results.Rows.ToDTOList<TeacherMeetings>();
+            return classResults;
         }
 
         private DataTable ExecuteStoredProcedure(string queryString)

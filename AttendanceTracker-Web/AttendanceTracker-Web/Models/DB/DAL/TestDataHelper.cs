@@ -238,5 +238,20 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override List<ClassAttendance> GetClassAttendance(long classID, DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<TeacherAttendance> GetTeacherAttendance(long teacherID, DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<TeacherMeetings> GetTeacherMeetings(long teacherID, DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
