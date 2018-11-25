@@ -3,12 +3,26 @@
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
     int i = 0;
     int j = 0;
+    int ClassMeetingCount = (Model.ClassMeetings as IEnumerable<IGrouping<DateTime, TeacherMeetings>>).ToList().Count;
     <link href="~/Content/Home/Attendance.css" rel="stylesheet" />
 }
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/Chart.bundle.min.js"></script>
 <script src="~/Scripts/Attendance.js"></script>
+
+<button onclick="backButtonClicked()" id="back-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored nav-button">
+    <i class="material-icons">arrow_back_ios</i>
+</button>
+
+<button onclick="forwardButtonClicked()" id="forward-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored nav-button">
+    <i class="material-icons">arrow_forward_ios</i>
+</button>
+
+@if (ClassMeetingCount == 0)
+{
+    <div id="empty-attendance-text" class="mdl-color-text--grey-600">No attendance this week.</div>
+}
 
 @using AttendanceTracker_Web.Models.DB;
 @foreach (IGrouping<DateTime, TeacherMeetings> date in Model.ClassMeetings)

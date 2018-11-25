@@ -108,10 +108,6 @@ namespace AttendanceTracker_Web.Controllers.MVC
                         var endDate = startDate.AddDays(6);
                         var classes = dal.Source.GetTeacherMeetings(userCookie.CWID, startDate, endDate);
                         var groupedClasses = classes.GroupBy(x => x.MeetingDate);
-                        //foreach(var a in groupedClasses)
-                        //{
-
-                        //}
                         var viewModel = viewModelsFactory.AttendanceViewModel(groupedClasses);
                         return View(viewModel);
                     }

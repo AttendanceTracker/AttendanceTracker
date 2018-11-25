@@ -1,4 +1,6 @@
-﻿function renderChart(elementID, data) {
+﻿var currentDate = Date.now
+
+function renderChart(elementID, data) {
     new Chart(document.getElementById(elementID), {
         type: 'doughnut',
         data: data,
@@ -19,4 +21,16 @@ function downloadAttendance(classID, date) {
     var encodedDate = encodeURIComponent(dateString);
     var url = "/Home/GetAttendanceFile?classid=" + classID + "&date=" + encodedDate;
     window.location.href = url;
+}
+
+function backButtonClicked() {
+    currentDate.setDate(currentDate.getDate() - 7)
+}
+
+function forwardButtonClicked() {
+    currentDate.setDate(currentDate.getDate() + 7)
+}
+
+function updateAttendance() {
+
 }
