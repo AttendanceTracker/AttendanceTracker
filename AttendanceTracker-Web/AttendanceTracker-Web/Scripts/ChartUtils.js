@@ -37,8 +37,10 @@ function buildAreaLineChartData(labels, dataPoints) {
     return data;
 }
 
-function initDoughnutChart(elementID, data) {
-    new Chart(document.getElementById(elementID), {
+function initDoughnutChart(canvas, data) {
+    var context = canvas.getContext("2d");
+    //context.fillText("Hello World", 30, 30);
+    new Chart(context, {
         type: 'doughnut',
         data: data,
         options: {

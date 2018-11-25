@@ -12,8 +12,6 @@
 <script src="~/Scripts/ChartUtils.js"></script>
 <script src="~/Scripts/Attendance.js"></script>
 
-
-
 @if (ClassMeetingCount == 0)
 {
     <div id="empty-attendance-text" class="mdl-color-text--grey-600">No attendance this week.</div>
@@ -50,11 +48,13 @@
                         $("#@downloadButtonID").on("click", function () {
                             var classID = @classMeeting.ID;
                             var dateString = "@date.Key";
-                            downloadAttendance(classID, Date.parse(dateString))
+                            var date = Date.parse(dateString);
+                            downloadAttendance(classID, date)
                         });
 
                         var chartData = buildDougnnutChartData(0.86);
-                        initDoughnutChart("@chartID", chartData)
+                        var canvas = document.getElementById("@chartID");
+                        initDoughnutChart(canvas, chartData)
                     });
                 </script>
             }
