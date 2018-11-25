@@ -1,16 +1,4 @@
-﻿var currentDate = Date.now
-
-function renderChart(elementID, data) {
-    new Chart(document.getElementById(elementID), {
-        type: 'doughnut',
-        data: data,
-        options: {
-            tooltips: {
-                enabled: false
-            }
-        }
-    });
-}
+﻿var currentDate = new Date();
 
 function downloadAttendance(classID, date) {
     var actualDate = new Date(date);

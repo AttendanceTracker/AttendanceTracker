@@ -9,15 +9,10 @@
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/Chart.bundle.min.js"></script>
+<script src="~/Scripts/ChartUtils.js"></script>
 <script src="~/Scripts/Attendance.js"></script>
 
-<button onclick="backButtonClicked()" id="back-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored nav-button">
-    <i class="material-icons">arrow_back_ios</i>
-</button>
 
-<button onclick="forwardButtonClicked()" id="forward-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored nav-button">
-    <i class="material-icons">arrow_forward_ios</i>
-</button>
 
 @if (ClassMeetingCount == 0)
 {
@@ -55,19 +50,11 @@
                         $("#@downloadButtonID").on("click", function () {
                             var classID = @classMeeting.ID;
                             var dateString = "@date.Key";
-                            console.log("hello");
                             downloadAttendance(classID, Date.parse(dateString))
                         });
 
-                        data = {
-                            datasets: [
-                                {
-                                    backgroundColor: ["#536dfe", "#c2cbff"],
-                                    data: [84, 26]
-                                }
-                            ]
-                        };
-                        renderChart("@chartID", data)
+                        var chartData = buildDougnnutChartData(0.86);
+                        initDoughnutChart("@chartID", chartData)
                     });
                 </script>
             }

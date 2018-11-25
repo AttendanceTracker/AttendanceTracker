@@ -1,3 +1,21 @@
 ﻿.chart-container {
     padding: 20px;
 }
+
+.class-chart {
+    height: 100%;
+    width: 100%;
+}
+
+.nav-button {
+    position: absolute;
+    top: 45%;
+}
+
+#back-button {
+    left: 20px;
+}
+
+#forward-button {
+    right: 20px;
+}
