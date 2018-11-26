@@ -192,8 +192,10 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        
-                        return Content("");
+                        var attendedCount = (double)dal.Source.GetAttendanceCount(classID, date);
+                        var classCount = (double)dal.Source.GetClassCount(classID);
+                        var attendedPercentage = attendedCount / classCount;
+                        return Content(attendedPercentage.ToString());
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);

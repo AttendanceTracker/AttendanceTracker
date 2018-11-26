@@ -412,6 +412,25 @@ namespace AttendanceTracker_Web.Models.DB
             return classResults;
         }
 
+        public override int GetAttendanceCount(long classID, DateTime date)
+        {
+            var queryString = "exec CountAttendanceForClassByDate @class_id, @date;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.AddParameter("@date", date);
+            var results = (int) query.ExecuteScalar();
+            return results;
+        }
+
+        public override int GetClassCount(long classID)
+        {
+            var queryString = "exec CountStudentsForClass @class_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            var results = (int)query.ExecuteScalar();
+            return results;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

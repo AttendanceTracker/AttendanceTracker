@@ -8,7 +8,7 @@
 
         attendance.$onInit = function () {
             attendance.updateAttendance();
-            attendance.meetingDates = attendance.classMeetings.flat().map(x => x.MeetingDate);
+            attendance.updateMeetingDates();
         };
 
         attendance.backButtonClicked = function () {
@@ -26,15 +26,43 @@
         }
 
         attendance.updateAttendance = function () {
-            $http.get("/Home/GetAttendance", { params: { date: attendance.currentDate } }).then(
+            var config = { params: { date: attendance.currentDate } };
+            $http.get("/Home/GetAttendance", config).then(
                 function (response) {
                     attendance.classMeetings = response.data;
-                    attendance.meetingDates = attendance.classMeetings.flat().map(x => x.MeetingDate);
+                    attendance.updateMeetingDates();
                 },
                 function (error) {
                     console.log(error);
                 });
         };
+
+        attendance.updateMeetingDates = function () {
+            attendance.meetingDates = attendance.classMeetings.flat().map(x => attendance.simpleFormatDate(x.MeetingDate));
+        }
+
+        attendance.simpleFormatDate = function (date) {
+            var actualDate = new Date(date);
+            var dayString = attendance.dateGetDayString(actualDate.getDay());
+            var month = actualDate.getMonth() + 1;
+            var day = actualDate.getDate();
+            var formattedDateString = dayString + " " + month.toString() + "/" + day.toString();
+            return formattedDateString;
+        }
+
+        attendance.dateGetDayString = function (day) {
+            var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            return weekday[day];
+        }
+
+        attendance.getAttendedPercentage = function (classID, date, success, error) {
+            var config = { params: { classID: classID, date: date } }
+            $http.get("/Home/GetAttendedPercentage", config).then(
+                function (response) {
+                    success(response.data);
+                },
+                error);
+        }
 
         attendance.downloadButtonClicked = function (indexI, indexJ) {
             var meeting = attendance.classMeetings[indexI][indexJ];
@@ -57,9 +85,17 @@
             restrict: 'A',
             link: function ($scope, element, attrs) {
                 element.ready(function () {
-                    //do stuff with attr.meeting
-                    var chartData = buildDougnnutChartData(0.86);
-                    initDoughnutChart(element[0], chartData);
+                    var meeting = JSON.parse(attrs.meeting);
+                    var attendedPercentage = 0;
+                    $scope.attendanceController.getAttendedPercentage(meeting.ID, meeting.MeetingDate,
+                        function (percentage) {
+                            attendedPercentage = percentage;
+                            var chartData = buildDougnnutChartData(attendedPercentage);
+                            initDoughnutChart(element[0], chartData);
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
                 })
             }
         }
