@@ -263,5 +263,10 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override List<AttendanceDataPoint> GetTeacherAttendanceData(long teacherID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

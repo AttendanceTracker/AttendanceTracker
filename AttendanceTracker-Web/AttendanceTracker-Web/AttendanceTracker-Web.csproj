@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Models\AuthorizationManager.cs" />
     <Compile Include="Models\DateTimeExtensions.cs" />
+    <Compile Include="Models\DB\DTOs\AttendanceDataPoint.cs" />
     <Compile Include="Models\DB\DTOs\ClassAttendance.cs" />
     <Compile Include="Models\DB\DTOs\StudentAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherAttendance.cs" />
@@ -212,7 +213,6 @@
     <Compile Include="Models\DB\Mapper\DBMapperDataRowCollectionExtensions.cs" />
     <Compile Include="Models\DB\Mapper\DBPropertyMap.cs" />
     <Compile Include="Models\StringExtensions.cs" />
-    <Compile Include="Models\View Models\AttendanceViewModel.cs" />
     <Compile Include="Models\View Models\Factories\ViewModelsFactory.cs" />
     <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />
     <Compile Include="Models\Web\DTOs\CreateAccountRequest.cs" />

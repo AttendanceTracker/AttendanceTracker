@@ -72,6 +72,31 @@ namespace AttendanceTracker_Web.Controllers.MVC
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
             }
         }
+        
+        [HttpGet]
+        public ActionResult GetAttendanceChartData()
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var dataPoints = dal.Source.GetTeacherAttendanceData(userCookie.CWID);
+                        var groupedDataPoints = dataPoints.GroupBy(x => x.ClassName);
+                        var groupedDataPointsJSON = JsonConvert.SerializeObject(groupedDataPoints);
+                        return Content(groupedDataPointsJSON);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
 
         public ActionResult Class()
         {

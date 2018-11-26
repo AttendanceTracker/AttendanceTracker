@@ -23,7 +23,7 @@
 
         attendance.addDays = function (dayCount) {
             attendance.currentDate.setDate(attendance.currentDate.getDate() + dayCount);
-        }
+        };
 
         attendance.updateAttendance = function () {
             var config = { params: { date: attendance.currentDate } };
@@ -39,7 +39,7 @@
 
         attendance.updateMeetingDates = function () {
             attendance.meetingDates = attendance.classMeetings.flat().map(x => attendance.simpleFormatDate(x.MeetingDate));
-        }
+        };
 
         attendance.simpleFormatDate = function (date) {
             var actualDate = new Date(date);
@@ -48,12 +48,12 @@
             var day = actualDate.getDate();
             var formattedDateString = dayString + " " + month.toString() + "/" + day.toString();
             return formattedDateString;
-        }
+        };
 
         attendance.dateGetDayString = function (day) {
             var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             return weekday[day];
-        }
+        };
 
         attendance.getAttendedPercentage = function (classID, date, success, error) {
             var config = { params: { classID: classID, date: date } }
@@ -62,12 +62,12 @@
                     success(response.data);
                 },
                 error);
-        }
+        };
 
         attendance.downloadButtonClicked = function (indexI, indexJ) {
             var meeting = attendance.classMeetings[indexI][indexJ];
             attendance.downloadAttendance(meeting.ID, meeting.MeetingDate);
-        }
+        };
 
         attendance.downloadAttendance = function (classID, date) {
             var actualDate = new Date(date);
@@ -85,7 +85,7 @@
             restrict: 'A',
             link: function ($scope, element, attrs) {
                 element.ready(function () {
-                    var meeting = JSON.parse(attrs.meeting);
+                    var meeting = JSON.parse(attrs.buildChart);
                     var attendedPercentage = 0;
                     $scope.attendanceController.getAttendedPercentage(meeting.ID, meeting.MeetingDate,
                         function (percentage) {
