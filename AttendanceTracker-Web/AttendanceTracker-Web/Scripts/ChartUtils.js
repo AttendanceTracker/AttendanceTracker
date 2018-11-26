@@ -7,6 +7,30 @@
 function buildDougnnutChartData(percentage) {
     var filled = percentage * 100;
     var unfilled = filled - 100;
+
+    Chart.pluginService.register({
+        beforeDraw: function (chart) {
+            var width = chart.chart.width,
+                height = chart.chart.height,
+                ctx = chart.chart.ctx;
+
+            chart.clear();
+
+            ctx.restore();
+            var fontSize = (height / 114).toFixed(2);
+            ctx.font = fontSize + "em sans-serif";
+            ctx.textBaseline = "middle";
+
+            var text = filled.toString() + "%",
+                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                textY = height / 2;
+
+            ctx.fillStyle = "#757575";
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+        }
+    });
+    
     data = {
         datasets: [
             {
