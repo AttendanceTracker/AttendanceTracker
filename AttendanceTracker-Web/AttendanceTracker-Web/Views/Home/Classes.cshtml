@@ -5,10 +5,9 @@
     <link href="~/Content/Home/Classes.css" rel="stylesheet" />
 }
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/Chart.bundle.min.js"></script>
-<script src="~/Scripts/ChartUtils.js"></script>
-<script src="~/Scripts/Classes.js"></script>
+@section scripts {
+    <script src="~/Scripts/Classes.js"></script>
+}
 
 <button onclick="backButtonClicked()" id="back-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored nav-button">
     <i class="material-icons">arrow_back_ios</i>

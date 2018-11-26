@@ -104,12 +104,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        var startDate = DateTime.Now.WeekStart(DayOfWeek.Sunday);
-                        var endDate = startDate.AddDays(6);
-                        var classes = dal.Source.GetTeacherMeetings(userCookie.CWID, startDate, endDate);
-                        var groupedClasses = classes.GroupBy(x => x.MeetingDate);
-                        var viewModel = viewModelsFactory.AttendanceViewModel(groupedClasses);
-                        return View(viewModel);
+                        return View();
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
@@ -159,34 +154,57 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
-        //[HttpGet]
-        //public ActionResult GetAttendance(long classID)
-        //{
-        //    try
-        //    {
-        //        var userCookieJson = GetCookie("user");
-        //        if (userCookieJson != null)
-        //        {
-        //            var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
-        //            if (authManager.IsAuthorized(userCookie.AccessToken))
-        //            {
-        //                var startDate = DateTime.Now.WeekStart(DayOfWeek.Sunday);
-        //                var endDate = startDate.AddDays(6);
-        //                var attendanceResults = dal.Source.GetClassAttendance(4, startDate, endDate);
-        //                var groupedAttendance = attendanceResults.GroupBy(x => x.MeetingDate);
-        //                var groupedAttendanceJSON = JsonConvert.SerializeObject(groupedAttendance);
-        //                return Content(groupedAttendanceJSON);
-        //            }
-        //        }
-        //        return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
-        //    }
-        //}
+        [HttpGet]
+        public ActionResult GetAttendance(DateTime date)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var startDate = date.WeekStart(DayOfWeek.Sunday);
+                        var endDate = startDate.AddDays(6);
+                        var classes = dal.Source.GetTeacherMeetings(userCookie.CWID, startDate, endDate);
+                        var groupedClasses = classes.GroupBy(x => x.MeetingDate);
+                        var groupedClassesJSON = JsonConvert.SerializeObject(groupedClasses);
+                        return Content(groupedClassesJSON);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
 
-            public ActionResult QRCodes()
+        [HttpGet]
+        public ActionResult GetAttendedPercentage(long classID, DateTime date)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        
+                        return Content("");
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        public ActionResult QRCodes()
         {
             try
             {

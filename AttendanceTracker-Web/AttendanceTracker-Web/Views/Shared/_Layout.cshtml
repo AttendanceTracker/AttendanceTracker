@@ -8,14 +8,17 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/material")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ChartUtils.js"></script>
+    <script src="~/Scripts/CookieUtils.js"></script>
+    <script src="~/Scripts/WebserviceUtil.js"></script>
+    <script src="~/Scripts/Chart.bundle.min.js"></script>
     <div class="container body-content">
         @RenderBody()
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/material")
-    @RenderSection("scripts", required: false)
-    <script src="~/Scripts/CookieUtils.js"></script>
-    <script src="~/Scripts/WebserviceUtil.js"></script>
 </body>
 </html>
