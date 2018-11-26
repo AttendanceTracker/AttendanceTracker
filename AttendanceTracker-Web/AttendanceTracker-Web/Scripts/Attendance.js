@@ -85,9 +85,10 @@
             restrict: 'A',
             link: function ($scope, element, attrs) {
                 element.ready(function () {
+                    var attendanceController = $scope.attendanceController;
                     var meeting = JSON.parse(attrs.buildChart);
                     var attendedPercentage = 0;
-                    $scope.attendanceController.getAttendedPercentage(meeting.ID, meeting.MeetingDate,
+                    attendanceController.getAttendedPercentage(meeting.ID, meeting.MeetingDate,
                         function (percentage) {
                             attendedPercentage = percentage;
                             var chartData = buildDougnnutChartData(attendedPercentage);
@@ -96,7 +97,7 @@
                         function (error) {
                             console.log(error);
                         });
-                })
+                });
             }
-        }
+        };
     });

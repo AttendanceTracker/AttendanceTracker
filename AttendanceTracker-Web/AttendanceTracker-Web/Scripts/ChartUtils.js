@@ -7,29 +7,6 @@
 function buildDougnnutChartData(percentage) {
     var filled = percentage * 100;
     var unfilled = filled - 100;
-
-    Chart.pluginService.register({
-        beforeDraw: function (chart) {
-            var width = chart.chart.width,
-                height = chart.chart.height,
-                ctx = chart.chart.ctx;
-
-            chart.clear();
-
-            ctx.restore();
-            var fontSize = (height / 114).toFixed(2);
-            ctx.font = fontSize + "em sans-serif";
-            ctx.textBaseline = "middle";
-
-            var text = filled.toString() + "%",
-                textX = Math.round((width - ctx.measureText(text).width) / 2),
-                textY = height / 2;
-
-            ctx.fillStyle = "#757575";
-            ctx.fillText(text, textX, textY);
-            ctx.save();
-        }
-    });
     
     data = {
         datasets: [
@@ -57,23 +34,52 @@ function buildAreaLineChartData(labels, dataPoints) {
                 data: dataPoints
             }
         ]
-    }
+    };
     return data;
 }
 
 function initDoughnutChart(canvas, data) {
     var context = canvas.getContext("2d");
-    //context.fillText("Hello World", 30, 30);
     new Chart(context, {
         type: 'doughnut',
         data: data,
         options: {
             tooltips: {
                 enabled: false
+            },
+            hover: {
+                animationDuration: 0
+            },
+            animation: {
+                onComplete: function (ctx) {
+                    var chart = ctx.chart.canvas;
+                    var percentage = data.datasets[0].data[0];
+                    drawChartText(percentage, chart);
+                }
             }
-        }
+        },
+        events:[]
     });
 }
+
+ function drawChartText (percentage, chart) {
+    var width = chart.width,
+        height = chart.height,
+        ctx = chart.getContext("2d");
+
+    ctx.restore();
+    var fontSize = (height / 114).toFixed(2);
+    ctx.font = fontSize + "em sans-serif";
+    ctx.textBaseline = "middle";
+
+     var text = percentage.toString() + "%",
+        textX = Math.round((width - ctx.measureText(text).width) / 2),
+        textY = height / 2 + 8;
+
+    ctx.fillStyle = "#757575";
+    ctx.fillText(text, textX, textY);
+    ctx.save();
+};
 
 function initLineChart(canvas, data) {
     var context = canvas.getContext("2d");
