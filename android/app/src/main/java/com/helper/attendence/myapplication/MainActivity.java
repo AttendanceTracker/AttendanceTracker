@@ -14,11 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+//https://developer.android.com/guide/topics/ui/declaring-layout#java
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,28 +87,10 @@ public class MainActivity extends AppCompatActivity {
         Student x = new Student(firstName, lastName, email, cwid, Long.parseLong(IMEINumber));
         x.printAll();
 
-//        Intent i = new Intent(MainActivity.this, InfoLogging.class);
-//        i.putExtra("serialize_data", std);
-//        startActivity(i);
-
-//        //Should show 4 boxes to enter the fname, lname, username, and CWID
-//        if (!newDeviceFlag) {
-//            Intent i = new Intent(MainActivity.this, InfoLogging.class);
-//            i.putExtra("student_imei", (Parcelable) std);
-//            startActivity(i);
-//        } else {
-//            SharedPreferences.Editor editor = app_preferences.edit();
-//            editor.putBoolean("deviceFlag", true); //set's boolean to True bc user has been seen before
-//            editor.apply(); // Very important
-//            TextView text = (TextView) findViewById(R.id.txtCount);
-//            text.setText("Welcome. Your info is stored.\n");
-//            displayInfo(app_preferences);
-//        }
-//        displayInfo(x);
-
         //NEED TO IMPLEMENT GETCLASSES
-        x.getClasses();
-        mainMenu(x.getClasses());
+        x.setClasses("[  {    \"ID\": 4,    \"Name\": \"Test Class\",    \"TeacherID\": 99999999  },  {    \"ID\": 5,    \"Name\": \"adf100\",    \"TeacherID\": 93847274  }, {    \"ID\": 6,    \"Name\": \"Big dick energy\",    \"TeacherID\": 8675309  }]");
+        System.out.println("Final Value out of class: : " + x.getClasses().get(0).getID() + " " + x.getClasses().get(0).getName() + " " + x.getClasses().get(0).getTeacherID());
+        mainMenu(x);
 
     }
 
@@ -119,9 +101,7 @@ public class MainActivity extends AppCompatActivity {
 //        text.setText("\nFirst name =" + std.getFname() + "\n Last name =" + std.getLname()+ "\n Username =" + std.getEmail()+ "\n CWID =" + std.getCwid()+ ". ");
 //    }
 
-    public void mainMenu(ArrayList<sClass> classes) {
-
-
+    public void mainMenu(final Student x) {
          FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
        qrBtn.setOnClickListener(new View.OnClickListener() {
             //Open qr library and go from there
@@ -140,14 +120,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        String[] mobileArray = classes.toArray(new String[classes.size()]);
+        String[] stringArray = new String [x.getClasses().size()];
+        for(int i = 0; i < x.getClasses().size(); i++)  {
+            System.out.println("Class name " + i + ": " + x.getClasses().get(i).getName() );
+            stringArray[i] = x.getClasses().get(i).getName();
+        }
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, mobileArray);
+                R.layout.activity_listview, stringArray);
 
         ListView listView = (ListView) findViewById(R.id.mobile_list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position,
+                                    long arg3)
+            {
+                String value = (String)adapter.getItemAtPosition(position);
+                System.out.println("You clicked " + value + " at position: " + position);
+                Intent i = new Intent(MainActivity.this, AttendanceView.class);
+                i.putExtra("className", value);
+                i.putExtra("classId", x.getClasses().get(position).getID());
+                startActivity(i);
+            }
+              }
+        );
 
     }
+
+
+        public void onItemClick(AdapterView parent, View v, int position, long id) {
+            // Do something in response to the click
+        }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,

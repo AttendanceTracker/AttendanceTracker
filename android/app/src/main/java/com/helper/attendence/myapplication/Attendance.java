@@ -7,8 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,7 +26,7 @@ public class Attendance {
         return returnVal;
     }
 
-    public java.util.Date getDate() {
+    public Date getDate() {
         return Date;
     }
 
