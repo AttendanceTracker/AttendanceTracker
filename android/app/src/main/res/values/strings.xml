@@ -8,4 +8,5 @@
     <string name="button_submit">Submit</string>
     <string name="scan_results">Scan Results:</string>
     <string name="scan_qr_code">Scan QR Code</string>
+    <string name="attendance">Attendance</string>
 </resources>

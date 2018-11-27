@@ -34,34 +34,23 @@ public class AttendanceView extends AppCompatActivity {
             Attendance att = new Attendance();
 
             GridLayout tableLayout = (GridLayout)findViewById(R.id.table);
-            tableLayout.removeAllViews();
+//            tableLayout.removeAllViews();
             ArrayList<Attendance> x = att.getAttendance("[  {    \"Date\": \"2018-11-12T00:00:00\",    \"DidAttend\": true  },  {    \"Date\": \"2018-11-14T00:00:00\",    \"DidAttend\": false  },  {    \"Date\": \"2018-11-16T00:00:00\",    \"DidAttend\": true  },  {    \"Date\": \"2018-11-19T00:00:00\",    \"DidAttend\": true  },  {    \"Date\": \"2018-11-21T00:00:00\",    \"DidAttend\": true  }]");
             System.out.println();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             for(int i = 0; i < x.size(); i++) {
-
                 System.out.println("On " + i + " with date: " + x.get(i).getDate() + " and attendance: " + x.get(i).getDidAttend());
 
                 LinearLayout mContainerView = (LinearLayout)findViewById(R.id.attendanceLL);
                 LayoutInflater inflater =(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View myView = inflater.inflate(R.layout.attendance_view, null);
 
-
-                TextView first_field = (TextView) findViewById(R.id.textAttendanceDate);
-                TextView second_field = (TextView) findViewById(R.id.textAttendanceID);
-
-
-
-                TextView text = (TextView) findViewById(R.id.textAttendanceDate);
-//                String strDate = formatter.format(x.get(i).getDate());
-//                System.out.println("Date: " + strDate);
-//                text.setText("DICKS");
-//                TextView texts = (TextView) findViewById(R.id.textAttendanceID);
-//                texts.setText("SUCK");
-
-
-                first_field.setText("DICKS");
-                second_field.setText("SUCK");
+                String strDate = formatter.format(x.get(i).getDate());
+                System.out.println("Date: " + strDate);
+                TextView text = (TextView) findViewById(R.id.textAttendanceID);
+                text.setText(strDate);
+                TextView texts = (TextView) findViewById(R.id.textAttendanceID);
+                texts.setText(x.get(i).getDidAttend().toString());
 
                 mContainerView.addView(myView);
             }
