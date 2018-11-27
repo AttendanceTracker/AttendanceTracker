@@ -79,7 +79,7 @@ function initDoughnutChart(canvas, data) {
     ctx.fillStyle = "#757575";
     ctx.fillText(text, textX, textY);
     ctx.save();
-};
+}
 
 function initLineChart(canvas, data) {
     var context = canvas.getContext("2d");

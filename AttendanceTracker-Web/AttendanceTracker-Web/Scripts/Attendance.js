@@ -56,7 +56,7 @@
         };
 
         attendance.getAttendedPercentage = function (classID, date, success, error) {
-            var config = { params: { classID: classID, date: date } }
+            var config = { params: { classID: classID, date: date } };
             $http.get("/Home/GetAttendedPercentage", config).then(
                 function (response) {
                     success(response.data);
