@@ -70,11 +70,12 @@
             android:name=".QRScanner"
             android:label="AttendanceTracker">
         </activity>
-
         <activity
-            android:name=".AttendanceView"
+            android:name=".OuterList"
             android:label="AttendanceTracker">
         </activity>
+
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

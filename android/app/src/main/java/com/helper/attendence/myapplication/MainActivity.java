@@ -94,13 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //displays this fName, lName, userName, CWID, counter (for fun)  on activity_main
-//    public void displayInfo(Student std) {
-//        setContentView(R.layout.activity_main);
-//        TextView text = (TextView) findViewById(R.id.txtCount);
-//        text.setText("\nFirst name =" + std.getFname() + "\n Last name =" + std.getLname()+ "\n Username =" + std.getEmail()+ "\n CWID =" + std.getCwid()+ ". ");
-//    }
-
     public void mainMenu(final Student x) {
          FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
        qrBtn.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 String value = (String)adapter.getItemAtPosition(position);
                 System.out.println("You clicked " + value + " at position: " + position);
-                Intent i = new Intent(MainActivity.this, AttendanceView.class);
+                Intent i = new Intent(MainActivity.this,OuterList.class);
                 i.putExtra("className", value);
                 i.putExtra("classId", x.getClasses().get(position).getID());
                 startActivity(i);
