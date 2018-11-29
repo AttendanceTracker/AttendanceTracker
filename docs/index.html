@@ -1,40 +1,137 @@
-<!DOCTYPE HTML>
-<meta charset="utf-8">
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
 <head>
-	<title>AttendanceTracker</title>
-	<link rel="stylesheet" href="css/site.css"/>
-	<link rel="stylesheet" href="css/index.css"/>
-</head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>AttendanceTracker</title>
 
-<html>
-	<body>
-		<headerbar>
-			<div class="title-holder">
-				<a class="title-text">AttendanceTracker</a>
-			</div>
-			<ul class="menu-list">
-				<li>
-					<a style="color: #000; border-bottom-style: solid; height: 45px;" class="page-menu-item" href="index.html">Home</a>
-				</li>
-				<li>
-					<a class="page-menu-item" href="deliverables.html">Deliverables</a>
-				</li>
-				<li>
-					<a class="page-menu-item" href="aboutus.html">About Us</a>
-				</li>
-			</ul>
-		</headerbar>
-		<maincontent>
-			<!-- <div class="content-header"></div> -->
-			<div class="content-body">
-				<div id="video-placeholder">Video here</div>
-				<h1>Our Goals</h1>
-				<p id="app-about">
-					Currently, in many classrooms attendance is tracked using either a Pen-and-Paper approach or with costly electronic input devices. AttendanceTracker is a new android application with the goal of offering both students and instructors an alternative to traditional methods of classroom attendance tracking and participation. Using our app is more secure than relying on more traditional methods as instructors can allow optional settings such as time and location locks to ensure that students can not cheat the system by signing in for their classmates. Our app aims to streamline the process of taking attendance for instructors. By including a web interface instructors can easily generate scannable QR Codes and create quizzes based on course content to gauge classroom involvement and participation. 
-				</p>
-			</div>
-		</maincontent>
-	</body>
-	<script src="js/site.js"></script>
+  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+  -->
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-indigo.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="site.css">
+  <style>
+  #view-source {
+    position: fixed;
+    display: block;
+    right: 0;
+    bottom: 0;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    z-index: 900;
+  }
+</style>
+</head>
+<body class="mdl-boi mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>AttendanceTracker</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="#overview" class="mdl-layout__tab is-active">Home</a>
+        <a href="#features" class="mdl-layout__tab">Deliverables</a>
+        <a href="#aboutus" class="mdl-layout__tab">About Us</a>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div id="goal-boi" class="mdl-card__supporting-text">
+              <h4>Our Goals</h4>
+              Currently, in many classrooms attendance is tracked using either a Pen-and-Paper approach or with costly electronic input devices. AttendanceTracker is a new android application with the goal of offering both students and instructors an alternative to traditional methods of classroom attendance tracking and participation. Using our app is more secure than relying on more traditional methods as instructors can allow optional settings such as time and location locks to ensure that students can not cheat the system by signing in for their classmates. Our app aims to streamline the process of taking attendance for instructors. By including a web interface instructors can easily generate scannable QR Codes and create quizzes based on course content to gauge classroom involvement and participation. 
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="mdl-layout__tab-panel" id="features">
+        <section class="section--center mdl-grid mdl-grid--no-spacing">
+          <div class="mdl-cell mdl-cell--12-col">
+            <h4>Deliverables</h4>
+            <ul class="toc">
+              <h4>Presentation Slides</h4>
+              <a href="resources/AttendanceTracker-CowlesWrightWitherspoon.pptx">Initial Pitch</a>
+              <a href="resources/Sprint1Presentation.pptx">Sprint 1</a>
+              <a href="resources/Sprint2Presentation.pptx">Sprint 2</a>
+              <a class="disabled-link">Sprint 3</a>
+            </ul>
+            <ul class="toc">
+              <h4>APK</h4>
+              <a href="#Deliverables">AttendanceTracker.apk</a>
+            </ul>
+            <ul class="toc">
+              <h4>Website</h4>
+              <a target=":void()" href="https://attendancetracker.us/">attendancetracker.us</a>
+            </ul>
+            <ul class="toc">
+              <h4>Source</h4>
+              <a target=":void()" href="https://github.com/AttendanceTracker/AttendanceTracker">github.com/AttendanceTracker/AttendanceTracker</a>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <div class="mdl-layout__tab-panel" id="aboutus">
+        <section class="section--center mdl-grid mdl-grid--no-spacing">
+          <div class="mdl-cell mdl-cell--12-col">
+            <h4>About Us</h4>
+            <ul class="toc">
+              <h4>
+                Greyson Wright
+                <a href="mailto:gwright@crimson.ua.edu">gwright@crimson.ua.edu</a>
+              </h4>
+              <li>Hobbies: Frisbee and ARGs</li>
+              <li>Nickname: The Dinosaur</li>
+            </ul>
+            <ul class="toc">
+              <h4>
+                Zack Witherspoon
+                <a href="mailto:zbwitherspoon@crimson.ua.edu">zbwitherspoon@crimson.ua.edu</a>
+              </h4>
+              <li>Hobbies: Rock Climbing & Hackerman</li>
+              <li>Nickname: Hackerman</li>
+            </ul>
+            <ul class="toc">
+              <h4>
+                Jacob Cowles
+                <a href="mailto:jrcowles@crimson.ua.edu">jrcowles@crimson.ua.edu</a>
+              </h4>
+              <li>Computer Science Student</li>
+              <li>Hobbies: Baking and Hiking</li>
+              <li>Nickname: The Baker</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
 </html>
