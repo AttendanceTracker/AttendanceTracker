@@ -113,9 +113,6 @@ html, body {
 .mdl-boi section.section--center {
   max-width: 860px;
 }
-.mdl-boi #features section.section--center {
-  max-width: 620px;
-}
 .mdl-boi section > header{
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -200,15 +197,6 @@ html, body {
 }
 .mdl-boi .mdl-card .mdl-card__supporting-text > h3:first-child {
   margin-bottom: 24px;
-}
-.mdl-boi .mdl-layout__tab-panel:not(#overview) {
-  background-color: white;
-}
-.mdl-boi #features section {
-  margin-bottom: 72px;
-}
-.mdl-boi #features h4, #features h5 {
-  margin-bottom: 16px;
 }
 .mdl-boi .toc {
   list-style: none;
