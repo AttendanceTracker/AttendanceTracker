@@ -195,6 +195,7 @@
     <Compile Include="Models\DB\DTOs\StudentAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherMeetings.cs" />
+    <Compile Include="Models\DB\DTOs\ActiveQRCodeData.cs" />
     <Compile Include="Models\DB\DTOs\TeacherTotalAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherTotalMeetings.cs" />
     <Compile Include="Models\DB\DTOs\TotalAttendanceDataPoints.cs" />
@@ -216,14 +217,13 @@
     <Compile Include="Models\DB\Mapper\DBMapperDataRowCollectionExtensions.cs" />
     <Compile Include="Models\DB\Mapper\DBPropertyMap.cs" />
     <Compile Include="Models\StringExtensions.cs" />
-    <Compile Include="Models\View Models\Factories\ViewModelsFactory.cs" />
+    <Compile Include="Models\Web\DTOs\ActiveQRCode.cs" />
     <Compile Include="Models\Web\DTOs\CheckInRequest.cs" />
     <Compile Include="Models\Web\DTOs\CreateAccountRequest.cs" />
     <Compile Include="Models\Web\DTOs\CreateAccountResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\GetStudentResponse.cs" />
     <Compile Include="Models\Web\DTOs\QRCodePayload.cs" />
-    <Compile Include="Models\View Models\QRCodesViewModel.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceRequest.cs" />
     <Compile Include="Models\Web\DTOs\RegisterDeviceResponse.cs" />
     <Compile Include="Models\Web\DTOs\RegisterStudentRequest.cs" />

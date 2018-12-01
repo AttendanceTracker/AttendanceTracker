@@ -471,6 +471,16 @@ namespace AttendanceTracker_Web.Models.DB
             return attendanceData;
         }
 
+        public override List<ActiveQRCodeData> GetActiveQRCodes(long teacherID)
+        {
+            var queryString = "exec GetActiveQRCodesForTeacher @teacher_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            var results = query.Execute();
+            var qrCodeData = results.Rows.ToDTOList<ActiveQRCodeData>();
+            return qrCodeData;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

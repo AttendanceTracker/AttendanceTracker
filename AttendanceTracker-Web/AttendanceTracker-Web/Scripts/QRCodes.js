@@ -1,48 +1,79 @@
-﻿function addQRCodeButtonClicked() {
-    var dialog = document.querySelector('dialog');
-    dialog.showModal();
-}
+﻿angular.module("QRCodesModule", [])
+    .controller("QRCodesController", function ($scope, $http) {
+        var qrCodesController = this;
 
-function showToast(message) {
-    var snackbarContainer = document.querySelector('#toast-container');
-    'use strict';
-    var data = { message: message };
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-}
+        qrCodesController.qrCodeData = [];
+        qrCodesController.classData = [];
+        qrCodesController.selectedClass = {};
+        qrCodesController.dialog = document.querySelector('dialog');
+        qrCodesController.showDialogButton = document.querySelector('#show-dialog');
 
-function getQRCode(id, completed) {
-    var headers = { "AccessToken": getCookie("user").AccessToken };
-    request("/Home/GetQRCode?qrCodeID=" + id, "get", "text", null, headers, completed,
-        function (e) {
-            console.log(e);
-        }
-    );
-}
+        qrCodesController.$onInit = function () {
+            qrCodesController.getQRCodes();
+            qrCodesController.getClasses();
+        };
 
-function base64Encode(str) {
-    var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    var out = "", i = 0, len = str.length, c1, c2, c3;
-    while (i < len) {
-        c1 = str.charCodeAt(i++) & 0xff;
-        if (i == len) {
-            out += CHARS.charAt(c1 >> 2);
-            out += CHARS.charAt((c1 & 0x3) << 4);
-            out += "==";
-            break;
+        qrCodesController.getQRCodes = function () {
+            $http.get("/Home/GetActiveQRCodes").then(
+                function (response) {
+                    qrCodesController.qrCodeData = response.data;
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
         }
-        c2 = str.charCodeAt(i++);
-        if (i == len) {
-            out += CHARS.charAt(c1 >> 2);
-            out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-            out += CHARS.charAt((c2 & 0xF) << 2);
-            out += "=";
-            break;
+
+        qrCodesController.getClasses = function () {
+            $http.get("/Home/GetClasses").then(
+                function (response) {
+                    qrCodesController.classData = response.data;
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
         }
-        c3 = str.charCodeAt(i++);
-        out += CHARS.charAt(c1 >> 2);
-        out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-        out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
-        out += CHARS.charAt(c3 & 0x3F);
-    }
-    return out;
-}
+
+        if (!qrCodesController.dialog.showModal) {
+            qrCodesController.dialogPolyfill.registerDialog(qrCodesController.qrCodesController.dialog);
+        }
+
+        qrCodesController.addModalButtonClicked = function () {
+            var classSelectText = $("#class-select").val();
+            if (classSelectText == "") {
+                return showToast("Please select a class");
+            }
+            //var classDataJsonString = "@Json.Encode(Model.ClassData)";
+            //var parser = new DOMParser;
+            //var dom = parser.parseFromString('<!doctype html><body>' + classDataJsonString, 'text/html');
+            //var decodedClassDataJsonString = dom.body.textContent;
+            //var classData = JSON.parse(decodedClassDataJsonString);
+            //var c = classData.find(function (element) {
+            //    return element.Name == classSelectText;
+            //});
+            var headers = { "AccessToken": getCookie("user").AccessToken };
+            request("/Home/AddQRCode?classid=" + c.ID + "&expiresin=10000", "POST", "text", null, headers,
+                function () {
+                    qrCodesController.dialog.close();
+                    qrCodesController.showToast("QR code created");
+                    window.location = "/home/qrcodes/"
+                },
+                function (e) {
+                    console.log(e);
+                    qrCodesController.showToast("Failed to create QR code");
+                }
+            );
+        }
+
+        qrCodesController.addQRCodeButtonClicked = function () {
+            qrCodesController.dialog.showModal();
+        }
+
+        qrCodesController.showToast = function (message) {
+            var snackbarContainer = document.querySelector('#toast-container');
+            'use strict';
+            var data = { message: message };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        }
+    });

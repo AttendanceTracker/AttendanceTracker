@@ -19,7 +19,6 @@ namespace AttendanceTracker_Web.Controllers.MVC
         AuthorizationManager authManager;
         DataBaseFactory dbFactory;
         WebFactory webFactory;
-        ViewModelsFactory viewModelsFactory;
         DataAccessLayer dal;
 
         public HomeController()
@@ -27,7 +26,6 @@ namespace AttendanceTracker_Web.Controllers.MVC
             authManager = new AuthorizationManager();
             dbFactory = new DataBaseFactory();
             webFactory = new WebFactory();
-            viewModelsFactory = new ViewModelsFactory();
             dal = new DataAccessLayer(DALDataSource.DB);
         }
 
@@ -313,15 +311,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        var classData = dal.Source.GetClassDataForTeacher(userCookie.CWID);
-                        var qrCodes = new List<List<long>>();
-                        foreach (var c in classData)
-                        {
-                            var codes = dal.Source.GetQRCodes(c.ID);
-                            qrCodes.Add(codes);
-                        }
-                        var viewModel = viewModelsFactory.QRCodesViewModel(classData, qrCodes);
-                        return View(viewModel);
+                        return View();
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
@@ -332,14 +322,65 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
-        private string GetCookie(string key)
+        [HttpGet]
+        public ActionResult GetActiveQRCodes()
         {
-            if (Request.Cookies[key] != null)
+            try
             {
-                var value = Request.Cookies[key].Value.ToString();
-                return value;
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var activeQRCodes = new List<ActiveQRCode>();
+                        var qrCodeDataList = dal.Source.GetActiveQRCodes(userCookie.CWID);
+                        foreach (var qrCodeData in qrCodeDataList)
+                        {
+                            var qrCodePayload = webFactory.QRCodePayload(qrCodeData.ClassID, qrCodeData.Payload);
+                            var qrCodeImage = GenerateQRCode(qrCodePayload);
+                            byte[] imageData = { };
+                            using (var stream = new MemoryStream())
+                            {
+                                qrCodeImage.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                                imageData = stream.ToArray();
+                            }
+                            var qrCode = webFactory.ActiveQRCode(qrCodeData.ClassID, qrCodeData.ClassName, qrCodeData.StartDate, qrCodeData.EndDate, imageData);
+                        }
+                        var activeQRCodesJson = JsonConvert.SerializeObject(activeQRCodes);
+                        return Content(activeQRCodesJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
             }
-            return null;
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetClasses()
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var classData = dal.Source.GetClassDataForTeacher(userCookie.CWID);
+                        var classDataJson = JsonConvert.SerializeObject(classData);
+                        return Content(classDataJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
         }
 
         [HttpPost]
@@ -356,9 +397,8 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var dbQRCode = dbFactory.QRCode(0, classID, payload, DateTime.Now, expiresIn);
                     var fullPayload = webFactory.QRCodePayload(dbQRCode.ClassID, dbQRCode.Payload);
                     var addedQRCode = dal.Source.AddQRCode(dbQRCode);
-                    var qrCodeImage = GenerateQRCode(fullPayload);
-                    var qrCodeStream = BitmapToMemoryStream(qrCodeImage);
-                    return File(qrCodeStream, "image/bmp");
+                    var addedQRCodeJson = JsonConvert.SerializeObject(addedQRCode);
+                    return Content(addedQRCodeJson);
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null) ;
             }
@@ -388,6 +428,16 @@ namespace AttendanceTracker_Web.Controllers.MVC
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
             }
+        }
+
+        private string GetCookie(string key)
+        {
+            if (Request.Cookies[key] != null)
+            {
+                var value = Request.Cookies[key].Value.ToString();
+                return value;
+            }
+            return null;
         }
 
         private Bitmap GenerateQRCode(QRCodePayload payload)

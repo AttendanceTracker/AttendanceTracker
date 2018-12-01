@@ -283,5 +283,10 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override List<ActiveQRCodeData> GetActiveQRCodes(long teacherID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
