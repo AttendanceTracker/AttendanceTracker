@@ -77,7 +77,6 @@
             restrict: 'A',
             link: function ($scope, element, attrs) {
                 element.ready(function () {
-                    var attendanceController = $scope.attendanceController;
                     var attendedPercentage = attrs.buildChart;
                     var chartData = buildDougnnutChartData(attendedPercentage);
                     initDoughnutChart(element[0], chartData);

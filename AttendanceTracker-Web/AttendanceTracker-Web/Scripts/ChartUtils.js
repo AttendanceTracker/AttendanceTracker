@@ -72,7 +72,7 @@ function initDoughnutChart(canvas, data) {
     ctx.font = fontSize + "em sans-serif";
     ctx.textBaseline = "middle";
 
-     var text = percentage.toString() + "%",
+     var text = Math.round(percentage).toString() + "%",
         textX = Math.round((width - ctx.measureText(text).width) / 2),
         textY = height / 2;
 
