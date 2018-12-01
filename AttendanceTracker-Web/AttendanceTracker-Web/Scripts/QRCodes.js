@@ -22,7 +22,7 @@
                     console.log(error);
                 }
             );
-        }
+        };
 
         qrCodesController.getClasses = function () {
             $http.get("/Home/GetClasses").then(
@@ -33,7 +33,7 @@
                     console.log(error);
                 }
             );
-        }
+        };
 
         if (!qrCodesController.dialog.showModal) {
             qrCodesController.dialogPolyfill.registerDialog(qrCodesController.qrCodesController.dialog);
@@ -42,38 +42,38 @@
         qrCodesController.addModalButtonClicked = function () {
             var classSelectText = $("#class-select").val();
             if (classSelectText == "") {
-                return showToast("Please select a class");
+                return qrCodesController.showToast("Please select a class");
             }
-            //var classDataJsonString = "@Json.Encode(Model.ClassData)";
-            //var parser = new DOMParser;
-            //var dom = parser.parseFromString('<!doctype html><body>' + classDataJsonString, 'text/html');
-            //var decodedClassDataJsonString = dom.body.textContent;
-            //var classData = JSON.parse(decodedClassDataJsonString);
-            //var c = classData.find(function (element) {
-            //    return element.Name == classSelectText;
-            //});
-            var headers = { "AccessToken": getCookie("user").AccessToken };
-            request("/Home/AddQRCode?classid=" + c.ID + "&expiresin=10000", "POST", "text", null, headers,
-                function () {
-                    qrCodesController.dialog.close();
-                    qrCodesController.showToast("QR code created");
-                    window.location = "/home/qrcodes/"
+
+            var classID = qrCodesController.classData.find(function (element) {
+                return element.Name == classSelectText;
+            }).ID;
+
+            var config = { params: { classID: classID, expiresIn: 10000 } };
+            $http.post("/Home/AddQRCode", null, config).then(
+                function (response) {
+                    if (response.status = 200) {
+                        qrCodesController.dialog.close();
+                        qrCodesController.showToast("QR code created");
+                    } else {
+                        qrCodesController.showToast("Failed to create QR code");
+                    }
                 },
-                function (e) {
-                    console.log(e);
+                function (error) {
+                    console.log(error);
                     qrCodesController.showToast("Failed to create QR code");
                 }
             );
-        }
+        };
 
         qrCodesController.addQRCodeButtonClicked = function () {
             qrCodesController.dialog.showModal();
-        }
+        };
 
         qrCodesController.showToast = function (message) {
             var snackbarContainer = document.querySelector('#toast-container');
             'use strict';
             var data = { message: message };
             snackbarContainer.MaterialSnackbar.showSnackbar(data);
-        }
+        };
     });

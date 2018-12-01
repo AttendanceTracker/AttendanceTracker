@@ -346,6 +346,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                                 imageData = stream.ToArray();
                             }
                             var qrCode = webFactory.ActiveQRCode(qrCodeData.ClassID, qrCodeData.ClassName, qrCodeData.StartDate, qrCodeData.EndDate, imageData);
+                            activeQRCodes.Add(qrCode);
                         }
                         var activeQRCodesJson = JsonConvert.SerializeObject(activeQRCodes);
                         return Content(activeQRCodesJson);
@@ -388,19 +389,23 @@ namespace AttendanceTracker_Web.Controllers.MVC
         {
             try
             {
-                var accessToken = Request.Headers.GetValues("AccessToken").FirstOrDefault();
-                if (authManager.IsAuthorized(accessToken))
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
                 {
-                    var guid = Guid.NewGuid().ToString();
-                    var payload = guid + classID.ToString();
-                    payload = payload.SHA256Hash();
-                    var dbQRCode = dbFactory.QRCode(0, classID, payload, DateTime.Now, expiresIn);
-                    var fullPayload = webFactory.QRCodePayload(dbQRCode.ClassID, dbQRCode.Payload);
-                    var addedQRCode = dal.Source.AddQRCode(dbQRCode);
-                    var addedQRCodeJson = JsonConvert.SerializeObject(addedQRCode);
-                    return Content(addedQRCodeJson);
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var guid = Guid.NewGuid().ToString();
+                        var payload = guid + classID.ToString();
+                        payload = payload.SHA256Hash();
+                        var dbQRCode = dbFactory.QRCode(0, classID, payload, DateTime.Now, expiresIn);
+                        var fullPayload = webFactory.QRCodePayload(dbQRCode.ClassID, dbQRCode.Payload);
+                        var addedQRCode = dal.Source.AddQRCode(dbQRCode);
+                        var addedQRCodeJson = JsonConvert.SerializeObject(addedQRCode);
+                        return Content(addedQRCodeJson);
+                    }
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null) ;
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
             }
             catch (Exception)
             {
