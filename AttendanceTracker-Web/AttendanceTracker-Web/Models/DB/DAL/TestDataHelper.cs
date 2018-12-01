@@ -259,12 +259,22 @@ namespace AttendanceTracker_Web.Models.DB
             throw new NotImplementedException();
         }
 
-        public override int GetClassCount(long classID)
+        public override int GetStudentCountInClass(long classID)
         {
             throw new NotImplementedException();
         }
 
         public override List<AttendanceDataPoint> GetTeacherAttendanceData(long teacherID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<TeacherTotalAttendance> GetTeacherTotalAttendance(long teacherID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<TeacherTotalMeetings> GetTeacherTotalMeetings(long teacherID)
         {
             throw new NotImplementedException();
         }

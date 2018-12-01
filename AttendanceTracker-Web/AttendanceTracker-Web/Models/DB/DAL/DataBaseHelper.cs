@@ -422,7 +422,7 @@ namespace AttendanceTracker_Web.Models.DB
             return results;
         }
 
-        public override int GetClassCount(long classID)
+        public override int GetStudentCountInClass(long classID)
         {
             var queryString = "exec CountStudentsForClass @class_id;";
             var query = new Query(queryString, connectionString);
@@ -439,6 +439,26 @@ namespace AttendanceTracker_Web.Models.DB
             var results = query.Execute();
             var attendanceData = results.Rows.ToDTOList<AttendanceDataPoint>();
             return attendanceData;
+        }
+
+        public override List<TeacherTotalAttendance> GetTeacherTotalAttendance(long teacherID)
+        {
+            var queryString = "exec CountTotalAttendanceForTeacher @teacher_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            var results = query.Execute();
+            var attendanceData = results.Rows.ToDTOList<TeacherTotalAttendance>();
+            return attendanceData;
+        }
+
+        public override List<TeacherTotalMeetings> GetTeacherTotalMeetings(long teacherID)
+        {
+            var queryString = "exec CountTotalMeetingsForTeacher @teacher_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            var results = query.Execute();
+            var meetingData = results.Rows.ToDTOList<TeacherTotalMeetings>();
+            return meetingData;
         }
 
         private DataTable ExecuteStoredProcedure(string queryString)

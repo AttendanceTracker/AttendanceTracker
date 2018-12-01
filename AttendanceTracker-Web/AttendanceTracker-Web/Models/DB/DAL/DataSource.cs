@@ -41,7 +41,9 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract List<TeacherAttendance> GetTeacherAttendance(long teacherID, DateTime start, DateTime end);
         public abstract List<TeacherMeetings> GetTeacherMeetings(long teacherID, DateTime start, DateTime end);
         public abstract int GetAttendanceCount(long classID, DateTime date);
-        public abstract int GetClassCount(long classID);
+        public abstract int GetStudentCountInClass(long classID);
         public abstract List<AttendanceDataPoint> GetTeacherAttendanceData(long teacherID);
+        public abstract List<TeacherTotalAttendance> GetTeacherTotalAttendance(long teacherID);
+        public abstract List<TeacherTotalMeetings> GetTeacherTotalMeetings(long teacherID);
     }
 }

@@ -52,6 +52,54 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
+        [HttpGet]
+        public ActionResult GetTotalMeetings()
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var totalMeetings = dal.Source.GetTeacherTotalMeetings(userCookie.CWID);
+                        var totalMeetingsJson = JsonConvert.SerializeObject(totalMeetings);
+                        return Content(totalMeetingsJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetTotalAttendance()
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var totalAttendance = dal.Source.GetTeacherTotalAttendance(userCookie.CWID);
+                        var totalAttendanceJson = JsonConvert.SerializeObject(totalAttendance);
+                        return Content(totalAttendanceJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
         public ActionResult Classes()
         {
             try
@@ -218,7 +266,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
                         var attendedCount = (double)dal.Source.GetAttendanceCount(classID, date);
-                        var classCount = (double)dal.Source.GetClassCount(classID);
+                        var classCount = (double)dal.Source.GetStudentCountInClass(classID);
                         var attendedPercentage = attendedCount / classCount;
                         return Content(attendedPercentage.ToString());
                     }

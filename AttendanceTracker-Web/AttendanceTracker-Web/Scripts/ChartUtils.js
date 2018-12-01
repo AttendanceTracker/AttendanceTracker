@@ -74,7 +74,7 @@ function initDoughnutChart(canvas, data) {
 
      var text = percentage.toString() + "%",
         textX = Math.round((width - ctx.measureText(text).width) / 2),
-        textY = height / 2 + 8;
+        textY = height / 2;
 
     ctx.fillStyle = "#757575";
     ctx.fillText(text, textX, textY);
