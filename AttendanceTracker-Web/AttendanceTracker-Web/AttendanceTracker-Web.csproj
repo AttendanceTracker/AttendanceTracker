@@ -197,6 +197,7 @@
     <Compile Include="Models\DB\DTOs\TeacherMeetings.cs" />
     <Compile Include="Models\DB\DTOs\TeacherTotalAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherTotalMeetings.cs" />
+    <Compile Include="Models\DB\DTOs\TotalAttendanceDataPoints.cs" />
     <Compile Include="Models\DB\Mapper\DBMappableDataRowExtensions.cs" />
     <Compile Include="Models\DB\DAL\DataAccessLayer.cs" />
     <Compile Include="Models\DB\DAL\DataBaseHelper.cs" />

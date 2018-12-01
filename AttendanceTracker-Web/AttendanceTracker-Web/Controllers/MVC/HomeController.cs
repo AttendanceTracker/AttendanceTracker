@@ -100,6 +100,30 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
+        [HttpGet]
+        public ActionResult GetTotalAttendanceChartData()
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var dataPoints = dal.Source.GetTeacherTotalAttendanceData(userCookie.CWID);
+                        var dataPointsJson = JsonConvert.SerializeObject(dataPoints);
+                        return Content(dataPointsJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
         public ActionResult Classes()
         {
             try

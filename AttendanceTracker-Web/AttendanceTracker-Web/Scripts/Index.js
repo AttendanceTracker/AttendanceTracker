@@ -6,6 +6,7 @@
 
         homeController.$onInit = function () {
             homeController.buildClassAttendedPercentages();
+            homeController.getTotalATtendanceDataPoints();
         };
 
         homeController.buildClassAttendedPercentages = function () {
@@ -41,6 +42,35 @@
                     console.log(error);
                 }
             );
+        };
+
+        homeController.getTotalATtendanceDataPoints = function () {
+            $http.get("/Home/GetTotalAttendanceChartData").then(
+                function (response) {
+                    var dates = response.data.map(x => homeController.simpleFormatDate(new Date(x.MeetingTime)));
+                    var studentCounts = response.data.map(x => x.StudentCount);
+                    var chartData = buildAreaLineChartData(dates, studentCounts);
+                    var chart = document.getElementById("attendance-chart");
+                    initLineChart(chart, chartData);
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+        };
+
+        homeController.simpleFormatDate = function (date) {
+            var actualDate = new Date(date);
+            var dayString = homeController.dateGetDayString(actualDate.getDay());
+            var month = actualDate.getMonth() + 1;
+            var day = actualDate.getDate();
+            var formattedDateString = dayString + " " + month.toString() + "/" + day.toString();
+            return formattedDateString;
+        };
+
+        homeController.dateGetDayString = function (day) {
+            var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            return weekday[day];
         };
     }).directive('buildChart', function ($parse) {
         return {

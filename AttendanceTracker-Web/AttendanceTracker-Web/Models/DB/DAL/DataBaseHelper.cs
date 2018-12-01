@@ -461,6 +461,16 @@ namespace AttendanceTracker_Web.Models.DB
             return meetingData;
         }
 
+        public override List<TotalAttendanceDataPoints> GetTeacherTotalAttendanceData(long teacherID)
+        {
+            var queryString = "exec GetTotalAttendanceForTeacher @teacher_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@teacher_id", teacherID);
+            var results = query.Execute();
+            var attendanceData = results.Rows.ToDTOList<TotalAttendanceDataPoints>();
+            return attendanceData;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);
