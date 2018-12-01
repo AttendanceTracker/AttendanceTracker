@@ -1,4 +1,4 @@
-﻿.key-container {
+﻿/*.key-container {
     min-height: unset;
     width: 100%;
 }
@@ -10,6 +10,10 @@
 
 .key-list-item {
     margin-right: 20px;
+}*/
+
+.classes-container {
+    display: -webkit-inline-box;
 }
 
 .chart-container {
