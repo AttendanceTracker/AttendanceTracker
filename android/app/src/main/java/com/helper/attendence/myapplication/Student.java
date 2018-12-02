@@ -450,12 +450,28 @@ public class Student implements Serializable {
 
     public sClass getSpecificClass(int x) { return getClasses().get(x); }
 
-    public void setClasses(String classString) {
-        System.out.println("Class String: " + classString);
-        Type object = new TypeToken<ArrayList<sClass>>(){}.getType();
-        Gson gson = new Gson();
-        ArrayList<sClass> returnVal= gson.fromJson(classString, object);
-        System.out.println("ReturnVal: " + returnVal.get(0).getID() + " " + returnVal.get(0).getName() + " " + returnVal.get(0).getTeacherID());
-        this.classes =(ArrayList<sClass>)returnVal.clone();
+    public void setClasses() {
+        String params = "studentid=" + getCwid();
+        Log.i(TAG, "Running GET call.");
+        String response = httpRequests.getCall("/api/Class/getforstudent", params);
+        System.out.println("Response =|" + response + "|");
+        if(!response.equals("Failed")) {
+            if(!response.equals("")) {
+                try {
+                        System.out.println("Class String: " + response);
+                        Type object = new TypeToken<ArrayList<sClass>>(){}.getType();
+                        Gson gson = new Gson();
+                        ArrayList<sClass> returnVal= gson.fromJson(response, object);
+                        System.out.println("ReturnVal: " + returnVal.get(0).getID() + " " + returnVal.get(0).getName() + " " + returnVal.get(0).getTeacherID());
+                        this.classes =(ArrayList<sClass>)returnVal.clone();  
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else
+        {
+            Log.d(TAG, "ERROR, the GET call did not work");
+        }
     }
 }

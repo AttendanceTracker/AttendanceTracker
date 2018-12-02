@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         x.printAll();
 
         //NEED TO IMPLEMENT GETCLASSES
-        x.setClasses("[  {    \"ID\": 4,    \"Name\": \"Test Class\",    \"TeacherID\": 99999999  },  {    \"ID\": 5,    \"Name\": \"adf100\",    \"TeacherID\": 93847274  }, {    \"ID\": 6,    \"Name\": \"Big dick energy\",    \"TeacherID\": 8675309  }]");
+        x.setClasses();
         System.out.println("Final Value out of class: : " + x.getClasses().get(0).getID() + " " + x.getClasses().get(0).getName() + " " + x.getClasses().get(0).getTeacherID());
         mainMenu(x);
 
@@ -134,11 +134,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this,OuterList.class);
                 i.putExtra("className", value);
                 i.putExtra("classId", x.getClasses().get(position).getID());
+                i.putExtra("studentId", x.getCwid());
                 startActivity(i);
             }
               }
         );
-
     }
 
 

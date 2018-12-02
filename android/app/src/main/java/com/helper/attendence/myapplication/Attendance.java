@@ -1,5 +1,7 @@
 package com.helper.attendence.myapplication;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -10,6 +12,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class Attendance {
     @SerializedName("Date")
     @Expose
@@ -19,11 +23,33 @@ public class Attendance {
     private Boolean DidAttend;
 
 
-    public ArrayList<Attendance> getAttendance(String classString) {
-        Type object = new TypeToken<ArrayList<Attendance>>(){}.getType();
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-        ArrayList<Attendance> returnVal= gson.fromJson(classString, object);
-        return returnVal;
+    public ArrayList<Attendance> getAttendance(Long studentId, Long classId) {
+        HttpClient http = new HttpClient();
+        String params = "studentId=" + studentId.toString() + "&classid=" + classId.toString();
+        System.out.println("Parmas =" + params);
+        Log.i(TAG, "Running GET call.");
+        String response = http.getCall("/api/attendance/Get", params);
+
+        System.out.println("Response =|" + response + "|");
+        if(!response.equals("Failed")) {
+            if(!response.equals("")) {
+                try {
+                        Type object = new TypeToken<ArrayList<Attendance>>(){}.getType();
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                        ArrayList<Attendance> returnVal= gson.fromJson(response, object);
+                        return returnVal;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else
+        {
+            Log.d(TAG, "ERROR, the GET call did not work");
+            ArrayList<Attendance> returnVal = null;
+            return returnVal;
+        }
+        return null;
     }
 
     public Date getDate() {
