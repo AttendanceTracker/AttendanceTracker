@@ -1,5 +1,5 @@
 ﻿angular.module("AttendanceModule", [])
-    .controller("AttendanceController", function ($scope, $http) {
+    .controller("AttendanceController", function ($scope, $http, $window) {
         var attendance = this;
 
         attendance.currentDate = new Date();
@@ -7,8 +7,27 @@
         attendance.meetingDates = [];
 
         attendance.$onInit = function () {
+            attendance.bindToWindowResize();
+            attendance.updateStyle();
             attendance.updateAttendance();
             attendance.updateMeetingDates();
+        };
+
+        attendance.bindToWindowResize = function () {
+            var w = angular.element($window);
+            w.bind('resize', function () {
+                var mainContentContainer = document.getElementById("main-content-container");
+                var isSmallScreen = angular.element(mainContentContainer).hasClass("is-small-screen")
+                attendance.updateStyle(isSmallScreen);
+            });
+        };
+
+        attendance.updateStyle = function (isSmallScreen) {
+            if (!isSmallScreen) {
+                $("#back-button").attr("style", "left: 260px");
+            } else {
+                $("#back-button").attr("style", "left: 20px");
+            }
         };
 
         attendance.backButtonClicked = function () {
