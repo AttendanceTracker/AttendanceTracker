@@ -35,7 +35,7 @@
         };
 
         if (!qrCodesController.dialog.showModal) {
-            qrCodesController.dialogPolyfill.registerDialog(qrCodesController.qrCodesController.dialog);
+            dialogPolyfill.registerDialog(qrCodesController.qrCodesController.dialog);
         }
 
         qrCodesController.addModalButtonClicked = function () {
