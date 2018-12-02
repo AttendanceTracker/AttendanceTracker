@@ -239,7 +239,7 @@ public class Student implements Serializable {
 
         String params = "cwid=" + permanentCWID.toString();
         Log.i(TAG, "Running PUT call.");
-        String response = httpRequests.putCall("api/Student/Update", params, putDataParams);
+        String response = httpRequests.putCall("/api/Student/Update", params, putDataParams);
         System.out.println("Response =|" + response + "|");
         if (response.equals("Already Exists")) {
             bResponse = false;
