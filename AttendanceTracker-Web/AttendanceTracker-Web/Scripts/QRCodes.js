@@ -4,7 +4,6 @@
 
         qrCodesController.qrCodeData = [];
         qrCodesController.classData = [];
-        qrCodesController.selectedClass = {};
         qrCodesController.dialog = document.querySelector('dialog');
         qrCodesController.showDialogButton = document.querySelector('#show-dialog');
 
