@@ -1,21 +1,17 @@
-﻿/*.key-container {
-    min-height: unset;
-    width: 100%;
-}
-
-.key-list {
-    display: inline-flex;
-    list-style: square inside;
-}
-
-.key-list-item {
-    margin-right: 20px;
-}*/
-
-.classes-container {
+﻿.classes-container {
     display: -webkit-inline-box;
 }
 
 .chart-container {
     padding: 20px;
+}
+
+#empty-attendance-text {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin-top: 100px;
+    text-align: center;
+    font-size: 20px;
 }
