@@ -1,21 +1,12 @@
 ﻿var classesModule = angular.module("ClassesModule", ['ngRoute', 'ngAnimate']);
 
-//classesModule.config(['$locationProvider', function ($locationProvider) {
-//    //$locationProvider.hashPrefix('');
-
-//    $locationProvider.html5Mode({
-//        enabled: true,
-//        requireBase: true
-//    });
-//}]);
-
 classesModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: "/Content/Home/page-classes.html",
             controller: "ClassesPageController"
         })
-        .when("/students", {
+        .when("/students/:classID", {
             templateUrl: "/Content/Home/page-students.html",
             controller: "StudentsPageController"
         });
@@ -71,6 +62,11 @@ var classesController = classesModule.controller("ClassesController", function (
     classesController.editClassButtonClicked = function () {
         classesController.dialog.showModal();
     };
+
+    classesController.closeModalClicked = function () {
+        window.location = "#";
+        classesController.dialog.close();
+    };
 });
 
 classesController.directive('buildChart', function () {
@@ -106,6 +102,7 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
     };
 });
 
-classesModule.controller("StudentsPageController", function ($scope) {
+classesModule.controller("StudentsPageController", function ($scope, $routeParams) {
     $scope.pageClass = "page-students";
+    $scope.test = $routeParams.classID;
 });
