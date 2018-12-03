@@ -53,40 +53,13 @@ public class Student implements Serializable {
     }
 
     public boolean checkIn(Double lat, Double longitude, String payload, Long CWID){
-
-        //Payload is {"classid":3,"payload": "somestring"}
-
-        String[] tokens = payload.split("[ {\":,}]+");
-
-        /*
-         *
-         * tokens[0] = null
-         * tokens[1] = "classid"
-         * tokens[2] = classId#
-         * tokens[3] = "payload"
-         * tokens[4] = actual payload
-         *
-         */
-        Long classID = Long.valueOf(tokens[2]);
-
-
-//        for (int i = 0; i < tokens.length ; i++){
-//            System.out.println("TOKEN " + i + ": " + tokens[i]);
-//        }
-
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("StudentID", CWID.toString());
-        postDataParams.put(tokens[4], payload); //tokens[4] = actual payload
+        postDataParams.put("Payload", payload); //tokens[4] = actual payload
         postDataParams.put("Latitude", lat.toString());
         postDataParams.put("Longitude", longitude.toString());
 
-        System.out.println("id:" + CWID);
-        System.out.println("Lat" + lat);
-        System.out.println("Long:" + longitude);
-        System.out.println("Payload:" + payload);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-        String api = "/api/Attendance/CheckIn?classID=" + classID; //put classID here
+        String api = "/api/Attendance/CheckIn";
 
         Log.i(TAG, "Running POST call.");
         String response = httpRequests.postCall(api,postDataParams);

@@ -207,18 +207,11 @@ public class QRScanner extends AppCompatActivity {
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Double longitude = 78.9789;
-        Double latitude = 87.9898;
+        Double longitude = location.getLongitude();
+        Double latitude = location.getLatitude();
         Log.d(LOG_TAG,  latitude + " " + longitude);
         System.out.println(" Lat: " + latitude + " Long: " + longitude);
 
