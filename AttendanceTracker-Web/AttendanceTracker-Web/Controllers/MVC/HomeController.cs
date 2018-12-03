@@ -258,7 +258,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                             writer.Flush();
                             stream.Position = 0;
                             var fileContents = stream.ToArray();
-                            var fileFormattedDate = date.ToString("DD.MM.YYYY");
+                            var fileFormattedDate = date.ToString("dd_MM_yyyy");
                             var fileName = string.Format("{0}_{1}.csv", attendanceResults[0].ClassName, fileFormattedDate);
                             return File(fileContents, "application/CSV", fileName);
                         }

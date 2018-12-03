@@ -39,3 +39,27 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.page-classes.ng-leave {
+    -webkit-animation: slideOutLeft 0.25s both ease-in;
+    -moz-animation: slideOutLeft 0.25s both ease-in;
+    animation: slideOutLeft 0.25s both ease-in;
+}
+
+.page-classes.ng-enter {
+    -webkit-animation: slideInRight 0.25s both ease-in;
+    -moz-animation: slideInRight 0.25s both ease-in;
+    animation: slideInRight 0.25s both ease-in;
+}
+
+.page-students.ng-leave {
+    -webkit-animation: slideOutLeft 0.25s both ease-in;
+    -moz-animation: slideOutLeft 0.25s both ease-in;
+    animation: slideOutLeft 0.25s both ease-in;
+}
+
+.page-students.ng-enter {
+    -webkit-animation: slideInRight 0.25s both ease-in;
+    -moz-animation: slideInRight 0.25s both ease-in;
+    animation: slideInRight 0.25s both ease-in;
+}

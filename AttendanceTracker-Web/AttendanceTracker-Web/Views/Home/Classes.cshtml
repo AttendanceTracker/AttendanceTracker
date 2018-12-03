@@ -8,43 +8,29 @@
     <script src="~/Scripts/Classes.js"></script>
 }
 
-    <div ng-app="ClassesModule" class="mdl-grid">
-        <div class="mdl-grid" ng-controller="ClassesController as classesController">
-            <div ng-if="classesController.classes.length == 0" id="empty-classes-text" class="mdl-color-text--grey-600">You teach no classes.</div>
-            <div ng-repeat="class in classesController.classes" class="class-container mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-                <div class="mdl-card__title mdl-card--expand mdl-color--primary">
-                    <h2 class="mdl-card__title-text mdl-color-text--white">{{class.name}}</h2>
-                </div>
-                <div class="chart-container">
-                    <canvas build-chart="{{class}}" class="class-chart"></canvas>
-                </div>
+<div ng-app="ClassesModule" class="mdl-grid">
+    <div class="mdl-grid" ng-controller="ClassesController as classesController">
+        <div ng-if="classesController.classes.length == 0" id="empty-classes-text" class="mdl-color-text--grey-600">You teach no classes.</div>
+        <div ng-repeat="class in classesController.classes" class="class-container mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+            <div class="mdl-card__title mdl-card--expand mdl-color--primary">
+                <h2 class="mdl-card__title-text mdl-color-text--white">{{class.name}}</h2>
             </div>
-            <button ng-click="classesController.editClassButtonClicked()" id="edit-classes-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                <i class="material-icons">edit</i>
-            </button>
-            <body>
-                <dialog class="mdl-dialog">
-                    <div class="mdl-dialog__content">
-                        <table id="modal-classdata-table" class="mdl-data-table mdl-js-data-table">
-                            <tr ng-repeat="classData in classesController.classData">
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    {{classData.Name}}
-                                </td>
-                                <td>
-                                    <button type="button" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons mdl-color-text--red-500">remove_circle</i></button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="mdl-dialog__actions">
-                        <button ng-click="classesController.dialog.close()" type="button" class="mdl-button close">Close</button>
-                    </div>
-                </dialog>
-            </body>
-
-            <div id="toast-container" class="mdl-js-snackbar mdl-snackbar">
-                <div class="mdl-snackbar__text"></div>
-                <button class="mdl-snackbar__action" type="button"></button>
+            <div class="chart-container">
+                <canvas build-chart="{{class}}" class="class-chart"></canvas>
             </div>
         </div>
+        <button ng-click="classesController.editClassButtonClicked()" id="edit-classes-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">edit</i>
+        </button>
+        <body>
+            <dialog class="mdl-dialog">
+                <div class="mdl-dialog__content">
+                    <div class="page {{ pageClass }}" ng-view></div>
+                </div>
+                <div class="mdl-dialog__actions">
+                    <button ng-click="classesController.dialog.close()" type="button" class="mdl-button close">Close</button>
+                </div>
+            </dialog>
+        </body>
     </div>
+</div>

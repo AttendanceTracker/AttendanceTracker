@@ -257,6 +257,8 @@
     <Content Include="Content\Home\Classes.css" />
     <Content Include="Content\Home\Home.css" />
     <Content Include="Content\Home\Index.css" />
+    <Content Include="Content\Home\page-classes.html" />
+    <Content Include="Content\Home\page-students.html" />
     <Content Include="Content\Login\Login.css" />
     <Content Include="Content\Login\SignUp.css" />
     <Content Include="Content\Login\_LoginLayout.css" />
