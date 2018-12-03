@@ -52,6 +52,7 @@
             $http.post("/Home/AddQRCode", null, config).then(
                 function (response) {
                     if (response.status = 200) {
+                        qrCodesController.getQRCodes();
                         qrCodesController.dialog.close();
                         qrCodesController.showToast("QR code created");
                     } else {
