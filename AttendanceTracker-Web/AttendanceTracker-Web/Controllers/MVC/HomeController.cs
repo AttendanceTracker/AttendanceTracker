@@ -213,6 +213,30 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
+        [HttpGet]
+        public ActionResult GetClass(long classID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var students = dal.Source.GetClass(classID);
+                        var studentsJson = JsonConvert.SerializeObject(students);
+                        return Content(studentsJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
         public ActionResult Attendance()
         {
             try

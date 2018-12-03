@@ -1,6 +1,21 @@
 ﻿<link href="/Content/Home/Classes.css" />
 <h4>Students</h4>
 <div>
-    {{test}}
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th>CWID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="student in class">
+            <td>{{student.StudentID}}</td>
+            <td>{{student.StudentFirstName}}</td>
+            <td>{{student.StudentLastName}}</td>
+            <td>{{student.StudentEmail}}</td>
+        </tr>
+    </table>
     <a href="#">back</a>
 </div>

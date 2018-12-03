@@ -288,5 +288,10 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override List<Class> GetClass(long classID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

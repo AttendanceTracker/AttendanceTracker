@@ -102,7 +102,23 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
     };
 });
 
-classesModule.controller("StudentsPageController", function ($scope, $routeParams) {
+classesModule.controller("StudentsPageController", function ($scope, $http, $routeParams) {
     $scope.pageClass = "page-students";
-    $scope.test = $routeParams.classID;
+    $scope.class = [];
+
+    angular.element(document).ready(function () {
+        $scope.getClass();
+    });
+
+    $scope.getClass = function () {
+        var config = { params: { classID: $routeParams.classID } };
+        $http.get("/Home/GetClass", config).then(
+            function (response) {
+                $scope.class = response.data;
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
 });

@@ -481,6 +481,16 @@ namespace AttendanceTracker_Web.Models.DB
             return qrCodeData;
         }
 
+        public override List<Class> GetClass(long classID)
+        {
+            var queryString = "exec Classes_GetClassForClassID @class_id";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            var results = query.Execute();
+            var classResults = results.Rows.ToDTOList<Class>();
+            return classResults;
+        }
+
         private DataTable ExecuteStoredProcedure(string queryString)
         {
             var query = new Query(queryString, connectionString);

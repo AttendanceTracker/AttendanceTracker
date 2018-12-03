@@ -203,6 +203,7 @@
     <Compile Include="Models\AuthorizationManager.cs" />
     <Compile Include="Models\DateTimeExtensions.cs" />
     <Compile Include="Models\DB\DTOs\AttendanceDataPoint.cs" />
+    <Compile Include="Models\DB\DTOs\Class.cs" />
     <Compile Include="Models\DB\DTOs\ClassAttendance.cs" />
     <Compile Include="Models\DB\DTOs\StudentAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherAttendance.cs" />
