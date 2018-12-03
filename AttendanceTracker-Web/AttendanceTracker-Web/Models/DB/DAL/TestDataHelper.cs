@@ -293,5 +293,10 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override QRCode GetQRCode(string payload)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

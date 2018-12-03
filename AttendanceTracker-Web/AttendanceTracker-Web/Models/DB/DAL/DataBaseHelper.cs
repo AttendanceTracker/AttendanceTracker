@@ -183,6 +183,16 @@ namespace AttendanceTracker_Web.Models.DB
             return null;
         }
 
+        public override QRCode GetQRCode(string payload)
+        {
+            var queryString = "exec QRCodes_GetByPayload @payload";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@payload", payload);
+            var results = query.Execute();
+            var qrResult = results.Rows[0].ToDTO<QRCode>();
+            return qrResult;
+        }
+
         public override QRCode GetQRCode(long classID, string payload)
         {
             var queryString = "exec QRCodes_GetQRCode @class_id, @payload;";

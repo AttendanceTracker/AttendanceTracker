@@ -35,14 +35,14 @@ namespace AttendanceTracker_Web.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult CheckIn(long classID, [FromBody] CheckInRequest request)
+        public IHttpActionResult CheckIn([FromBody] CheckInRequest request)
         {
             try
             {
-                var qrCode = dal.Source.GetQRCode(classID, request.Payload);
-                if (IsQRCodeValid(qrCode))
+                var qrCode = dal.Source.GetQRCode(request.Payload);
+                if (qrCode != null && IsQRCodeActive(qrCode) && IsStudentInClass(qrCode.ClassID, request.StudentID))
                 {
-                    var attendance = dbFactory.Attendance(0, classID, request.StudentID, DateTime.Now, request.Latitude, request.Longitude);
+                    var attendance = dbFactory.Attendance(0, qrCode.ClassID, request.StudentID, DateTime.Now, request.Latitude, request.Longitude);
                     dal.Source.AddAttendance(attendance);
                     return Ok(true);
                 }
@@ -54,13 +54,19 @@ namespace AttendanceTracker_Web.Controllers.API
             }
         }
 
-        private bool IsQRCodeValid(QRCode qrCode)
+        private bool IsQRCodeActive(QRCode qrCode)
         {
-            if (qrCode != null)
+            var expirationDate = qrCode.Issued.AddSeconds(qrCode.ExpiresIn);
+            var span = new TimeSpan(0, 1, 0);
+            return DateTime.Now.Round(span) < expirationDate.Round(span);
+        }
+
+        private bool IsStudentInClass(long classID, long studentID)
+        {
+            var classData = dal.Source.GetClassDataForStudent(studentID);
+            if (classData != null)
             {
-                var expirationDate = qrCode.Issued.AddSeconds(qrCode.ExpiresIn);
-                var span = new TimeSpan(0, 1, 0);
-                return DateTime.Now.Round(span) < expirationDate.Round(span);
+                return classData.Any(x => x.ID == classID);
             }
             return false;
         }

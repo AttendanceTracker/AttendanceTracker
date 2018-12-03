@@ -496,8 +496,8 @@ namespace AttendanceTracker_Web.Controllers.MVC
         private Bitmap GenerateQRCode(QRCodePayload payload)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            var payloadJson = JsonConvert.SerializeObject(payload);
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payloadJson, QRCodeGenerator.ECCLevel.Q);
+            var payloadValue = payload.Payload;
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payloadValue, QRCodeGenerator.ECCLevel.Q);
             QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             return qrCodeImage;
