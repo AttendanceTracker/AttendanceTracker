@@ -4,6 +4,9 @@
 
         classesController.classesResponse = [];
         classesController.classes = [];
+        classesController.classData = [];
+        classesController.dialog = document.querySelector('dialog');
+        classesController.showDialogButton = document.querySelector('#show-dialog');
 
         classesController.$onInit = function () {
             classesController.getClassesData();
@@ -14,6 +17,7 @@
                 function (response) {
                     classesController.classesResponse = response.data;
                     classesController.buildClasses();
+                    classesController.getClassData();
                 },
                 function (error) {
                     console.log(error);
@@ -42,6 +46,21 @@
         classesController.dateGetDayString = function (day) {
             var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             return weekday[day];
+        };
+
+        classesController.getClassData = function () {
+            $http.get("/Home/GetClassDataForTeacher").then(
+                function (response) {
+                    classesController.classData = response.data;
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+        };
+
+        classesController.editClassButtonClicked = function () {
+            classesController.dialog.showModal();
         };
     })
     .directive('buildChart', function ($parse) {
