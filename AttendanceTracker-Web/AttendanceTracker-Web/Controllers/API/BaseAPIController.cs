@@ -35,7 +35,7 @@ namespace AttendanceTracker_Web.Controllers.API
             webFactory = new WebFactory();
             dbFactory = new DataBaseFactory();
             authManager = new AuthorizationManager();
-    }
+        }
 
         public NegotiatedContentResult<T> Accepted<T>(T responseContent)
         {

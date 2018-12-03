@@ -4,17 +4,23 @@
     ViewBag.Title = "AttendanceTracker - Log In";
 }
 
+@section scripts {
+    <script src="/Scripts/LogIn.js"></script>
+}
 
-<div class="field-container">
-    <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="username-input" />
-        <label class="mdl-textfield__label" for="username-input">Username</label>
-    </div>
-    <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="password" id="password-input" />
-        <label class="mdl-textfield__label" for="password-input">Password</label>
+<div ng-app="LoginModule" class="mdl-grid login-content-container">
+    <div ng-controller="LoginController as loginController" class="mdl-grid login-content-container">
+        <div class="field-container">
+            <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="username-input" />
+                <label class="mdl-textfield__label" for="username-input">Username</label>
+            </div>
+            <div class="login-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="password-input" />
+                <label class="mdl-textfield__label" for="password-input">Password</label>
+            </div>
+        </div>
+        <a id="login-button" ng-click="loginController.logInButtonClicked()" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Login</a>
+        <a href="/Login/SignUp" class="main-container-spacing mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</a>
     </div>
 </div>
-<a id="login-button" onclick="logInButtonClicked()" class="main-container-spacing mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Login</a>
-<a href="/Login/SignUp" class="main-container-spacing mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</a>
-<script src="/Scripts/LogIn.js"></script>

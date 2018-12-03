@@ -5,9 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Web;
+using Newtonsoft.Json;
 using AttendanceTracker_Web.Models;
 using AttendanceTracker_Web.Models.DB;
 using AttendanceTracker_Web.Models.Web;
+using System.Text;
 
 namespace AttendanceTracker_Web.Controllers.API
 {
@@ -39,7 +42,7 @@ namespace AttendanceTracker_Web.Controllers.API
                     var addedTeacher = dal.Source.AddTeacher(teacher);
                     if (addedTeacher != null)
                     {
-                        var accessToken = login(request.Email, saltedPasswordHash);
+                        var accessToken = Login(request.Email, saltedPasswordHash);
                         if (accessToken != null)
                         {
                             var responseContent = webFactory.CreateAccountResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.Email, accessToken.Token);
@@ -63,14 +66,15 @@ namespace AttendanceTracker_Web.Controllers.API
             try
             {
                 var account = dal.Source.GetAccount(request.Username);
-                if (account != null && isPasswordValid(account.Password, request.Password, account.Salt))
+                if (account != null && IsPasswordValid(account.Password, request.Password, account.Salt))
                 {
-                    var accessToken = login(account.Username, account.Password);
+                    var accessToken = Login(account.Username, account.Password);
                     if (accessToken != null)
                     {
                         var teacher = dal.Source.GetTeacherByUserID(account.ID);
                         var responseContent = webFactory.SignInResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.Email, accessToken.Token);
                         return Accepted(responseContent);
+
                     }
                 }
                 return Unauthorized();
@@ -81,20 +85,45 @@ namespace AttendanceTracker_Web.Controllers.API
             }
         }
 
-        private bool isPasswordValid(string expectedPassword, string actualPassword, string salt)
+        private bool IsPasswordValid(string expectedPassword, string actualPassword, string salt)
         {
             var saltedActualPassword = actualPassword + salt;
             var hashedSaltedActualPassword = saltedActualPassword.SHA256Hash();
             return expectedPassword == hashedSaltedActualPassword;
         }
 
-        private AccessToken login(string username, string password)
+        private AccessToken Login(string username, string password)
         {
             var account = dal.Source.GetAccount(username);
             var token = Guid.NewGuid().ToString();
             var accessToken = dbFactory.AccessToken(account.ID, token, dayInSeconds, DateTime.Now, true);
             var addedAccessToken = dal.Source.AddAccessToken(accessToken);
             return addedAccessToken;
+        }
+
+        private HttpCookie BuildUserCookie(Teacher teacher, AccessToken accessToken)
+        {
+            var cookieValue = webFactory.SignInResponse(teacher.CWID, teacher.FirstName, teacher.LastName, teacher.Email, accessToken.Token);
+            var cookieValueJson = JsonConvert.SerializeObject(cookieValue);
+            var cookie = new HttpCookie("user", cookieValueJson);
+            cookie.Path = "/";
+            cookie.Secure = true;
+            if (accessToken.DoesExpire)
+            {
+                cookie.Expires = accessToken.Issued.AddSeconds(accessToken.ExpiresIn);
+            }
+            return cookie;
+        }
+
+        private string BuildCookieString(HttpCookie cookie)
+        {
+            var cookieStringBuilder = new StringBuilder(cookie.Name + "=" + cookie.Value);
+            if (cookie.Secure)
+            {
+                cookieStringBuilder.Append("; Secure");
+            }
+            cookieStringBuilder.Append("; Path=/");
+            return cookieStringBuilder.ToString();
         }
 
         [HttpDelete]

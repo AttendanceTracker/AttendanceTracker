@@ -1,7 +1,7 @@
 ﻿function setCookie(value, expires) {
     var now = new Date();
     now.setTime(now.getTime() + 24 * 3600 * 1000);
-    document.cookie = "user=" + value + "; expires=" + now.toUTCString() + ";";
+    document.cookie = "user=" + value + "; expires=" + now.toUTCString() + "; path=/;";
 }
 
 function getCookie(key) {
