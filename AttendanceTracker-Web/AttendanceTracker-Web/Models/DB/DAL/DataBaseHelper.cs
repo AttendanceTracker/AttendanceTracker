@@ -491,14 +491,50 @@ namespace AttendanceTracker_Web.Models.DB
             return qrCodeData;
         }
 
-        public override List<Class> GetClass(long classID)
+        public override List<ClassStudents> GetClass(long classID)
         {
-            var queryString = "exec Classes_GetClassForClassID @class_id";
+            var queryString = "exec Classes_GetClassForClassID @class_id;";
             var query = new Query(queryString, connectionString);
             query.AddParameter("@class_id", classID);
             var results = query.Execute();
-            var classResults = results.Rows.ToDTOList<Class>();
+            var classResults = results.Rows.ToDTOList<ClassStudents>();
             return classResults;
+        }
+
+        public override void RemoveStudentFromClass(long classID, long studentID)
+        {
+            var queryString = "exec Classes_RemoveStudentForClass @class_id, @student_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.AddParameter("@student_id", studentID);
+            query.Execute();
+        }
+
+        public override void AddStudentToClass(long classID, long studentID)
+        {
+            var queryString = "exec Classes_AddStudentForClass @class_id, @student_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.AddParameter("@student_id", studentID);
+            query.Execute();
+        }
+
+        public override long AddClassData(ClassData classData)
+        {
+            var queryString = "exec Class_Data_AddForTeacher @class_name, @teacher_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_name", classData.Name);
+            query.AddParameter("@teacher_id", classData.TeacherID);
+            var classDataID = (long) query.ExecuteScalar();
+            return classDataID;
+        }
+
+        public override void RemoveClass(long classID)
+        {
+            var queryString = "exec Class_Data_Remove @class_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@class_id", classID);
+            query.Execute();
         }
 
         private DataTable ExecuteStoredProcedure(string queryString)

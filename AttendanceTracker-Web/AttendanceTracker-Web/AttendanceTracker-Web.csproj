@@ -203,7 +203,7 @@
     <Compile Include="Models\AuthorizationManager.cs" />
     <Compile Include="Models\DateTimeExtensions.cs" />
     <Compile Include="Models\DB\DTOs\AttendanceDataPoint.cs" />
-    <Compile Include="Models\DB\DTOs\Class.cs" />
+    <Compile Include="Models\DB\DTOs\ClassStudents.cs" />
     <Compile Include="Models\DB\DTOs\ClassAttendance.cs" />
     <Compile Include="Models\DB\DTOs\StudentAttendance.cs" />
     <Compile Include="Models\DB\DTOs\TeacherAttendance.cs" />
@@ -1098,7 +1098,6 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\Classes.cshtml" />
-    <Content Include="Views\Home\Class.cshtml" />
     <Content Include="Views\Home\Attendance.cshtml" />
     <Content Include="Views\Home\QRCodes.cshtml" />
     <Content Include="Views\Login\SignUp.cshtml" />

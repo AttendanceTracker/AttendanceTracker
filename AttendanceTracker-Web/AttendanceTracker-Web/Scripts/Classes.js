@@ -6,7 +6,7 @@ classesModule.config(['$routeProvider', function ($routeProvider) {
             templateUrl: "/Content/Home/page-classes.html",
             controller: "ClassesPageController"
         })
-        .when("/students/:classID", {
+        .when("/students/:classID/:className", {
             templateUrl: "/Content/Home/page-students.html",
             controller: "StudentsPageController"
         });
@@ -93,6 +93,8 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
     $scope.getClassData = function () {
         $http.get("/Home/GetClassDataForTeacher").then(
             function (response) {
+                $("#edit-modal-back").addClass("hidden");
+                $("#edit-modal").removeAttr("style");
                 $scope.classData = response.data;
             },
             function (error) {
@@ -105,8 +107,11 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
 classesModule.controller("StudentsPageController", function ($scope, $http, $routeParams) {
     $scope.pageClass = "page-students";
     $scope.class = [];
+    $scope.className = $routeParams.className;
 
     angular.element(document).ready(function () {
+        $("#edit-modal-back").removeClass("hidden");
+        $("#edit-modal").attr("style", "width: 600px");
         $scope.getClass();
     });
 
@@ -120,5 +125,42 @@ classesModule.controller("StudentsPageController", function ($scope, $http, $rou
                 console.log(error);
             }
         );
+    };
+
+    $scope.addStudentButtonClicked = function () {
+        var addStudentText = $("#add-student-textfield").val();
+        var studentID = parseInt(addStudentText);
+        var config = { params: { classID: $routeParams.classID, studentID: studentID } };
+        $http.post("/Home/AddStudentToClass", null, config).then(
+            function (response) {
+                $scope.getClass();
+                $scope.showToast("Student added.");
+            },
+            function (error) {
+                $scope.showToast("Failed to add student.");
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.removeStudentButtonClicked = function (studentID) {
+        var config = { params: { classID: $routeParams.classID, studentID: studentID } };
+        $http.delete("/Home/RemoveStudentFromClass", config).then(
+            function () {
+                $scope.getClass();
+                $scope.showToast("Student removed.");
+            },
+            function (error) {
+                $scope.showToast("Failed to remove student.");
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.showToast = function (message) {
+        var snackbarContainer = document.querySelector('#toast-container');
+        'use strict';
+        var data = { message: message };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
     };
 });

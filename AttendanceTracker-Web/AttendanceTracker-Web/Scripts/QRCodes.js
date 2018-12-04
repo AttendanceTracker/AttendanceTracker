@@ -41,7 +41,7 @@
         qrCodesController.addModalButtonClicked = function () {
             var classSelectText = $("#class-select").val();
             if (classSelectText == "") {
-                return qrCodesController.showToast("Please select a class");
+                return qrCodesController.showToast("Please select a class.");
             }
 
             var classID = qrCodesController.classData.find(function (element) {
@@ -54,14 +54,14 @@
                     if (response.status = 200) {
                         qrCodesController.getQRCodes();
                         qrCodesController.dialog.close();
-                        qrCodesController.showToast("QR code created");
+                        qrCodesController.showToast("QR code created.");
                     } else {
-                        qrCodesController.showToast("Failed to create QR code");
+                        qrCodesController.showToast("Failed to create QR code.");
                     }
                 },
                 function (error) {
                     console.log(error);
-                    qrCodesController.showToast("Failed to create QR code");
+                    qrCodesController.showToast("Failed to create QR code.");
                 }
             );
         };

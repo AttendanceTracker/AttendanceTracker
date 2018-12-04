@@ -6,7 +6,7 @@ using AttendanceTracker_Web.Models.DB.Mapper;
 
 namespace AttendanceTracker_Web.Models.DB
 {
-    public class Class: DBMappable
+    public class ClassStudents: DBMappable
     {
         public long ID { get; set; }
         public long StudentID { get; set; }

@@ -1,13 +1,22 @@
-﻿<link href="/Content/Home/Classes.css" />
-<h4>Students</h4>
+﻿<!--<link href="/Content/Home/Classes.css" />-->
+<h4>{{className}}</h4>
 <div>
-    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <div style="margin-bottom: 20px;">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input id="add-student-textfield" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+            <label class="mdl-textfield__label" for="sample4">Number...</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+        <button ng-click="addStudentButtonClicked()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add Student</button>
+    </div>
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
             <tr>
                 <th>CWID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th class="mdl-data-table__cell--non-numeric"></th>
             </tr>
         </thead>
         <tr ng-repeat="student in class">
@@ -15,7 +24,7 @@
             <td>{{student.StudentFirstName}}</td>
             <td>{{student.StudentLastName}}</td>
             <td>{{student.StudentEmail}}</td>
+            <td><button ng-click="removeStudentButtonClicked(student.StudentID)" type="button" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons mdl-color-text--red-500">remove_circle</i></button></td>
         </tr>
     </table>
-    <a href="#">back</a>
 </div>

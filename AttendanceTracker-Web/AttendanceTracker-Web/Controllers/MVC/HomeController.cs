@@ -192,27 +192,6 @@ namespace AttendanceTracker_Web.Controllers.MVC
             }
         }
 
-        public ActionResult Class()
-        {
-            try
-            {
-                var userCookieJson = GetCookie("user");
-                if (userCookieJson != null)
-                {
-                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
-                    if (authManager.IsAuthorized(userCookie.AccessToken))
-                    {
-                        return View();
-                    }
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
-            }
-        }
-
         [HttpGet]
         public ActionResult GetClass(long classID)
         {
@@ -227,6 +206,99 @@ namespace AttendanceTracker_Web.Controllers.MVC
                         var students = dal.Source.GetClass(classID);
                         var studentsJson = JsonConvert.SerializeObject(students);
                         return Content(studentsJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult RemoveStudentFromClass(long classID, long studentID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        dal.Source.RemoveStudentFromClass(classID, studentID);
+                        return Content(null);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddClass(string className, long teacherID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        var classData = dbFactory.ClassData(0, className, teacherID);
+                        dal.Source.AddClassData(classData);
+                        return Content(null);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult RemoveClass(long classID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        dal.Source.RemoveClass(classID);
+                        return Content(null);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddStudentToClass(long classID, long studentID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        dal.Source.AddStudentToClass(classID, studentID);
+                        return Content(null);
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);

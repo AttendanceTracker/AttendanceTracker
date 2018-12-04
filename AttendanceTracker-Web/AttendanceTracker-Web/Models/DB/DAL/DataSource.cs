@@ -48,6 +48,10 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract List<TeacherTotalMeetings> GetTeacherTotalMeetings(long teacherID);
         public abstract List<TotalAttendanceDataPoints> GetTeacherTotalAttendanceData(long teacherID);
         public abstract List<ActiveQRCodeData> GetActiveQRCodes(long teacherID);
-        public abstract List<Class> GetClass(long classID);
+        public abstract List<ClassStudents> GetClass(long classID);
+        public abstract void RemoveStudentFromClass(long classID, long studentID);
+        public abstract void AddStudentToClass(long classID, long studentID);
+        public abstract long AddClassData(ClassData classData);
+        public abstract void RemoveClass(long classID);
     }
 }

@@ -289,12 +289,22 @@ namespace AttendanceTracker_Web.Models.DB
             throw new NotImplementedException();
         }
 
-        public override List<Class> GetClass(long classID)
+        public override List<ClassStudents> GetClass(long classID)
         {
             throw new NotImplementedException();
         }
 
         public override QRCode GetQRCode(string payload)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RemoveStudentFromClass(long classID, long studentID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void AddStudentToClass(long classID, long studentID)
         {
             throw new NotImplementedException();
         }
