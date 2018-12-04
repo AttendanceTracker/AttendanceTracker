@@ -258,8 +258,9 @@
     <Content Include="Content\Home\Classes.css" />
     <Content Include="Content\Home\Home.css" />
     <Content Include="Content\Home\Index.css" />
-    <Content Include="Content\Home\page-classes.html" />
-    <Content Include="Content\Home\page-students.html" />
+    <Content Include="Views\Templates\page-classes.html" />
+    <Content Include="Views\Templates\page-students.html" />
+    <Content Include="Views\Templates\EditClassModal.html" />
     <Content Include="Content\Login\Login.css" />
     <Content Include="Content\Login\SignUp.css" />
     <Content Include="Content\Login\_LoginLayout.css" />
@@ -1083,6 +1084,7 @@
     <Content Include="Scripts\SignUp.js" />
     <Content Include="Scripts\sitemap.xml" />
     <Content Include="Scripts\WebserviceUtil.js" />
+    <Content Include="Views\Templates\QRCodeModal.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

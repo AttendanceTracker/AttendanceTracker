@@ -3,11 +3,11 @@
 classesModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: "/Content/Home/page-classes.html",
+            templateUrl: "/Views/Templates/page-classes.html",
             controller: "ClassesPageController"
         })
         .when("/students/:classID/:className", {
-            templateUrl: "/Content/Home/page-students.html",
+            templateUrl: "/Views/Templates/page-students.html",
             controller: "StudentsPageController"
         });
 }]);
@@ -17,8 +17,7 @@ var classesController = classesModule.controller("ClassesController", function (
 
     classesController.classesResponse = [];
     classesController.classes = [];
-    classesController.dialog = document.querySelector('dialog');
-    classesController.showDialogButton = document.querySelector('#show-dialog');
+    classesController.dialog = {};
 
     classesController.$onInit = function () {
         classesController.getClassesData();
@@ -60,6 +59,10 @@ var classesController = classesModule.controller("ClassesController", function (
     };
 
     classesController.editClassButtonClicked = function () {
+        classesController.dialog = document.querySelector('#edit-modal');
+        if (!classesController.dialog.showModal) {
+            dialogPolyfill.registerDialog(classesController.dialog);
+        }
         classesController.dialog.showModal();
     };
 
@@ -87,6 +90,7 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
     $scope.classData = [];
 
     angular.element(document).ready(function () {
+        componentHandler.upgradeAllRegistered();
         $scope.getClassData();
     });
        
@@ -146,6 +150,7 @@ classesModule.controller("StudentsPageController", function ($scope, $http, $rou
     $scope.className = $routeParams.className;
 
     angular.element(document).ready(function () {
+        componentHandler.upgradeAllRegistered()
         $("#edit-modal-back").removeClass("hidden");
         $("#edit-modal").attr("style", "width: 600px");
         $scope.getClass();

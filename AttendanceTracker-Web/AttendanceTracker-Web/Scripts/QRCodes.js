@@ -4,8 +4,7 @@
 
         qrCodesController.qrCodeData = [];
         qrCodesController.classData = [];
-        qrCodesController.dialog = document.querySelector('dialog');
-        qrCodesController.showDialogButton = document.querySelector('#show-dialog');
+        qrCodesController.dialog = {};
 
         qrCodesController.$onInit = function () {
             qrCodesController.getQRCodes();
@@ -33,10 +32,6 @@
                 }
             );
         };
-
-        if (!qrCodesController.dialog.showModal) {
-            dialogPolyfill.registerDialog(qrCodesController.qrCodesController.dialog);
-        }
 
         qrCodesController.addModalButtonClicked = function () {
             var classSelectText = $("#class-select").val();
@@ -67,6 +62,13 @@
         };
 
         qrCodesController.addQRCodeButtonClicked = function () {
+            qrCodesController.dialog = document.querySelector('#qr-modal');
+            angular.element(qrCodesController.dialog).ready(function () {
+                componentHandler.upgradeAllRegistered();
+            });
+            if (!qrCodesController.dialog.showModal) {
+                dialogPolyfill.registerDialog(qrCodesController.dialog);
+            }
             qrCodesController.dialog.showModal();
         };
 

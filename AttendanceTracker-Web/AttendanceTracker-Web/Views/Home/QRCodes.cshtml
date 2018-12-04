@@ -34,24 +34,7 @@
         <button ng-click="qrCodesController.addQRCodeButtonClicked()" id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
             <i class="material-icons">add</i>
         </button>
-        <body>
-            <dialog class="mdl-dialog">
-                <div class="mdl-dialog__content">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                        <input type="text" value="" class="mdl-textfield__input" id="class-select" readonly>
-                        <input type="hidden" value="" name="class-select">
-                        <label for="class-select" class="mdl-textfield__label">Class</label>
-                        <ul for="class-select" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-                            <li ng-repeat="class in qrCodesController.classData" class="mdl-menu__item" data-val="{{class.ID}}">{{class.Name}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="mdl-dialog__actions">
-                    <button ng-click="qrCodesController.addModalButtonClicked()" type="button" class="mdl-button">Create</button>
-                    <button ng-click="qrCodesController.dialog.close()" type="button" class="mdl-button close">Cancel</button>
-                </div>
-            </dialog>
-        </body>
+        <div ng-include src="'/Views/Templates/QRCodeModal.html'"></div>
         <div id="toast-container" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>

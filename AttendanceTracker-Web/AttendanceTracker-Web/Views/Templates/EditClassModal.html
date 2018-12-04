@@ -1,0 +1,11 @@
+﻿<body>
+    <dialog id="edit-modal" class="mdl-dialog">
+        <div class="mdl-dialog__content">
+            <div class="page {{ pageClass }}" ng-view></div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button ng-click="classesController.closeModalClicked()" type="button" class="mdl-button close">Close</button>
+            <a href="#" id="edit-modal-back" type="button" class="mdl-button close">Back</a>
+        </div>
+    </dialog>
+</body>
