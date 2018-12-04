@@ -18,10 +18,10 @@
                 <h2 class="mdl-card__title-text mdl-color-text--white">{{qrData.ClassName}}</h2>
             </div>
             <div class="mdl-card__subtitle-text mdl-cell mdl-cell--12-col">
-                Starts {{qrData.StartDate}}
+                Starts {{qrData.StartDate | dayOfWeek}}, {{qrData.StartDate | date:'MM/dd HH:mm'}}
             </div>
             <div class="mdl-card__subtitle-text mdl-cell mdl-cell--12-col">
-                Expires {{qrData.EndDate}}
+                Expires {{qrData.EndDate | dayOfWeek}}, {{qrData.EndDate | date:'MM/dd HH:mm'}}
             </div>
             <div class="QR-container mdl-card__actions mdl-card--border">
                 <img class="mdl-color-text--accent mdl-cell mdl-cell--12-col" src="data:image/png;base64,{{qrData.ImageData}}">
