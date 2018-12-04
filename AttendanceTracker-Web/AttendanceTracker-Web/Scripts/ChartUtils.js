@@ -90,6 +90,14 @@ function initLineChart(canvas, data) {
             bezierCurve: false,
             legend: {
                 display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        stepSize: 1
+                    }
+                }]
             }
         }
     });

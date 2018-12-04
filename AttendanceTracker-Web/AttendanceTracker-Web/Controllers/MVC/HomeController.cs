@@ -240,7 +240,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
         }
 
         [HttpPost]
-        public ActionResult AddClass(string className, long teacherID)
+        public ActionResult AddClass(string className)
         {
             try
             {
@@ -250,7 +250,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
                     if (authManager.IsAuthorized(userCookie.AccessToken))
                     {
-                        var classData = dbFactory.ClassData(0, className, teacherID);
+                        var classData = dbFactory.ClassData(0, className, userCookie.CWID);
                         dal.Source.AddClassData(classData);
                         return Content(null);
                     }

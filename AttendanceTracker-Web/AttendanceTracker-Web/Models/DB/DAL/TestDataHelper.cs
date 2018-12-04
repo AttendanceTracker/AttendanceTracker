@@ -308,5 +308,15 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override long AddClassData(ClassData classData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RemoveClass(long classID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

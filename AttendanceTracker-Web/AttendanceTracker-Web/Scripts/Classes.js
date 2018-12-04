@@ -94,13 +94,49 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
         $http.get("/Home/GetClassDataForTeacher").then(
             function (response) {
                 $("#edit-modal-back").addClass("hidden");
-                $("#edit-modal").removeAttr("style");
+                $("#edit-modal").attr("style", "width: 410px");
                 $scope.classData = response.data;
             },
             function (error) {
                 console.log(error);
             }
         );
+    };
+
+    $scope.addClassButtonClicked = function () {
+        var addClassText = $("#add-class-textfield").val();
+        var config = { params: { className: addClassText} };
+        $http.post("/Home/AddClass", null, config).then(
+            function (response) {
+                $scope.getClassData();
+                $scope.showToast("Class added.");
+            },
+            function (error) {
+                $scope.showToast("Failed to add class.");
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.removeClassButtonClicked = function (classID) {
+        var config = { params: { classID: classID} };
+        $http.delete("/Home/RemoveClass", config).then(
+            function () {
+                $scope.getClassData();
+                $scope.showToast("Class removed.");
+            },
+            function (error) {
+                $scope.showToast("Failed to remove class.");
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.showToast = function (message) {
+        var snackbarContainer = document.querySelector('#toast-container');
+        'use strict';
+        var data = { message: message };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
     };
 });
 
