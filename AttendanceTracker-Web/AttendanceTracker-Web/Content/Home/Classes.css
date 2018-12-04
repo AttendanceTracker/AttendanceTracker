@@ -39,3 +39,8 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+#edit-modal {
+    max-height: 70% !important;
+    overflow: auto !important;
+}
