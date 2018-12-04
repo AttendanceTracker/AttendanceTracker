@@ -383,7 +383,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                         var startDate = date.WeekStart(DayOfWeek.Sunday);
                         var endDate = startDate.AddDays(6);
                         var classes = dal.Source.GetTeacherMeetings(userCookie.CWID, startDate, endDate);
-                        var groupedClasses = classes.GroupBy(x => x.MeetingDate);
+                        var groupedClasses = classes.GroupBy(x => x.MeetingDate.Date);
                         var groupedClassesJSON = JsonConvert.SerializeObject(groupedClasses);
                         return Content(groupedClassesJSON);
                     }

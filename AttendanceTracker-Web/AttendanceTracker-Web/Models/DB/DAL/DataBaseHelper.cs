@@ -412,7 +412,7 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override List<TeacherMeetings> GetTeacherMeetings(long teacherID, DateTime start, DateTime end)
         {
-            var queryString = "exec GetclassMeetingsForTeacherByDateRange @teacher_id, @start_date, @end_date;";
+            var queryString = "exec GetClassMeetingsForTeacherByDateRange @teacher_id, @start_date, @end_date;";
             var query = new Query(queryString, connectionString);
             query.AddParameter("@teacher_id", teacherID);
             query.AddParameter("@start_date", start);

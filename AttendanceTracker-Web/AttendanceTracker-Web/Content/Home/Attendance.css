@@ -33,3 +33,7 @@
     position: fixed;
     top: 50%;
 }
+
+#attendance-module, #attendance-controller {
+    width: 100% !important;
+}
