@@ -62,7 +62,7 @@ public class QRScanner extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_scanner);
-
+        setTitle("");
         TextView text = (TextView) findViewById(R.id.txt_info);
         text.setText("This is the QR Code Section of the app.\n");
 

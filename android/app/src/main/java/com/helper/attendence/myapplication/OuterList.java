@@ -18,10 +18,12 @@ public class OuterList extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewcontents_layout);
-
+        setTitle(getIntent().getStringExtra("className"));
         String className= getIntent().getStringExtra("className");
+
         Long classId= getIntent().getLongExtra("classId", -1L);
         Long studentId = getIntent().getLongExtra("studentId", -1L);
+
         System.out.println("Classname: " + className + " id: " + classId);
         Attendance att = new Attendance();
         ArrayList<Attendance> uL= att.getAttendance(studentId, classId);

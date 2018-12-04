@@ -24,7 +24,7 @@ public class EditUserInformation extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user_information);
-
+        setTitle("Edit Information");
         FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

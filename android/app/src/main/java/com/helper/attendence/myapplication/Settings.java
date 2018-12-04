@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,21 +13,21 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class Settings extends Activity {
+public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_main);
-
-        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Settings.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+        setTitle("Settings");
+//        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.backBtn);
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(Settings.this, MainActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         //QR Button Commented out, unless we actually want it clickable from the settings menu.
 /*
