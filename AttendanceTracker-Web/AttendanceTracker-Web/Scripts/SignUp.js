@@ -30,7 +30,7 @@
 
 function signUpSuccess(response) {
     var responseString = JSON.stringify(response);
-    setCookie(responseString, response.expires);
+    setCookie("user", responseString, response.expires);
     window.location.href = "/Home/Index";
 }
 

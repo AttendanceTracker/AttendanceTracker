@@ -270,6 +270,7 @@
     <Content Include="Scripts\angular-material.js" />
     <Content Include="Scripts\angular-material.min.js" />
     <Content Include="Scripts\md-time-picker.js" />
+    <Content Include="Scripts\_HomeLayout.js" />
     <Content Include="Views\Templates\page-classes.html" />
     <Content Include="Views\Templates\page-students.html" />
     <Content Include="Views\Templates\EditClassModal.html" />

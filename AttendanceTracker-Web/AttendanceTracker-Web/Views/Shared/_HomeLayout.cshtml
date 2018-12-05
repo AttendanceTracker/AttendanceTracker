@@ -6,19 +6,15 @@
 
 @RenderSection("scripts", required: false)
 
+<script src="~/Scripts/_HomeLayout.js"></script>
+
 <div id="main-content-container" class="home-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="main-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title">@ViewBag.PageName</span>
             <div class="mdl-layout-spacer"></div>
             <b id="username-label">A User</b>
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-                <i class="material-icons">more_vert</i>
-            </button>
-            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-                <li class="mdl-menu__item">Account</li>
-                <li class="mdl-menu__item">Log Out</li>
-            </ul>
+            <button onclick="signOut()" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn"><i class="material-icons">exit_to_app</i></button>
         </div>
     </header>
     <div class="main-drawer mdl-layout__drawer mdl-color--primary-dark mdl-color-text--white">

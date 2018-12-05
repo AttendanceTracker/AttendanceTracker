@@ -1,7 +1,7 @@
-﻿function setCookie(value, expires) {
+﻿function setCookie(key, value, expires) {
     var now = new Date();
     now.setTime(now.getTime() + 24 * 3600 * 1000);
-    document.cookie = "user=" + value + "; expires=" + now.toUTCString() + "; path=/;";
+    document.cookie = key + "=" + value + "; expires=" + now.toUTCString() + "; path=/;";
 }
 
 function getCookie(key) {
@@ -12,4 +12,8 @@ function getCookie(key) {
         var valueJson = JSON.parse(value);
         return valueJson;
     }
+}
+
+function deleteCookie(key) {
+    document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
 }

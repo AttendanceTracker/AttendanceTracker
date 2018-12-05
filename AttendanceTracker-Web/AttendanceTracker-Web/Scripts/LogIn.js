@@ -10,7 +10,7 @@
             $http.post("/api/account/SignIn", requestData).then(
                 function (response) {
                     var responseString = JSON.stringify(response.data);
-                    setCookie(responseString, response.expires);
+                    setCookie("user", responseString, response.expires);
                     window.location.href = "/Home/Index";
                 },
                 function (error) {
