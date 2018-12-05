@@ -37,3 +37,8 @@
 #attendance-module, #attendance-controller {
     width: 100% !important;
 }
+
+.date-container {
+    margin-left: 75px;
+    margin-right: 75px;
+}
