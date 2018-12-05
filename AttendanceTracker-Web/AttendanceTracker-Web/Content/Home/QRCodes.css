@@ -12,3 +12,16 @@
     text-align: center;
     font-size: 20px;
 }
+
+.modal-time-picker {
+    display: inline-block;
+}
+
+.modal-time-picker-outer {
+    display: grid;
+}
+
+.modal-time-picker-inner {
+    margin-left: auto;
+    margin-right: auto;
+}

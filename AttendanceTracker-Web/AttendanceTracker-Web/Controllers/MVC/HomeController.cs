@@ -505,7 +505,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
         }
 
         [HttpPost]
-        public ActionResult AddQRCode(long classID, int expiresIn)
+        public ActionResult AddQRCode(long classID, [System.Web.Http.FromBody] DateTime issuedDate, int expiresIn)
         {
             try
             {
@@ -518,7 +518,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                         var guid = Guid.NewGuid().ToString();
                         var payload = guid + classID.ToString();
                         payload = payload.SHA256Hash();
-                        var dbQRCode = dbFactory.QRCode(0, classID, payload, DateTime.Now, expiresIn);
+                        var dbQRCode = dbFactory.QRCode(0, classID, payload, issuedDate, expiresIn);
                         var fullPayload = webFactory.QRCodePayload(dbQRCode.ClassID, dbQRCode.Payload);
                         var addedQRCode = dal.Source.AddQRCode(dbQRCode);
                         var addedQRCodeJson = JsonConvert.SerializeObject(addedQRCode);

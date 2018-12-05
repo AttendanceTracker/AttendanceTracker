@@ -1,26 +1,23 @@
-﻿<!--<body>
-    <dialog id="qr-modal" class="mdl-dialog">
-        <div class="mdl-dialog__content">
-            <md-select placeholder="Assign to user" ng-model="class" md-on-open="qrCodesController.getQRCodes()" style="min-width: 200px;">
-                <md-option ng-value="class" ng-repeat="class in classData">{{class.Name}}</md-option>
-            </md-select>
-        </div>
-        <div class="mdl-dialog__actions">
-            <button ng-click="qrCodesController.addModalButtonClicked()" type="button" class="mdl-button">Create</button>
-            <button ng-click="qrCodesController.dialog.close()" type="button" class="mdl-button close">Cancel</button>
-        </div>
-    </dialog>
-</body>-->
-
-<md-dialog>
+﻿<md-dialog>
     <form ng-cloak>
-        <md-dialog-content>
+        <md-dialog-content id="qr-modal-content">
             <div class="md-dialog-content">
-                <md-select placeholder="Assign to user" ng-model="class" md-on-open="getClasses()" style="min-width: 200px;">
+                <md-select placeholder="Class Name" ng-model="class" md-on-open="getClasses()" style="min-width: 200px;">
                     <md-option ng-value="class" ng-repeat="class in classData">{{class.Name}}</md-option>
                 </md-select>
-                <md-time-picker ng-model="startTime" message="timePickerError" no-meridiem no-auto-switch></md-time-picker>
-                <md-time-picker ng-model="endTime" message="timePickerError" no-meridiem no-auto-switch></md-time-picker>
+                    <md-datepicker ng-model="date" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker>
+                <div class="modal-time-picker-outer">
+                    <div class="modal-time-picker-inner">
+                        <b>Start Time:</b>
+                        <md-time-picker class="modal-time-picker" remove-time-modal-button ng-model="startTime" message="timePickerError" no-meridiem no-auto-switch></md-time-picker>
+                    </div>
+                </div>
+                <div class="modal-time-picker-outer">
+                    <div class="modal-time-picker-inner">
+                        <b>End Time:</b>
+                        <md-time-picker class="modal-time-picker" remove-time-modal-button ng-model="endTime" message="timePickerError" no-meridiem no-auto-switch></md-time-picker>
+                    </div>
+                </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">

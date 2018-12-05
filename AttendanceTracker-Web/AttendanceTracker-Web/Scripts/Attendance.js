@@ -95,7 +95,7 @@ attenndanceModule.controller("AttendanceController", function ($scope, $http, $w
         window.location.href = url;
     };
 });
-attenndanceModule.directive('buildChart', function ($parse) {
+attenndanceModule.directive('buildChart', function () {
         return {
             restrict: 'A',
             link: function ($scope, element, attrs) {

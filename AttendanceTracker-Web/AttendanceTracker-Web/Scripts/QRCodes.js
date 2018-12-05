@@ -30,34 +30,6 @@ qrCodesModule.controller("QRCodesController", ["$scope", "$http", "$mdDialog", "
         );
     };
 
-    //qrCodesController.addModalButtonClicked = function () {
-    //    var classSelectText = $("#class-select").val();
-    //    if (classSelectText == "") {
-    //        return qrCodesController.showToast("Please select a class.");
-    //    }
-
-    //    //var classID = qrCodesController.classData.find(function (element) {
-    //    //    return element.Name == classSelectText;
-    //    //}).ID;
-
-    //    var config = { params: { classID: $scope.class.ID, expiresIn: 10000 } };
-    //    $http.post("/Home/AddQRCode", null, config).then(
-    //        function (response) {
-    //            if (response.status = 200) {
-    //                qrCodesController.getQRCodes();
-    //                qrCodesController.dialog.close();
-    //                qrCodesController.showToast("QR code created.");
-    //            } else {
-    //                qrCodesController.showToast("Failed to create QR code.");
-    //            }
-    //        },
-    //        function (error) {
-    //            console.log(error);
-    //            qrCodesController.showToast("Failed to create QR code.");
-    //        }
-    //    );
-    //};
-
     qrCodesController.addQRCodeButtonClicked = function () {
         qrCodesController.dialog = document.querySelector('#qr-modal');
         angular.element(qrCodesController.dialog).ready(function () {
@@ -89,6 +61,7 @@ qrCodesModule.controller("QRCodesController", ["$scope", "$http", "$mdDialog", "
     function dialogController($scope, $http, $mdDialog) {
         $scope.classData = [];
         $scope.class = {};
+        $scope.date = new Date();
         $scope.startTime = new Date();
         $scope.endTime = new Date();
         $scope.timePickerError = {
@@ -114,19 +87,17 @@ qrCodesModule.controller("QRCodesController", ["$scope", "$http", "$mdDialog", "
         $scope.add = function () {
             if ($scope.class == {}) {
                 qrCodesController.showToast("Please select a class.");
-                return
+                return;
             }
 
-            var config = { params: { classID: $scope.class.ID, expiresIn: 10000 } };
-            $http.post("/Home/AddQRCode", null, config).then(
+            var expiresIn = $scope.getDurationInSeconds($scope.startTime, $scope.endTime);
+            var requestData = { issuedDate: $scope.date, expiresIn: expiresIn };
+            var config = { params: { classID: $scope.class.ID }};
+            $http.post("/Home/AddQRCode", requestData, config).then(
                 function (response) {
-                    if (response.status = 200) {
-                        qrCodesController.getQRCodes();
-                        qrCodesController.showToast("QR code created.");
-                        $mdDialog.cancel();
-                    } else {
-                        qrCodesController.showToast("Failed to create QR code.");
-                    }
+                    qrCodesController.getQRCodes();
+                    qrCodesController.showToast("QR code created.");
+                    $mdDialog.cancel();
                 },
                 function (error) {
                     console.log(error);
@@ -134,5 +105,20 @@ qrCodesModule.controller("QRCodesController", ["$scope", "$http", "$mdDialog", "
                 }
             );
         };
+
+        $scope.getDurationInSeconds = function (startDate, endDate) {
+            return Math.round((endDate - startDate) / 1000)
+        };
     }
 }]);
+
+qrCodesModule.directive("removeTimeModalButton", function () {
+    return {
+        restrict: "A",
+        link: function (scope, element, attr) {
+            angular.element(element).ready(function () {
+                element.find("button").remove()
+            });
+        }
+    };
+});
