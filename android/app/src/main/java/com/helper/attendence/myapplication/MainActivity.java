@@ -1,5 +1,6 @@
 package com.helper.attendence.myapplication;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -23,6 +25,15 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
+
+    int PERMISSIONS_REQUEST_QRSCANNER_ALL = 123;
+    String[] PERMISSIONS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.CAMERA
+    };
+
+
+
     private TelephonyManager mTelephonyManager;
 
     @Override
@@ -30,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(!hasPermissions(this, PERMISSIONS)){
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_QRSCANNER_ALL);
+        }
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -191,4 +205,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
