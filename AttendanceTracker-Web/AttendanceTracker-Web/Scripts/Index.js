@@ -13,8 +13,11 @@
             homeController.getClassMeetings(function (totalMeetings) {
                 homeController.getTotalAttendance(function (totalAttendance) {
                     for (var i = 0; i < totalMeetings.length; i++) {
-                        var className = totalAttendance[i].ClassName;
-                        var percentage = totalAttendance[i].AttendanceCount / totalMeetings[i].ClassMeetingCount;
+                        var className = totalMeetings[i].ClassName;
+                        var percentage = 0;
+                        if (totalAttendance.length != 0) {
+                            var percentage = totalAttendance[i].AttendanceCount / totalMeetings[i].ClassMeetingCount;
+                        }
                         var classData = { className: className, percentage: percentage };
                         homeController.classAttendedPercentages.push(classData);
                     }
