@@ -463,7 +463,7 @@ public class Student implements Serializable {
                         Type object = new TypeToken<ArrayList<sClass>>(){}.getType();
                         Gson gson = new Gson();
                         ArrayList<sClass> returnVal= gson.fromJson(response, object);
-                        System.out.println("ReturnVal: " + returnVal.get(0).getID() + " " + returnVal.get(0).getName() + " " + returnVal.get(0).getTeacherID());
+//                        System.out.println("ReturnVal: " + returnVal.get(0).getID() + " " + returnVal.get(0).getName() + " " + returnVal.get(0).getTeacherID());
                         this.classes =(ArrayList<sClass>)returnVal.clone();  
                 } catch (Exception e) {
                     e.printStackTrace();

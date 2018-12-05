@@ -1,10 +1,12 @@
 package com.helper.attendence.myapplication;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -41,7 +43,24 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        String IMEINumber = "3015";
+        String IMEINumber = "-1";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            } else {
+                IMEINumber = getDeviceImei();
+                Log.d("msg", "Final IMEI = " + IMEINumber);
+            }
+        }
+        else {
+            Log.d("msg", "ERROR, NOT HIGH ENOUGH API VERSION!");
+        }
+
+
+
+
         Student std = new Student(Long.parseLong(IMEINumber));
         //CHECK TO SEE IF THIS DEVICE HAS BEEN SEEN HERE WITH A REST CALL.
 
@@ -121,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        String[] stringArray;
-        stringArray = new String [x.getClasses().size()];
+        String[] stringArray = new String [x.getClasses().size()];
         for(int i = 0; i < x.getClasses().size(); i++)  {
             System.out.println("Class name " + i + ": " + x.getClasses().get(i).getName() );
             stringArray[i] = x.getClasses().get(i).getName();
