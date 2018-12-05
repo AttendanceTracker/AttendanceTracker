@@ -24,6 +24,7 @@ namespace AttendanceTracker_Web.Models.DB
         public abstract QRCode GetQRCode(long id);
         public abstract QRCode GetQRCode(string payload);
         public abstract QRCode GetQRCode(long classID, string payload);
+        public abstract void RemoveQRCode(long qrCodeID);
         public abstract List<long> GetQRCodes(long classID);
         public abstract AccessToken AddAccessToken(AccessToken accessToken);
         public abstract AccessToken GetAccessToken(string token);

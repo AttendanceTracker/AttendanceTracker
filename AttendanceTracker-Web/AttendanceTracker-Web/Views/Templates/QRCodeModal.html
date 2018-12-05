@@ -1,11 +1,17 @@
 ﻿<md-dialog>
     <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add QR Code</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
         <md-dialog-content id="qr-modal-content">
             <div class="md-dialog-content">
                 <md-select placeholder="Class Name" ng-model="class" md-on-open="getClasses()" style="min-width: 200px;">
                     <md-option ng-value="class" ng-repeat="class in classData">{{class.Name}}</md-option>
                 </md-select>
-                    <md-datepicker ng-model="date" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker>
+                <md-datepicker ng-model="date" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker>
                 <div class="modal-time-picker-outer">
                     <div class="modal-time-picker-inner">
                         <b>Start Time:</b>

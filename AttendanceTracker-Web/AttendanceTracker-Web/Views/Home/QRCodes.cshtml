@@ -26,10 +26,10 @@
                 <img class="mdl-color-text--accent mdl-cell mdl-cell--12-col" src="data:image/png;base64,{{qrData.ImageData}}">
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a href="#" class="mdl-color-text--accent mdl-button mdl-js-button mdl-js-ripple-effect"><i class="mdl-color-text--accent material-icons" role="presentation">delete</i></a>
+                <button ng-click="qrCodesController.deleteQRCode(qrData.QRCodeID)" class="mdl-color-text--accent mdl-button mdl-js-button mdl-button--icon"><i class="mdl-color-text--accent material-icons" role="presentation">delete</i></button>
             </div>
         </div>
-        <button ng-click="showAdvanced($event)" id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">add</i></button>
+        <button ng-click="showModal($event)" id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">add</i></button>
         <div id="toast-container" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>

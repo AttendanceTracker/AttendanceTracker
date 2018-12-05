@@ -224,6 +224,14 @@ namespace AttendanceTracker_Web.Models.DB
             return qrCodeIDs;
         }
 
+        public override void RemoveQRCode(long qrCodeID)
+        {
+            var queryString = "exec QRCodes_RemoveQRCode @qrcode_id;";
+            var query = new Query(queryString, connectionString);
+            query.AddParameter("@qrcode_id", qrCodeID);
+            query.Execute();
+        }
+
         public override AccessToken AddAccessToken(AccessToken accessToken)
         {
             var queryString = "exec Access_Tokens_AddAccess_Token @user_id, @token, @expires_in, @issued, @does_expire;";

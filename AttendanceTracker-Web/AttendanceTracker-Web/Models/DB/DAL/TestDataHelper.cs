@@ -318,5 +318,10 @@ namespace AttendanceTracker_Web.Models.DB
         {
             throw new NotImplementedException();
         }
+
+        public override void RemoveQRCode(long qrCodeID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

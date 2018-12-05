@@ -165,9 +165,10 @@ namespace AttendanceTracker_Web.Models.Web
             return dto;
         }
 
-        public ActiveQRCode ActiveQRCode(long classID, string className, DateTime startDate, DateTime endDate, byte[] imageData)
+        public ActiveQRCode ActiveQRCode(long QRCodeID, long classID, string className, DateTime startDate, DateTime endDate, byte[] imageData)
         {
             var dto = new ActiveQRCode();
+            dto.QRCodeID = QRCodeID;
             dto.ClassID = classID;
             dto.ClassName = className;
             dto.StartDate = startDate;

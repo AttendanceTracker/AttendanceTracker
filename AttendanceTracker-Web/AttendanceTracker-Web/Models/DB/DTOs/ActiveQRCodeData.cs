@@ -8,6 +8,7 @@ namespace AttendanceTracker_Web.Models.DB
 {
     public class ActiveQRCodeData : DBMappable
     {
+        public long QRCodeID { get; set; }
         public long ClassID { get; set; }
         public string ClassName { get; set; }
         public DateTime StartDate { get; set; }
@@ -16,7 +17,8 @@ namespace AttendanceTracker_Web.Models.DB
 
         public override void MapProperties(DBPropertyMap map)
         {
-            ClassID = map.Get<long>("ID");
+            QRCodeID = map.Get<long>("qrcode_id");
+            ClassID = map.Get<long>("class_id");
             ClassName = map.Get<string>("name");
             StartDate = map.Get<DateTime>("start_date");
             EndDate = map.Get<DateTime>("end_date");

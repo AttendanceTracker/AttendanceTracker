@@ -7,6 +7,7 @@ namespace AttendanceTracker_Web.Models.Web
 {
     public class ActiveQRCode
     {
+        public long QRCodeID { get; set; }
         public long ClassID { get; set; }
         public string ClassName { get; set; }
         public DateTime StartDate { get; set; }

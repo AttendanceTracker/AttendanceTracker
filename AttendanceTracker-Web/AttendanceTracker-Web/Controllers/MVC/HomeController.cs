@@ -465,11 +465,34 @@ namespace AttendanceTracker_Web.Controllers.MVC
                                 qrCodeImage.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                                 imageData = stream.ToArray();
                             }
-                            var qrCode = webFactory.ActiveQRCode(qrCodeData.ClassID, qrCodeData.ClassName, qrCodeData.StartDate, qrCodeData.EndDate, imageData);
+                            var qrCode = webFactory.ActiveQRCode(qrCodeData.QRCodeID, qrCodeData.ClassID, qrCodeData.ClassName, qrCodeData.StartDate, qrCodeData.EndDate, imageData);
                             activeQRCodes.Add(qrCode);
                         }
                         var activeQRCodesJson = JsonConvert.SerializeObject(activeQRCodes);
                         return Content(activeQRCodesJson);
+                    }
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, null);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult RemoveQRCode(long qrCodeID)
+        {
+            try
+            {
+                var userCookieJson = GetCookie("user");
+                if (userCookieJson != null)
+                {
+                    var userCookie = JsonConvert.DeserializeObject<UserCookie>(userCookieJson);
+                    if (authManager.IsAuthorized(userCookie.AccessToken))
+                    {
+                        dal.Source.RemoveQRCode(qrCodeID);
+                        return Content(null);
                     }
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, null);

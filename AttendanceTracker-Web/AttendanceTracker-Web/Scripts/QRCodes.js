@@ -30,6 +30,20 @@ qrCodesModule.controller("QRCodesController", ["$scope", "$http", "$mdDialog", "
         );
     };
 
+    qrCodesController.deleteQRCode = function (qrCodeID) {
+        var config = { params: { qrCodeID: qrCodeID } };
+        $http.delete("/Home/RemoveQRCode", config).then(
+            function (response) {
+                qrCodesController.getQRCodes();
+                qrCodesController.showToast("QR code removed.");
+            },
+            function (error) {
+                qrCodesController.showToast("Failed to remove QR code.");
+                console.log(error);
+            }
+        );
+    };
+
     qrCodesController.addQRCodeButtonClicked = function () {
         qrCodesController.dialog = document.querySelector('#qr-modal');
         angular.element(qrCodesController.dialog).ready(function () {
@@ -48,7 +62,7 @@ qrCodesModule.controller("QRCodesController", ["$scope", "$http", "$mdDialog", "
         snackbarContainer.MaterialSnackbar.showSnackbar(data);
     };
 
-    $scope.showAdvanced = function (ev) {
+    $scope.showModal = function (ev) {
         $mdDialog.show({
             controller: dialogController,
             templateUrl: '/Views/Templates/QRCodeModal.html',
