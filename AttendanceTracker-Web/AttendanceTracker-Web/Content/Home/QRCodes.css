@@ -25,3 +25,8 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+#qr-module {
+    margin-right: 70px !important;
+    margin-left: 70px !important;
+}
