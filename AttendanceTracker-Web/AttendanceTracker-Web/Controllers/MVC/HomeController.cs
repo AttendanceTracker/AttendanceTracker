@@ -409,7 +409,7 @@ namespace AttendanceTracker_Web.Controllers.MVC
                     {
                         var attendedCount = (double)dal.Source.GetAttendanceCount(classID, date);
                         var classCount = (double)dal.Source.GetStudentCountInClass(classID);
-                        var attendedPercentage = attendedCount / classCount;
+                        var attendedPercentage = classCount != 0 ? attendedCount / classCount : 0;
                         return Content(attendedPercentage.ToString());
                     }
                 }
