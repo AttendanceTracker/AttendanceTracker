@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         //NEED TO IMPLEMENT GETCLASSES
         x.setClasses();
-        System.out.println("Final Value out of class: : " + x.getClasses().get(0).getID() + " " + x.getClasses().get(0).getName() + " " + x.getClasses().get(0).getTeacherID());
+//        System.out.println("Final Value out of class: : " + x.getClasses().get(0).getID() + " " + x.getClasses().get(0).getName() + " " + x.getClasses().get(0).getTeacherID());
         mainMenu(x);
 
     }
@@ -113,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        String[] stringArray = new String [x.getClasses().size()];
+        String[] stringArray;
+        stringArray = new String [x.getClasses().size()];
         for(int i = 0; i < x.getClasses().size(); i++)  {
             System.out.println("Class name " + i + ": " + x.getClasses().get(i).getName() );
             stringArray[i] = x.getClasses().get(i).getName();
@@ -190,5 +191,25 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        SharedPreferences pref = this.getSharedPreferences("MAIN_ACTIVITY", Context.MODE_PRIVATE);
+        String firstName = pref.getString("storedFirstName", "ERROR");
+        String lastName = pref.getString("storedLastName", "ERROR");
+        String email = pref.getString("storedEmail", "ERROR");
+        Long cwid = pref.getLong("storedCwid", -1L);
+
+        Student x = new Student(firstName, lastName, email, cwid);
+        x.printAll();
+
+        //NEED TO IMPLEMENT GETCLASSES
+        x.setClasses();
+//        System.out.println("Final Value out of class: : " + x.getClasses().get(0).getID() + " " + x.getClasses().get(0).getName() + " " + x.getClasses().get(0).getTeacherID());
+        mainMenu(x);
+
+    }
+
 
 }

@@ -33,7 +33,7 @@ public class HttpClient implements Serializable{
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + "https://attendancetracker.us/api/Student/Get");
+//            System.out.println("\nSending 'GET' request to URL : " + "https://attendancetracker.us/api/Student/Get" + parameters);
             System.out.println("Response Code : " + responseCode);
             if(responseCode == 200) {
                 Log.i(TAG, "getCall returned with 200 response code");
@@ -73,6 +73,7 @@ public class HttpClient implements Serializable{
             result.append("=");
             result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
+        System.out.println("Post Params:"  +result.toString());
         return result.toString();
     }
 
