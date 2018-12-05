@@ -10,11 +10,15 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mitch on 2016-05-13.
- */
+/* File created by: Zack Witherspoon
+/  Description: This class is a simple class that inflates the layout of the attendance for the
+/      student
+*/
+
 public class OuterList extends AppCompatActivity {
     @Override
+
+    //Function created by: Zack Witherspoon
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewcontents_layout);

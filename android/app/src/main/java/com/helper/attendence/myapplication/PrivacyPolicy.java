@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+/* File created by: Zack Witherspoon
+/  Description: This class is a simple class that shows the Privacy policy for the application
+/
+*/
+
 
 public class PrivacyPolicy extends Activity {
 

@@ -19,10 +19,16 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static android.support.constraint.Constraints.TAG;
 
+/* File created by: Zack Witherspoon
+/  Description: This class is set up to help with API calls
+/
+*/
+
 public class HttpClient implements Serializable{
 
     private String baseURL = "https://attendancetracker.us";
 
+    //Function created by: Zack Witherspoon
     public String getCall(String apiString, String parameters) {
         String urlString = baseURL + apiString + "?" + parameters;
         System.out.println("StringBoi: " + urlString);
@@ -60,6 +66,7 @@ public class HttpClient implements Serializable{
         return response;
     }
 
+    //Function created by: Zack Witherspoon
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException{
         StringBuilder result = new StringBuilder();
         boolean first = true;
@@ -77,8 +84,7 @@ public class HttpClient implements Serializable{
         return result.toString();
     }
 
-
-
+    //Function created by: Zack Witherspoon
     public String postCall(String apiString, HashMap<String, String> postDataParams) {
         URL url;
         String response = "";
@@ -128,6 +134,7 @@ public class HttpClient implements Serializable{
         return response;
     }
 
+    //Function created by: Zack Witherspoon
     public String putCall(String apiString, String urlParameters, HashMap<String, String> putDataParams) {
         URL url;
         String response = "";

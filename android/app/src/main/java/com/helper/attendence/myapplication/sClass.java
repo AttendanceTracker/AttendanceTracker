@@ -3,6 +3,11 @@ package com.helper.attendence.myapplication;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/* File created by: Zack Witherspoon
+/  Description: This class is a simple class that contains the ID, Name, and TeacherID for gson
+/      manipulation
+*/
+
 public class sClass {
     @SerializedName("ID")
     @Expose

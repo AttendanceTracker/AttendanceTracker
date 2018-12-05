@@ -15,6 +15,11 @@ import android.widget.TextView;
 
 import static android.content.Context.*;
 
+/* File created by: Zack Witherspoon
+/  Description: This class is set up to help the student edit their name in case of a name change
+/
+*/
+
 
 public class EditUserInformation extends Activity{
 

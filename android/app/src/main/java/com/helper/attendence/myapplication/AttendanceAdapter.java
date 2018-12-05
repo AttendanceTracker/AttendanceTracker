@@ -1,9 +1,5 @@
 package com.helper.attendence.myapplication;
 
-/**
- * Created by Mitch on 2016-05-13.
- */
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +10,18 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * Created by Mitch on 2016-05-06.
- */
+/* File created by: Zack Witherspoon
+/  Description: This class is an adapter that helps to inflate and populate the ArrayList of
+/      attendance for the choosen class
+*/
+
 public class AttendanceAdapter extends ArrayAdapter<Attendance> {
 
     private LayoutInflater mInflater;
     private ArrayList<Attendance> users;
     private int mViewResourceId;
 
+    //Function created by: Zack Witherspoon
     public AttendanceAdapter(Context context, int textViewResourceId, ArrayList<Attendance> users) {
         super(context, textViewResourceId, users);
         this.users = users;
@@ -30,6 +29,7 @@ public class AttendanceAdapter extends ArrayAdapter<Attendance> {
         mViewResourceId = textViewResourceId;
     }
 
+    //Function created by: Zack Witherspoon
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = mInflater.inflate(mViewResourceId, null);
         Attendance user = users.get(position);

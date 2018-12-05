@@ -1,12 +1,17 @@
 package com.helper.attendence.myapplication;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.app.Activity;
-        import android.support.design.widget.FloatingActionButton;
-        import android.text.method.ScrollingMovementMethod;
-        import android.view.View;
-        import android.widget.TextView;
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
+import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.TextView;
+
+/* File created by: Zack Witherspoon
+/  Description: This class is a simple class that License for the the app
+/
+*/
 
 public class License extends Activity{
 

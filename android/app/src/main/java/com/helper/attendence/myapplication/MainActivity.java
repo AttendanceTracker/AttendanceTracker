@@ -18,13 +18,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-//https://developer.android.com/guide/topics/ui/declaring-layout#java
+/* File created by: Zack Witherspoon
+/  Description: Main landing page for the sutdents that should display the classes the student
+/      is in.
+*/
 
+
+//Function created by: Zack Witherspoon
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
     private TelephonyManager mTelephonyManager;
 
+
+    //Function created by: Zack Witherspoon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Function created by: Zack Witherspoon
     public void mainMenu(final Student x) {
          FloatingActionButton qrBtn = (FloatingActionButton) findViewById(R.id.qrScanner_button);
        qrBtn.setOnClickListener(new View.OnClickListener() {
@@ -142,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    //Function created by: Zack Witherspoon
+    public void onItemClick(AdapterView parent, View v, int position, long id) {
+        // Do something in response to the click
+    }
 
-        public void onItemClick(AdapterView parent, View v, int position, long id) {
-            // Do something in response to the click
-        }
-
-
+    //Function created by: Zack Witherspoon
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
@@ -157,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        @SuppressLint("MissingPermission")
+    //Function created by: Zack Witherspoon
+    @SuppressLint("MissingPermission")
     private String getDeviceImei() {
         Log.d("msg", "MSG: About to find the telephony stoof");
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -169,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         return deviceid;
     }
 
-
+    //Function created by: Zack Witherspoon
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -177,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //Function created by: Zack Witherspoon
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -192,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Function created by: Zack Witherspoon
     @Override
     public void onResume(){
         super.onResume();

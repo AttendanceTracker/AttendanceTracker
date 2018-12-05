@@ -13,6 +13,12 @@ import java.util.HashMap;
 
 import static android.support.constraint.Constraints.TAG;
 
+/* File created by: Zack Witherspoon
+/  Description: This class is a class that contains most of the methods and variables for a student
+/      object.
+*/
+
+
 public class Student implements Serializable {
 
     private HttpClient httpRequests;
@@ -23,14 +29,16 @@ public class Student implements Serializable {
     private Device studentDevice;
     private ArrayList<sClass> classes;
 
-
+    //Function created by: Zack Witherspoon
     public Student(Long Imei) {
         this.studentDevice= new Device(Imei);
         this.httpRequests = new HttpClient();
     }
 
+    //Function created by: Zack Witherspoon
     public Student() {httpRequests = new HttpClient();}
 
+    //Function created by: Zack Witherspoon
     public Student(String sFName, String sLName, String sEmail, Long sCwid) {
         this.fname = sFName;
         this.lname = sLName;
@@ -41,6 +49,7 @@ public class Student implements Serializable {
         this.httpRequests = new HttpClient();
     }
 
+    //Function created by: Zack Witherspoon
     public Student(String sFName, String sLName, String sEmail, Long sCwid, Long imei) {
         this.fname = sFName;
         this.lname = sLName;
@@ -52,6 +61,7 @@ public class Student implements Serializable {
         this.studentDevice= new Device(imei);
     }
 
+    //Function created by: Zack Witherspoon
     public boolean checkIn(Double lat, Double longitude, String payload, Long CWID){
         HashMap<String, String> postDataParams = new HashMap<>();
         postDataParams.put("StudentID", CWID.toString());
@@ -82,6 +92,7 @@ public class Student implements Serializable {
         return false;
     }
 
+    //Function created by: Zack Witherspoon
     public Student getStudent(Student std) {
         String fname = "";
         String lname = "";
@@ -135,6 +146,7 @@ public class Student implements Serializable {
         return std;
     }
 
+    //Function created by: Zack Witherspoon
     public void printAll() {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("Printing all the info: ");
@@ -146,6 +158,7 @@ public class Student implements Serializable {
         System.out.println("---------------------------------------------------------------------");
     }
 
+    //Function created by: Zack Witherspoon
     public Boolean registerStudent(Student std) {
         Boolean bResponse = false;
         String newFName = "";
@@ -196,6 +209,7 @@ public class Student implements Serializable {
         return bResponse;
     }
 
+    //Function created by: Zack Witherspoon
     public Boolean updateStudent(Student std, String changedFName, String changedLName, String changedEmail, Long permanentCWID) {
         Boolean bResponse = false;
         String newFName = "";
@@ -254,7 +268,7 @@ public class Student implements Serializable {
         return bResponse;
     }
 
-
+    //Function created by: Zack Witherspoon
     public Long getCwidFromDevice(Long deviceID) {
         Long sCwid = -1L;
         System.out.println("Starting Device find!");
@@ -287,7 +301,7 @@ public class Student implements Serializable {
         return  sCwid;
     }
 
-    // /api/Device/Register
+    //Function created by: Zack Witherspoon
     public Boolean registerDeviceToStudent(Student std, Long sImei) {
 
         Boolean bResponse = false;
@@ -330,7 +344,7 @@ public class Student implements Serializable {
         return bResponse;
     }
 
-    // /api/Device/Update
+    //Function created by: Zack Witherspoon
     public Boolean updateDevice(Student std, Device sDevice) {
         Boolean bResponse = false;
         Long newCwid = -1L;
@@ -378,51 +392,65 @@ public class Student implements Serializable {
         return bResponse;
     }
 
-
+    //Function created by: Zack Witherspoon
     public String getFname() {
         return fname;
     }
 
+    //Function created by: Zack Witherspoon
     public void setFname(String fname) {
         this.fname = fname;
     }
 
+    //Function created by: Zack Witherspoon
     public String getLname() {
         return lname;
     }
 
+    //Function created by: Zack Witherspoon
     public void setLname(String lname) {
         this.lname = lname;
     }
 
+    //Function created by: Zack Witherspoon
     public String getEmail() {
         return email;
     }
 
+    //Function created by: Zack Witherspoon
     public void setEmail(String email) {
         this.email = email;
     }
 
+    //Function created by: Zack Witherspoon
     public Long getCwid() {
         return cwid;
     }
 
+    //Function created by: Zack Witherspoon
     public void setCwid(Long cwid) {
         this.cwid = cwid;
     }
 
+    //Function created by: Zack Witherspoon
     public Device getStudentDevice() { return studentDevice; }
 
+    //Function created by: Zack Witherspoon
     public Long getImei() { return this.studentDevice.getImei(); }
 
+    //Function created by: Zack Witherspoon
     public void setImei(Device d) { this.studentDevice = d; }
 
+    //Function created by: Zack Witherspoon
     public void setImei(Long i) {Device d = new Device(i); setImei(d);}
 
+    //Function created by: Zack Witherspoon
     public ArrayList<sClass> getClasses() { return classes; }
 
+    //Function created by: Zack Witherspoon
     public sClass getSpecificClass(int x) { return getClasses().get(x); }
 
+    //Function created by: Zack Witherspoon
     public void setClasses() {
         String params = "studentid=" + getCwid();
         Log.i(TAG, "Running GET call.");

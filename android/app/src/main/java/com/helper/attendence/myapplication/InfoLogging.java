@@ -9,8 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/* File created by: Zack Witherspoon
+/  Description: An activity setup to help with the login of a new student
+/
+*/
+
 public class InfoLogging extends Activity {
 
+    //Function created by: Zack Witherspoon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_logging);

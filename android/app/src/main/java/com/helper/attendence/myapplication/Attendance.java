@@ -14,6 +14,11 @@ import java.util.Date;
 
 import static android.support.constraint.Constraints.TAG;
 
+/* File created by: Zack Witherspoon
+/  Description: This class is a simple class that holds the Date and Attendance
+/
+*/
+
 public class Attendance {
     @SerializedName("Date")
     @Expose
@@ -22,7 +27,7 @@ public class Attendance {
     @Expose
     private Boolean DidAttend;
 
-
+    //Function created by: Zack Witherspoon
     public ArrayList<Attendance> getAttendance(Long studentId, Long classId) {
         HttpClient http = new HttpClient();
         String params = "studentId=" + studentId.toString() + "&classid=" + classId.toString();
@@ -52,18 +57,22 @@ public class Attendance {
         return null;
     }
 
+    //Function created by: Zack Witherspoon
     public Date getDate() {
         return Date;
     }
 
+    //Function created by: Zack Witherspoon
     public void setDate(java.util.Date date) {
         Date = date;
     }
 
+    //Function created by: Zack Witherspoon
     public Boolean getDidAttend() {
         return DidAttend;
     }
 
+    //Function created by: Zack Witherspoon
     public void setDidAttend(Boolean didAttend) {
         DidAttend = didAttend;
     }
