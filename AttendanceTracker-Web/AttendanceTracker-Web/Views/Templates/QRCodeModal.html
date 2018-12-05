@@ -1,18 +1,32 @@
-﻿<body>
+﻿<!--<body>
     <dialog id="qr-modal" class="mdl-dialog">
         <div class="mdl-dialog__content">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                <input type="text" value="" class="mdl-textfield__input" id="class-select" readonly>
-                <input type="hidden" value="" name="class-select">
-                <label for="class-select" class="mdl-textfield__label">Class</label>
-                <ul for="class-select" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-                    <li ng-repeat="class in qrCodesController.classData" class="mdl-menu__item" data-val="{{class.ID}}">{{class.Name}}</li>
-                </ul>
-            </div>
+            <md-select placeholder="Assign to user" ng-model="class" md-on-open="qrCodesController.getQRCodes()" style="min-width: 200px;">
+                <md-option ng-value="class" ng-repeat="class in classData">{{class.Name}}</md-option>
+            </md-select>
         </div>
         <div class="mdl-dialog__actions">
             <button ng-click="qrCodesController.addModalButtonClicked()" type="button" class="mdl-button">Create</button>
             <button ng-click="qrCodesController.dialog.close()" type="button" class="mdl-button close">Cancel</button>
         </div>
     </dialog>
-</body>
+</body>-->
+
+<md-dialog>
+    <form ng-cloak>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-select placeholder="Assign to user" ng-model="class" md-on-open="getClasses()" style="min-width: 200px;">
+                    <md-option ng-value="class" ng-repeat="class in classData">{{class.Name}}</md-option>
+                </md-select>
+                <md-time-picker ng-model="startTime" message="timePickerError" no-meridiem no-auto-switch></md-time-picker>
+                <md-time-picker ng-model="endTime" message="timePickerError" no-meridiem no-auto-switch></md-time-picker>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()" target="_blank" md-autofocus>Close</md-button>
+            <span flex></span>
+            <md-button ng-click="add()" target="_blank" md-autofocus>Add</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

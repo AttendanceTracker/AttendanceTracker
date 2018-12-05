@@ -12,7 +12,6 @@
 <div ng-app="QRCodesModule" class="mdl-grid">
     <div class="mdl-grid" ng-controller="QRCodesController as qrCodesController">
         <div ng-if="qrCodesController.qrCodeData.length == 0" id="empty-qr-text" class="mdl-color-text--grey-600">No active QR Codes.</div>
-
         <div ng-repeat="qrData in qrCodesController.qrCodeData" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop">
             <div class="mdl-card__title mdl-card--expand mdl-color--primary">
                 <h2 class="mdl-card__title-text mdl-color-text--white">{{qrData.ClassName}}</h2>
@@ -30,11 +29,7 @@
                 <a href="#" class="mdl-color-text--accent mdl-button mdl-js-button mdl-js-ripple-effect"><i class="mdl-color-text--accent material-icons" role="presentation">edit</i></a>
             </div>
         </div>
-
-        <button ng-click="qrCodesController.addQRCodeButtonClicked()" id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">add</i>
-        </button>
-        <div ng-include src="'/Views/Templates/QRCodeModal.html'"></div>
+        <button ng-click="showAdvanced($event)" id="add-qr-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"><i class="material-icons">add</i></button>
         <div id="toast-container" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>

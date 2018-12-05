@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.10/dialog-polyfill.min.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.min.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layout-attributes.min.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layouts.ie_fixes.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.layouts.min.css" rel="stylesheet" />
+    <link href="~/Content/md-time-picker.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -11,11 +17,15 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/material")
     @RenderSection("scripts", required: false)
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.10/dialog-polyfill.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.10/dialog-polyfill.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-aria.min.js"></script>
     <script src="~/Scripts/angular-route.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
+    <script src="~/Scripts/angular-material.min.js"></script>
+    <script src="~/Scripts/md-time-picker.js"></script>
     <script src="~/Scripts/ChartUtils.js"></script>
     <script src="~/Scripts/CookieUtils.js"></script>
     <script src="~/Scripts/WebserviceUtil.js"></script>

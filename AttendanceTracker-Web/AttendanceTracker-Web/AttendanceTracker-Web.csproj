@@ -253,11 +253,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular-material.css" />
+    <Content Include="Content\angular-material.layout-attributes.css" />
+    <Content Include="Content\angular-material.layout-attributes.min.css" />
+    <Content Include="Content\angular-material.layouts.css" />
+    <Content Include="Content\angular-material.layouts.ie_fixes.css" />
+    <Content Include="Content\angular-material.layouts.min.css" />
+    <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\Home\Attendance.css" />
     <Content Include="Content\Home\Class.css" />
     <Content Include="Content\Home\Classes.css" />
     <Content Include="Content\Home\Home.css" />
     <Content Include="Content\Home\Index.css" />
+    <Content Include="Content\md-time-picker.css" />
+    <Content Include="Scripts\angular-material-mocks.js" />
+    <Content Include="Scripts\angular-material.js" />
+    <Content Include="Scripts\angular-material.min.js" />
+    <Content Include="Scripts\md-time-picker.js" />
     <Content Include="Views\Templates\page-classes.html" />
     <Content Include="Views\Templates\page-students.html" />
     <Content Include="Views\Templates\EditClassModal.html" />
