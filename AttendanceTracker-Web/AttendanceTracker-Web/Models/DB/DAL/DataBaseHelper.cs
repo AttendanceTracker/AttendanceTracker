@@ -53,8 +53,12 @@ namespace AttendanceTracker_Web.Models.DB
             var query = new Query(queryString, connectionString);
             query.AddParameter("@device_id", imei);
             var results = query.Execute();
-            var deviceResults = results.Rows[0].ToDTO<Device>();
-            return deviceResults;
+            if (results.Rows.Count == 0)
+            {
+                var deviceResults = results.Rows[0].ToDTO<Device>();
+                return deviceResults;
+            }
+            return null;
         }
 
         public override void RemoveDevice(long imei)
@@ -87,8 +91,12 @@ namespace AttendanceTracker_Web.Models.DB
             var query = new Query(queryString, connectionString);
             query.AddParameter("@student_id", cwid);
             var results = query.Execute();
-            var studentResults = results.Rows[0].ToDTO<Student>();
-            return studentResults;
+            if (results.Rows.Count != 0)
+            {
+                var studentResults = results.Rows[0].ToDTO<Student>();
+                return studentResults;
+            }
+            return null;
         }
 
         public override void RemoveStudent(long cwid)
@@ -189,8 +197,12 @@ namespace AttendanceTracker_Web.Models.DB
             var query = new Query(queryString, connectionString);
             query.AddParameter("@payload", payload);
             var results = query.Execute();
-            var qrResult = results.Rows[0].ToDTO<QRCode>();
-            return qrResult;
+            if (results.Rows.Count != 0)
+            {
+                var qrResult = results.Rows[0].ToDTO<QRCode>();
+                return qrResult;
+            }
+            return null;
         }
 
         public override QRCode GetQRCode(long classID, string payload)
