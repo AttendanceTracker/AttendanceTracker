@@ -1,12 +1,9 @@
 ﻿<md-dialog>
     <form ng-cloak>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2>Add QR Code</h2>
-                <span flex></span>
-            </div>
-        </md-toolbar>
         <md-dialog-content id="qr-modal-content">
+            <div>
+                <h4 style="margin-left: 20px;" id="title-header">Add QR Code</h4>
+            </div>
             <div class="md-dialog-content">
                 <md-select placeholder="Class Name" ng-model="class" md-on-open="getClasses()" style="min-width: 200px;">
                     <md-option ng-value="class" ng-repeat="class in classData">{{class.Name}}</md-option>
@@ -27,9 +24,9 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
-            <md-button ng-click="cancel()" target="_blank" md-autofocus>Close</md-button>
-            <span flex></span>
             <md-button ng-click="add()" target="_blank" md-autofocus>Add</md-button>
+            <span flex></span>
+            <md-button ng-click="cancel()" target="_blank" md-autofocus>Close</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

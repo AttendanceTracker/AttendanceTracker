@@ -44,3 +44,12 @@
     max-height: 70% !important;
     overflow: auto !important;
 }
+
+#classes-module, #classes-controller {
+    width: 100% !important;
+}
+
+.class-container {
+    margin-right: 75px;
+    margin-left: 75px;
+}
