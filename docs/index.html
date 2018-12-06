@@ -71,8 +71,63 @@
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
           <div class="mdl-card mdl-cell mdl-cell--12-col">
             <div id="goal-boi" class="mdl-card__supporting-text">
-              <h4>Our Goals</h4>
-              Currently, in many classrooms attendance is tracked using either a Pen-and-Paper approach or with costly electronic input devices. AttendanceTracker is a new android application with the goal of offering both students and instructors an alternative to traditional methods of classroom attendance tracking and participation. Using our app is more secure than relying on more traditional methods as instructors can allow optional settings such as time and location locks to ensure that students can not cheat the system by signing in for their classmates. Our app aims to streamline the process of taking attendance for instructors. By including a web interface instructors can easily generate scannable QR Codes and create quizzes based on course content to gauge classroom involvement and participation. 
+              <h4>Introduction</h4>
+                AttendanceTracker is an android application that replaces traditional methods of taking attendance in the classroom, such as pen and paper. A teacher can register a class that they teach and add their class roster through a web portal that is accessible to them only. On this website, the professors can view charts and data to look at class attendance, as well as data about which specific students have and haven’t been attending class. After their class is created and their students are added, the students can register their device through the student app. Once in the app, the students can scan a QR Code that is displayed by the professor that marks their attendance.
+
+              <h4><br>Security</h4>
+                Many college students are required to buy electronic clickers for some of their classes that can cost around $70 per semester. The problem with these electronic input devices, is the passing of these devices between students. A focus that we put on the development of this app is its secure nature and difficulty for non-attending students to get counted present. Compared to the electronic clickers that students are required to buy for many classes. To create this security, we use the device IMEI number and tie it to their account. To prevent a workaround of a student sending a photo of the QR Code to a non-attending student we access the device location and compare it to the location that the professor sets from the website.
+
+              <h4><br>Features</h4>
+                This application features the Google Vision API, which is a package dedicated to pattern and image recognition. Through the Vision API’s Barcode Detector, we implemented our QR Scanner.
+
+            <h4><br>Who wants to use this application</h4>
+              This application benefits both the professors and the students. For professors, it provides valuable data about class attendance and requires very little effort while being much more secure than alternatives. For students it eases the financial burden of college slightly by being completely free
+            <h4><br>Future Plans:</h4>
+            <h5>Web<h5>
+            <ul>
+                <li>
+                    Rework authentication.
+                </li>
+                 <li>
+                    Refactor to angular.js from razor.
+                </li>
+                 <li>
+                    Add viewable class attendance without download.
+                </li>
+                 <li>
+                    Switch from material design to ang.js material Integrate blackboard.
+                </li>
+                 <li>
+                    Separate requirements for different schools.
+                </li>
+                 <li>
+                    Add edit QR Button.
+                </li>
+                 <li>
+                    Add manual attendance addition
+                </li>
+                 <li>
+                    Multiple Browser Support 
+                </li>
+            </ul>
+            <h5>App</h5>
+            <ul>
+                <li>
+                    Implement refactored scanner
+                </li>
+                 <li>
+                    Fix Authentication
+                </li>
+                 <li>
+                    Tune location service
+                </li>
+                 <li>
+                    Customizable styling (school colors)
+                </li>
+                 <li>
+                    iPhone Support
+                </li>
+            </ul>
             </div>
           </div>
         </section>
@@ -86,7 +141,7 @@
               <a href="resources/AttendanceTracker-CowlesWrightWitherspoon.pptx">Initial Pitch</a>
               <a href="resources/Sprint1Presentation.pptx">Sprint 1</a>
               <a href="resources/Sprint2Presentation.pptx">Sprint 2</a>
-              <a class="disabled-link">Sprint 3</a>
+              <a class="resources/Sprint3Presentation.pptx">Sprint 3</a>
             </ul>
             <ul class="toc">
               <h4>APK</h4>

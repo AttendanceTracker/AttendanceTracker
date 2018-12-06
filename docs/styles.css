@@ -82,6 +82,10 @@ html, body {
   margin-top: 0;
   margin-bottom: 20px;
 }
+.mdl-boi .mdl-card .mdl-card__supporting-text li{
+  margin-top: 0;
+  font-size: 16px;
+}
 .mdl-boi .mdl-card__actions {
   margin: 0;
   padding: 4px 40px;
