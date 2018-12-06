@@ -25,7 +25,6 @@ import android.widget.ListView;
 /      is in.
 */
 
-
 //Function created by: Zack Witherspoon
 public class MainActivity extends AppCompatActivity {
 

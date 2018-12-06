@@ -69,7 +69,7 @@ public class EditUserInformation extends Activity{
                 System.out.println(mEdit.toString());
                 mEdit2 = (EditText) findViewById(R.id.lastName);
                 System.out.println(mEdit2.toString());
-                editor.putString("storedLastName", mEdit.getText().toString());
+                editor.putString("storedLastName", mEdit2.getText().toString());
                 System.out.println("Changing stoof....");
                 if(x.updateStudent(x, mEdit.getText().toString(), mEdit2.getText().toString(), x.getEmail(), x.getCwid())) {
                     editor.apply();
