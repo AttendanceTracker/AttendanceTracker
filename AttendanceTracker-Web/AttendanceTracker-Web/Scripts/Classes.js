@@ -1,5 +1,46 @@
 ﻿var classesModule = angular.module("ClassesModule", ['ngRoute', 'ngAnimate']);
 
+classesModule.run(function ($rootScope, $http) {
+    $rootScope.classesResponse = [];
+    $rootScope.classes = [];
+
+    $rootScope.getClassesData = function () {
+        $http.get("/Home/GetAttendanceChartData").then(
+            function (response) {
+                $rootScope.classesResponse = response.data;
+                $rootScope.buildClasses();
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
+
+    $rootScope.buildClasses = function () {
+        $rootScope.classes = [];
+        $rootScope.classesResponse.forEach(function (element) {
+            var dates = element.map(x => $rootScope.simpleFormatDate(x.MeetingTime));
+            var studentCounts = element.map(x => x.StudentCount);
+            var classObj = { name: element[0].ClassName, dates: dates, studentCounts: studentCounts };
+            $rootScope.classes.push(classObj);
+        });
+    };
+
+    $rootScope.simpleFormatDate = function (date) {
+        var actualDate = new Date(date);
+        var dayString = $rootScope.dateGetDayString(actualDate.getDay());
+        var month = actualDate.getMonth() + 1;
+        var day = actualDate.getDate();
+        var formattedDateString = dayString + " " + month.toString() + "/" + day.toString();
+        return formattedDateString;
+    };
+       
+    $rootScope.dateGetDayString = function (day) {
+        var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return weekday[day];
+    };
+});
+
 classesModule.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
@@ -12,50 +53,12 @@ classesModule.config(['$routeProvider', function ($routeProvider) {
         });
 }]);
 
-var classesController = classesModule.controller("ClassesController", function ($http) {
+var classesController = classesModule.controller("ClassesController", function ($scope, $http) {
     var classesController = this;
-
-    classesController.classesResponse = [];
-    classesController.classes = [];
     classesController.dialog = {};
 
     classesController.$onInit = function () {
-        classesController.getClassesData();
-    };
-
-    classesController.getClassesData = function () {
-        $http.get("/Home/GetAttendanceChartData").then(
-            function (response) {
-                classesController.classesResponse = response.data;
-                classesController.buildClasses();
-            },
-            function (error) {
-                console.log(error);
-            }
-        );
-    };
-
-    classesController.buildClasses = function () {
-        classesController.classesResponse.forEach(function (element) {
-            var dates = element.map(x => classesController.simpleFormatDate(x.MeetingTime));
-            var studentCounts = element.map(x => x.StudentCount);
-            var classObj = { name: element[0].ClassName, dates: dates, studentCounts: studentCounts };
-            classesController.classes.push(classObj);
-        });
-    };
-
-    classesController.simpleFormatDate = function (date) {
-        var actualDate = new Date(date);
-        var dayString = classesController.dateGetDayString(actualDate.getDay());
-        var month = actualDate.getMonth() + 1;
-        var day = actualDate.getDate();
-        var formattedDateString = dayString + " " + month.toString() + "/" + day.toString();
-        return formattedDateString;
-    };
-
-    classesController.dateGetDayString = function (day) {
-        var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        return weekday[day];
+        $scope.getClassesData();
     };
 
     classesController.editClassButtonClicked = function () {
@@ -85,21 +88,23 @@ classesController.directive('buildChart', function () {
     }
 });
 
+//------------ classes page controller
+
 classesModule.controller("ClassesPageController", function ($scope, $http) {
     $scope.pageClass = "page-classes";
-    $scope.classData = [];
+    $scope.students = [];
 
     angular.element(document).ready(function () {
         componentHandler.upgradeAllRegistered();
-        $scope.getClassData();
+        $scope.getStudentData();
     });
        
-    $scope.getClassData = function () {
+    $scope.getStudentData = function () {
         $http.get("/Home/GetClassDataForTeacher").then(
             function (response) {
                 $("#edit-modal-back").addClass("hidden");
                 $("#edit-modal").attr("style", "width: 410px");
-                $scope.classData = response.data;
+                $scope.students = response.data;
             },
             function (error) {
                 console.log(error);
@@ -112,7 +117,8 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
         var config = { params: { className: addClassText} };
         $http.post("/Home/AddClass", null, config).then(
             function (response) {
-                $scope.getClassData();
+                $scope.getClassesData();
+                $scope.getStudentData();
                 $scope.showToast("Class added.");
             },
             function (error) {
@@ -126,7 +132,8 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
         var config = { params: { classID: classID} };
         $http.delete("/Home/RemoveClass", config).then(
             function () {
-                $scope.getClassData();
+                $scope.getClassesData();
+                $scope.getStudentData();
                 $scope.showToast("Class removed.");
             },
             function (error) {
@@ -143,6 +150,8 @@ classesModule.controller("ClassesPageController", function ($scope, $http) {
         snackbarContainer.MaterialSnackbar.showSnackbar(data);
     };
 });
+
+//-------------------------students page controller
 
 classesModule.controller("StudentsPageController", function ($scope, $http, $routeParams) {
     $scope.pageClass = "page-students";
@@ -174,6 +183,7 @@ classesModule.controller("StudentsPageController", function ($scope, $http, $rou
         var config = { params: { classID: $routeParams.classID, studentID: studentID } };
         $http.post("/Home/AddStudentToClass", null, config).then(
             function (response) {
+                $scope.getClassesData();
                 $scope.getClass();
                 $scope.showToast("Student added.");
             },
@@ -188,6 +198,7 @@ classesModule.controller("StudentsPageController", function ($scope, $http, $rou
         var config = { params: { classID: $routeParams.classID, studentID: studentID } };
         $http.delete("/Home/RemoveStudentFromClass", config).then(
             function () {
+                $scope.getClassesData();
                 $scope.getClass();
                 $scope.showToast("Student removed.");
             },
